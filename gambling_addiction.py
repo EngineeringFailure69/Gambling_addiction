@@ -146,6 +146,14 @@ def russian_roulette():
     print("Win or die commrade, lets do this\n")
     return 
 
+def return_text():
+    info = "Welcome traveller, here is a little starting information about the game here: There are two types of game for you to play: " \
+    "Russian roulette and basic casion roulette. I assume you already know what the difference between these two is, but in case you are not aware, here is a little explanation for you: " \
+    "1)Russian roulette: its a 2 player game, you play it with the pistol and 1 bullet that can be in 1 of the six chambers, whoever dies first, losses the game. " \
+    "2)Casino roulette: table, ball and spinning wheel, if you manage to guess the proper number, you win, if not, you lose. " \
+    "To continue press start button"
+    return info
+
 def main():
     print("Welcome traveller, here is a little starting information about the game here:\nThere are two types of game for you to play:") 
     print("Russian roulette and basic casion roulette. I assume you already know what the difference between these two is, but in case you are not aware, here is a little explanation for you:")
@@ -169,4 +177,4 @@ def main():
     else:
         print("Critical error")
     print(balance)
-main()
+#main()
