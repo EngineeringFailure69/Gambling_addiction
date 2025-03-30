@@ -1,13 +1,12 @@
 import pygame
 import sys
-import os
-import sys
 import importlib.util
 import os
 import draw_functions
 import const
 import gambling_addiction
-import game_screen1 
+import apartment_screen 
+import city_screen
 
 def main_screen():
     running = True
@@ -18,8 +17,8 @@ def main_screen():
 
     while running:
         const.screen.fill(const.white)
+        draw_functions.load_background_image(const.screen,  "background_photos\start_screen_background.webp")
         draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
-
         for i in pygame.event.get():
             if i.type == pygame.QUIT:
                 running = False
@@ -43,7 +42,7 @@ def main_screen():
                 exit()
         elif Start_button.collidepoint(mouse_pos):
             if mouse_click[0]:
-                game_screen1.game_screen1()
+                apartment_screen.apartment_screen()
 
         pygame.display.flip()
     pygame.quit()

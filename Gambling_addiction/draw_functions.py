@@ -62,6 +62,12 @@ def load_background_image(screen, imagePath):
     scaled_image = pygame.transform.scale(image, (const.screen.get_width(), const.screen.get_height()))
     screen.blit(scaled_image, (0, 0))
 
+def load_icons(screen, imagePath, icon_width, icon_height, icon_position_x, icon_position_y):
+    image = pygame.image.load(resource_path(imagePath))
+    scaled_image = pygame.transform.scale(image, (icon_width, icon_height))
+    screen.blit(scaled_image, (icon_position_x, icon_position_y))
+    return icon_position_x, icon_position_y, icon_width, icon_height
+
 def resource_path(relative_path):
     try:
         # Ako je pokrenuto kao .exe, sys._MEIPASS će postojati

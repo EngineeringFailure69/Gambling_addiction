@@ -28,3 +28,10 @@ start_screen_info = "Welcome traveller, here is a little starting information ab
 balance = 500
 
 game_screen1_text = f"You are chilling at your home, your current bank balance is {balance} dollars, what do you want to do"
+
+#States
+STATE_CITY = "city"
+STATE_APARTMENT = "apartment"
+STATE_CASINO = "casino"
+STATE_EXIT_APARTMENT = "exit_door"
+STATE_WORK = "work"
