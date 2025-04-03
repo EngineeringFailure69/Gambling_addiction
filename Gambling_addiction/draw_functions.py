@@ -2,6 +2,13 @@ import pygame
 import const
 import sys
 import os
+import utils
+from tkinter import *
+from tkinter import messagebox
+
+def draw_message_box(title, text):
+    #Tk().wm_withdraw() #to hide the main window
+    messagebox.showinfo(title, text)
 
 def draw_text(surface, text, color, rect, font, line_spacing=0, antialias=True):
     x, y = rect.topleft
@@ -31,8 +38,8 @@ def draw_text(surface, text, color, rect, font, line_spacing=0, antialias=True):
         rendered_line = font.render(line, antialias, color)
         surface.blit(rendered_line, (x, y))
 
-def draw_button(surface, color, rect, text, font, text_color):
-    pygame.draw.rect(surface, color, rect)
+def draw_button(surface, colour, rect, text, font, text_color):
+    pygame.draw.rect(surface, colour, rect)
     text_surface = font.render(text, True, text_color)
     text_rect = text_surface.get_rect(center=(rect[0] + rect[2] // 2, rect[1] + rect[3] // 2))
     surface.blit(text_surface, text_rect)
@@ -74,5 +81,20 @@ def resource_path(relative_path):
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
-
     return os.path.join(base_path, relative_path)
+
+def draw_text_box(screen, colour, rect, text, font, text_color):
+        txt_surface = font.render(text, True, text_color)
+        pygame.draw.rect(screen, colour, rect, 2)
+        const.screen.blit(txt_surface, (rect.x + 5, rect.y + 5))
+
+def format_number(string_number):
+    if not string_number:  # Ako je prazan string, vrati prazan string
+        return ""
+    try:
+        number = int(string_number)
+    except ValueError:
+        return ""
+    formatted = f"{number/1000:.3f}" 
+    formatted = formatted + "K"
+    return formatted

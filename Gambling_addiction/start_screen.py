@@ -1,15 +1,12 @@
 import pygame
-import sys
-import importlib.util
-import os
 import draw_functions
 import const
-import gambling_addiction
-import apartment_screen 
-import city_screen
+import apartment_screen
+import utils 
 
 def main_screen():
     running = True
+    drawn = False
     pygame.font.init()
     font = pygame.font.SysFont(None, 30)
     screen_width = const.screen.get_width()
@@ -19,9 +16,8 @@ def main_screen():
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen,  "background_photos\start_screen_background.webp")
         draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
-        for i in pygame.event.get():
-            if i.type == pygame.QUIT:
-                running = False
+        
+        running = utils.handle_quit(running)
 
         draw_functions.draw_text(const.screen, const.start_screen_info, const.black, text_rect, font, line_spacing=5)
 

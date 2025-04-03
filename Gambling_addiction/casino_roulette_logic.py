@@ -1,7 +1,7 @@
 import random
 import time
 
-def to_win_function(choice, your_bet):
+def to_win_function(choice, your_bet, your_colour, your_numbers):
     others_bet = random.randint(your_bet, 10*your_bet)
     table = your_bet + others_bet
     your_numbers = []
@@ -94,53 +94,81 @@ def to_win_function(choice, your_bet):
 
     return to_win, others_bet, table, your_numbers, your_colour
 
-
-def casino_roulette(balance):
-    print("Welcome to Gambling Addiction Casion, your luck is our money, here is a little explanation on how this works:")
-    print("There are multiple variables:\nbalance - represents your current bank balance and max amount of money you can bet")
-    print("your_bet - the amount of money that you bet\nothers_bet - the amount of money other people bet in total")
-    print("table - current amount of money on the table that you can win if you guess correct number and colour")
-    print("your_number - number that you put your bet on\nyour_colour - colour that you bet on\nto_win - the amount you can win in this spin")
-    print("If you bet only on number, and guess it correctly, you can win 35x the amount of the money you bet, if you guess colour", end='')
-    print("and number correctly, you can win all the money on the table, if you guess only colour correctly, you can win the same amount you bet, on top of what you", end='')
-    print("put on the table, if you split the bet between two numbers, you can win 17x the amount you bet, if you split it between 3 numbers, you can win 11x the bet", end='')
-    print("if you split it between four numbers, you can win 8x the amount you bet, if you split it between 6 numbers, you can win 5x the amount of bet, if you play", end='')
-    print("0 + 2 other numbers, you can win 11x the amount you bet, if you play even/odd, you can win the same amount you bet, if you play low/high (1 - 18/19 - 36)", end='')
-    print("you earn same amount you bet, if you play dozens (1 - 12, 13 - 24, 25 - 36), you earn double the amount you bet")
-
-    print("balance: ", balance)
-    play = input("Do you want to play (type 1 and press enter) or not (type 2 and press enter)?: ")
-    while(play!='1' and play!='2'):
-        print("Its 1 or 2, not some random number, its not that hard man")
-        play = int(input("Do you want to play (type 1 and press enter)?: "))
-    while(play=='1'):
-        your_bet = int(input("Enter the amount you want to bet: "))
-        balance -= your_bet
-        print("(1) Number only\n(2) Colour and number\n(3) Only colour\n(4) Two numbers\n(5) Three numbers\n(6) Four numbers\n(7) Six numbers\n(8) 0 + 2\n(9) Even/Odd")
-        print("(10) Low/High\n(11) Dozens")
-        choice = int(input("Pick the type of bet, enter the number inside () and press enter: "))
-        your_numbers = []
-        to_win,  others_bet, table, your_numbers, your_colour = to_win_function(choice, your_bet)
-        
-        spin = int(input("Ready to spin, if yes press 1 and enter: "))
-        print(f"Your balance: {balance}", "\t", f"Your bet: {your_bet}", "\t", f"Your number: {your_numbers}", "\t", f"Your colour: {your_colour}") 
-        print(f"Others bet: {others_bet}", "\t", f"Sum on the table: {table}", "\t", f"Amount that you can win: {to_win}", "\n")
-        if(spin == 1):
-            print("Spinning the wheel...")
-            time.sleep(5)
-            spin = random.randint(0, 36)
-            spin_colour = random.choice(["red", "black"])
-            print(f"Number that it fell on: {spin}\nColour that it fell on: {spin_colour}")
-            if(your_colour == "none" and spin in your_numbers):
-                balance = balance + to_win
-            elif(your_colour == spin_colour and spin in your_numbers):
-                balance += to_win
-            elif(your_colour == spin_colour and spin not in your_numbers):
-                balance += to_win
-            else:
-                print(f"You lost: {your_bet} dollars")
-        play = input(f"If you want to continue to play, type 1 and press enter, if not, type anything else and press enter, your current balance is {balance}: ")
+def casino_roulette(balance, your_bet, choice, your_colour, your_numbers):
+    #your_bet = int(input("Enter the amount you want to bet: "))
+    balance -= your_bet
+    # print("(1) Number only\n(2) Colour and number\n(3) Only colour\n(4) Two numbers\n(5) Three numbers\n(6) Four numbers\n(7) Six numbers\n(8) 0 + 2\n(9) Even/Odd")
+    # print("(10) Low/High\n(11) Dozens")
+    # choice = int(input("Pick the type of bet, enter the number inside () and press enter: "))
+    your_numbers_list = []
+    to_win,  others_bet, table, your_numbers_list, your_colour = to_win_function(choice, your_bet, your_colour, your_numbers)
+    
+    spin = int(input("Ready to spin, if yes press 1 and enter: "))
+    print(f"Your balance: {balance}", "\t", f"Your bet: {your_bet}", "\t", f"Your number: {your_numbers}", "\t", f"Your colour: {your_colour}") 
+    print(f"Others bet: {others_bet}", "\t", f"Sum on the table: {table}", "\t", f"Amount that you can win: {to_win}", "\n")
+    if(spin == 1):
+        print("Spinning the wheel...")
+        time.sleep(5)
+        spin = random.randint(0, 36)
+        spin_colour = random.choice(["red", "black"])
+        print(f"Number that it fell on: {spin}\nColour that it fell on: {spin_colour}")
+        if(your_colour == "none" and spin in your_numbers):
+            balance = balance + to_win
+        elif(your_colour == spin_colour and spin in your_numbers):
+            balance += to_win
+        elif(your_colour == spin_colour and spin not in your_numbers):
+            balance += to_win
+        else:
+            print(f"You lost: {your_bet} dollars")
+    play = input(f"If you want to continue to play, type 1 and press enter, if not, type anything else and press enter, your current balance is {balance}: ")
     return balance
+
+# def casino_roulette(balance):
+#     print("Welcome to Gambling Addiction Casion, your luck is our money, here is a little explanation on how this works:")
+#     print("There are multiple variables:\nbalance - represents your current bank balance and max amount of money you can bet")
+#     print("your_bet - the amount of money that you bet\nothers_bet - the amount of money other people bet in total")
+#     print("table - current amount of money on the table that you can win if you guess correct number and colour")
+#     print("your_number - number that you put your bet on\nyour_colour - colour that you bet on\nto_win - the amount you can win in this spin")
+#     print("If you bet only on number, and guess it correctly, you can win 35x the amount of the money you bet, if you guess colour", end='')
+#     print("and number correctly, you can win all the money on the table, if you guess only colour correctly, you can win the same amount you bet, on top of what you", end='')
+#     print("put on the table, if you split the bet between two numbers, you can win 17x the amount you bet, if you split it between 3 numbers, you can win 11x the bet", end='')
+#     print("if you split it between four numbers, you can win 8x the amount you bet, if you split it between 6 numbers, you can win 5x the amount of bet, if you play", end='')
+#     print("0 + 2 other numbers, you can win 11x the amount you bet, if you play even/odd, you can win the same amount you bet, if you play low/high (1 - 18/19 - 36)", end='')
+#     print("you earn same amount you bet, if you play dozens (1 - 12, 13 - 24, 25 - 36), you earn double the amount you bet")
+
+#     print("balance: ", balance)
+#     play = input("Do you want to play (type 1 and press enter) or not (type 2 and press enter)?: ")
+#     while(play!='1' and play!='2'):
+#         print("Its 1 or 2, not some random number, its not that hard man")
+#         play = int(input("Do you want to play (type 1 and press enter)?: "))
+#     while(play=='1'):
+#         your_bet = int(input("Enter the amount you want to bet: "))
+#         balance -= your_bet
+#         print("(1) Number only\n(2) Colour and number\n(3) Only colour\n(4) Two numbers\n(5) Three numbers\n(6) Four numbers\n(7) Six numbers\n(8) 0 + 2\n(9) Even/Odd")
+#         print("(10) Low/High\n(11) Dozens")
+#         choice = int(input("Pick the type of bet, enter the number inside () and press enter: "))
+#         your_numbers = []
+#         to_win,  others_bet, table, your_numbers, your_colour = to_win_function(choice, your_bet)
+        
+#         spin = int(input("Ready to spin, if yes press 1 and enter: "))
+#         print(f"Your balance: {balance}", "\t", f"Your bet: {your_bet}", "\t", f"Your number: {your_numbers}", "\t", f"Your colour: {your_colour}") 
+#         print(f"Others bet: {others_bet}", "\t", f"Sum on the table: {table}", "\t", f"Amount that you can win: {to_win}", "\n")
+#         if(spin == 1):
+#             print("Spinning the wheel...")
+#             time.sleep(5)
+#             spin = random.randint(0, 36)
+#             spin_colour = random.choice(["red", "black"])
+#             print(f"Number that it fell on: {spin}\nColour that it fell on: {spin_colour}")
+#             if(your_colour == "none" and spin in your_numbers):
+#                 balance = balance + to_win
+#             elif(your_colour == spin_colour and spin in your_numbers):
+#                 balance += to_win
+#             elif(your_colour == spin_colour and spin not in your_numbers):
+#                 balance += to_win
+#             else:
+#                 print(f"You lost: {your_bet} dollars")
+#         play = input(f"If you want to continue to play, type 1 and press enter, if not, type anything else and press enter, your current balance is {balance}: ")
+#     return balance
 
 def russian_roulette():
     print("Win or die commrade, lets do this\n")

@@ -22,9 +22,7 @@ def city_screen():
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\work_icon.webp", 100, 100, 615, 430)
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_WORK)
 
-        for i in pygame.event.get():
-            if i.type == pygame.QUIT:
-                running = False
+        running = utils.handle_quit(running)
        
         pygame.display.flip()
     pygame.quit()

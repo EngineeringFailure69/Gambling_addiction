@@ -14,9 +14,8 @@ def apartment_screen():
     while running:
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, "background_photos\home_background.png")
-        for i in pygame.event.get():
-            if i.type == pygame.QUIT:
-                running = False
+        
+        running = utils.handle_quit(running)
 
         draw_functions.draw_text(const.screen, const.game_screen1_text, const.black, text_rect, font, line_spacing=5)
 
