@@ -95,6 +95,10 @@ def format_number(string_number):
         number = int(string_number)
     except ValueError:
         return ""
-    formatted = f"{number/1000:.3f}" 
-    formatted = formatted + "K"
+    if(number<=1000000):
+        formatted = f"{number/1000:.3f}" 
+        formatted = formatted + "K"
+    else:
+        formatted = f"{1000000/1000:.3f}" 
+        formatted = formatted + "K"
     return formatted

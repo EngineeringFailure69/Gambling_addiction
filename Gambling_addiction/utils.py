@@ -33,15 +33,16 @@ def handle_quit(running):
                 running = False
     return running
 
-def process_bet_text_box_events(input_box, text, active):
-    for event in pygame.event.get():
+def process_bet_text_box_events(events, input_box, text, active):
+    for event in events:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            text = "Your bet: "
             if input_box.collidepoint(event.pos):
+                text = "Your bet: "
                 active = True
+                const.digit_counter = 0
             else:
                 active = False
         if event.type == pygame.KEYDOWN and active:
@@ -52,10 +53,14 @@ def process_bet_text_box_events(input_box, text, active):
                     const.bet = ""         # resetuj unos
             elif event.key == pygame.K_BACKSPACE:
                 text = text[:-1]
+                const.digit_counter -= 1
             else:
-                if event.unicode in const.numbers:
+                if event.unicode in const.numbers and const.digit_counter < 7:
+                    const.digit_counter += 1
                     const.bet += event.unicode 
                     text += event.unicode 
+                elif const.digit_counter >= 7:
+                    draw_functions.draw_message_box('Wrong input', 'Nuber can not have more than 7 digits')
                 else:
                     draw_functions.draw_message_box('Wrong input', 'You need to input numbers 0-9')
     return text, active
