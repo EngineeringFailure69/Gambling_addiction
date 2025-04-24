@@ -170,39 +170,39 @@ def casino_roulette(balance, your_bet, choice, your_colour, your_numbers):
 #         play = input(f"If you want to continue to play, type 1 and press enter, if not, type anything else and press enter, your current balance is {balance}: ")
 #     return balance
 
-def russian_roulette():
-    print("Win or die commrade, lets do this\n")
-    return 
+# def russian_roulette():
+#     print("Win or die commrade, lets do this\n")
+#     return 
 
-def return_text():
-    info = "Welcome traveller, here is a little starting information about the game here: There are two types of game for you to play: " \
-    "Russian roulette and basic casion roulette. I assume you already know what the difference between these two is, but in case you are not aware, here is a little explanation for you: " \
-    "1)Russian roulette: its a 2 player game, you play it with the pistol and 1 bullet that can be in 1 of the six chambers, whoever dies first, losses the game. " \
-    "2)Casino roulette: table, ball and spinning wheel, if you manage to guess the proper number, you win, if not, you lose. " \
-    "To continue press start button"
-    return info
+# def return_text():
+#     info = "Welcome traveller, here is a little starting information about the game here: There are two types of game for you to play: " \
+#     "Russian roulette and basic casion roulette. I assume you already know what the difference between these two is, but in case you are not aware, here is a little explanation for you: " \
+#     "1)Russian roulette: its a 2 player game, you play it with the pistol and 1 bullet that can be in 1 of the six chambers, whoever dies first, losses the game. " \
+#     "2)Casino roulette: table, ball and spinning wheel, if you manage to guess the proper number, you win, if not, you lose. " \
+#     "To continue press start button"
+#     return info
 
-def main():
-    print("Welcome traveller, here is a little starting information about the game here:\nThere are two types of game for you to play:") 
-    print("Russian roulette and basic casion roulette. I assume you already know what the difference between these two is, but in case you are not aware, here is a little explanation for you:")
-    print("1)Russian roulette: its a 2 player game, you play it with the pistol and 1 bullet that can be in 1 of the six chambers, whoever dies first, losses the game.")
-    print("2)Casino roulette: table, ball and spinning wheel, if you manage to guess the proper number, you win, if not, you lose.")
-    start = int(input("To continue press 1 and after that enter: "))
-    condition = True
-    balance = 500
-    if(start == 1):
-        print(f"You are chilling at your home, your current bank balance is {balance} dollars, what do you want to do:", end=' ')
-        while condition:
-            choice = int(input("Go to casino and play roulette (press 1 and enter) or go and play Russian roulette (press 2 and enter): "))
-            if(choice == 1):
-                balance = casino_roulette(balance)
-                #condition = False
-            elif(choice == 2):
-                russian_roulette()
-                condition = False
-            else:
-                print("Press 1 or 2, and after that enter to play games")
-    else:
-        print("Critical error")
-    print(balance)
+# def main():
+    # print("Welcome traveller, here is a little starting information about the game here:\nThere are two types of game for you to play:") 
+    # print("Russian roulette and basic casion roulette. I assume you already know what the difference between these two is, but in case you are not aware, here is a little explanation for you:")
+    # print("1)Russian roulette: its a 2 player game, you play it with the pistol and 1 bullet that can be in 1 of the six chambers, whoever dies first, losses the game.")
+    # print("2)Casino roulette: table, ball and spinning wheel, if you manage to guess the proper number, you win, if not, you lose.")
+    # start = int(input("To continue press 1 and after that enter: "))
+    # condition = True
+    # balance = 500
+    # if(start == 1):
+    #     print(f"You are chilling at your home, your current bank balance is {balance} dollars, what do you want to do:", end=' ')
+    #     while condition:
+    #         choice = int(input("Go to casino and play roulette (press 1 and enter) or go and play Russian roulette (press 2 and enter): "))
+    #         if(choice == 1):
+    #             balance = casino_roulette(balance)
+    #             #condition = False
+    #         elif(choice == 2):
+    #             russian_roulette()
+    #             condition = False
+    #         else:
+    #             print("Press 1 or 2, and after that enter to play games")
+    # else:
+    #     print("Critical error")
+    # print(balance)
 #main()

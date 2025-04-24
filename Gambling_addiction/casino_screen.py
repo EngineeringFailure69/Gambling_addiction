@@ -11,10 +11,10 @@ def casino_screen():
     drawn = False
     right_choice_clicked_up = False
     left_choice_clicked_up = False
-    right_choice11_clicked_up = False
-    left_choice11_clicked_up = False
+    right_choice1_clicked_up = False
+    left_choice1_clicked_up = False
 
-    # Definiši textbox
+    # Define textbox
     bet_button = pygame.Rect(const.screen.get_width()//60, const.screen.get_height()//50, const.button_width-250, const.button_height-50)
     your_bet = pygame.Rect(const.screen.get_width()-1100, const.screen.get_height()//50, const.button_width, const.button_height-50)
     pick_colour_button = pygame.Rect(const.screen.get_width()-710, const.screen.get_height()//50, const.button_width-200, const.button_height-50)
@@ -51,12 +51,19 @@ def casino_screen():
 
     active = False
     text = "Your bet: "
-    selected_colour = "Red"
+    selected_colour = "Black"
     choice9_text = "Even num"
     choice10_text = "Low (1-18)"
     choice11_text = "Nums: 1-12"
     choice11_counter = 1
-    choice = 1
+    choice = 1 
+    prev_choice = choice
+    counter = 0
+    counter2  = 0
+    counter3  = 0
+    counter4  = 0
+    counter5  = 0
+    counter6  = 0
 
     while running:
 
@@ -102,26 +109,9 @@ def casino_screen():
         if black_colour_button.collidepoint(mouse_pos):
             if mouse_click[0]:
                 selected_colour = "Black"
-            
-        if right_choice_button.collidepoint(mouse_pos):
-            if mouse_click[0]:
-                if  choice<11 and not right_choice_clicked_up:
-                    choice += 1
-                    right_choice_clicked_up = True
-            
-        if left_choice_button.collidepoint(mouse_pos):
-            if mouse_click[0]:
-                if choice > 1 and not left_choice_clicked_up:
-                    choice -= 1
-                    left_choice_clicked_up = True
 
-        for event in events:
-            if event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:
-                    right_choice_clicked_up = False
-                    left_choice_clicked_up = False
-                    right_choice11_clicked_up = False
-                    left_choice11_clicked_up = False
+        choice, right_choice_clicked_up = utils.handle_choice_buttons(events, right_choice_button, right_choice_clicked_up, choice, 11, True)
+        choice, left_choice_clicked_up = utils.handle_choice_buttons(events, left_choice_button, left_choice_clicked_up, choice, 1, False)
 
         # end of functionalities elements drawings
 
@@ -129,121 +119,172 @@ def casino_screen():
             if mouse_click[0]:
                 return
 
+        if choice != prev_choice:
+            counter = 0
+            counter2  = 0
+            counter3  = 0
+            counter4  = 0
+            counter5  = 0
+            counter6  = 0
+            prev_choice = choice
+
         info = pygame.Rect(const.screen.get_width()-const.button_width-900, const.screen.get_height()-const.button_height+30, const.button_width+800, const.button_height-30)
         draw_functions.draw_button(const.screen, const.green, info, 'balance:' + str(const.balance), font, const.black)
 
         # Draw choices
 
-        if choice == 1 or choice == 2:
-            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: ", font, const.black)
+        if choice == 1:
+            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: " + str(counter), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
+            counter, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice1_button, right_choice1_clicked_up, counter, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
+            counter, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice1_button, left_choice1_clicked_up, counter, 0, False)
+        elif choice == 2:
+            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: " + str(counter), font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
+            counter, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice1_button, right_choice1_clicked_up, counter, 36, True)
+            draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
+            counter, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice1_button, left_choice1_clicked_up, counter, 0, False)
         elif choice == 3:
             print("Something, will make it later")
         elif choice == 4:
-            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: " + str(counter), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
+            counter, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice1_button, right_choice1_clicked_up, counter, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
-
-            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: ", font, const.black)
+            counter, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice1_button, left_choice1_clicked_up, counter, 0, False)
+            
+            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: " + str(counter2), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice2_button, "->", font, const.black)
+            counter2, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice2_button, right_choice1_clicked_up, counter2, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice2_button, "<-", font, const.black)
+            counter2, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice2_button, left_choice1_clicked_up, counter2, 0, False)
         elif choice == 5:
-            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: " + str(counter), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
+            counter, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice1_button, right_choice1_clicked_up, counter, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
+            counter, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice1_button, left_choice1_clicked_up, counter, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: " + str(counter2), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice2_button, "->", font, const.black)
+            counter2, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice2_button, right_choice1_clicked_up, counter2, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice2_button, "<-", font, const.black)
+            counter2, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice2_button, left_choice1_clicked_up, counter2, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice3_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice3_button, "Number: " + str(counter3), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice3_button, "->", font, const.black)
+            counter3, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice3_button, right_choice1_clicked_up, counter3, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice3_button, "<-", font, const.black)
+            counter3, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice3_button, left_choice1_clicked_up, counter3, 0, False)
         elif choice == 6:
-            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: " + str(counter), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
+            counter, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice1_button, right_choice1_clicked_up, counter, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
+            counter, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice1_button, left_choice1_clicked_up, counter, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: " + str(counter2), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice2_button, "->", font, const.black)
+            counter2, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice2_button, right_choice1_clicked_up, counter2, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice2_button, "<-", font, const.black)
+            counter2, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice2_button, left_choice1_clicked_up, counter2, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice3_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice3_button, "Number: " + str(counter3), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice3_button, "->", font, const.black)
+            counter3, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice3_button, right_choice1_clicked_up, counter3, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice3_button, "<-", font, const.black)
+            counter3, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice3_button, left_choice1_clicked_up, counter3, 0, False)
             
-            draw_functions.draw_button(const.screen, const.blue, choice4_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice4_button, "Number: " + str(counter4), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice4_button, "->", font, const.black)
+            counter4, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice4_button, right_choice1_clicked_up, counter4, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice4_button, "<-", font, const.black)
+            counter4, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice4_button, left_choice1_clicked_up, counter4, 0, False)
         elif choice == 7:
-            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: " + str(counter), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
+            counter, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice1_button, right_choice1_clicked_up, counter, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
+            counter, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice1_button, left_choice1_clicked_up, counter, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: " + str(counter2), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice2_button, "->", font, const.black)
+            counter2, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice2_button, right_choice1_clicked_up, counter2, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice2_button, "<-", font, const.black)
+            counter2, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice2_button, left_choice1_clicked_up, counter2, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice3_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice3_button, "Number: " + str(counter3), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice3_button, "->", font, const.black)
+            counter3, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice3_button, right_choice1_clicked_up, counter3, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice3_button, "<-", font, const.black)
+            counter3, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice3_button, left_choice1_clicked_up, counter3, 0, False)
             
-            draw_functions.draw_button(const.screen, const.blue, choice4_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice4_button, "Number: " + str(counter4), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice4_button, "->", font, const.black)
+            counter4, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice4_button, right_choice1_clicked_up, counter4, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice4_button, "<-", font, const.black)
+            counter4, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice4_button, left_choice1_clicked_up, counter4, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice5_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice5_button, "Number: " + str(counter5), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice5_button, "->", font, const.black)
+            counter5, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice5_button, right_choice1_clicked_up, counter5, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice5_button, "<-", font, const.black)
+            counter5, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice5_button, left_choice1_clicked_up, counter5, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice6_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice6_button, "Number: " + str(counter6), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice6_button, "->", font, const.black)
+            counter6, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice6_button, right_choice1_clicked_up, counter6, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice6_button, "<-", font, const.black)
+            counter6, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice6_button, left_choice1_clicked_up, counter6, 0, False)
         elif choice == 8:
             draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: 0", font, const.black)
-            draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
-            draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
 
-            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice2_button, "Number: " + str(counter2), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice2_button, "->", font, const.black)
+            counter2, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice2_button, right_choice1_clicked_up, counter2, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice2_button, "<-", font, const.black)
+            counter2, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice2_button, left_choice1_clicked_up, counter2, 0, False)
 
-            draw_functions.draw_button(const.screen, const.blue, choice3_button, "Number: ", font, const.black)
+            draw_functions.draw_button(const.screen, const.blue, choice3_button, "Number: " + str(counter3), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice3_button, "->", font, const.black)
+            counter3, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice3_button, right_choice1_clicked_up, counter3, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice3_button, "<-", font, const.black)
+            counter3, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice3_button, left_choice1_clicked_up, counter3, 0, False)
         elif choice == 9:
             draw_functions.draw_button(const.screen, const.blue, choice1_button, choice9_text, font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
             if right_choice1_button.collidepoint(mouse_pos):
                 if mouse_click[0]:
-                    choice9_text = "Even num"
+                    choice9_text = "Odd nums"
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
             if left_choice1_button.collidepoint(mouse_pos):
                 if mouse_click[0]:
-                    choice9_text = "Odd num"
+                    choice9_text = "Even nums"
         elif choice == 10:
             draw_functions.draw_button(const.screen, const.blue, choice1_button, choice10_text, font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
             if right_choice1_button.collidepoint(mouse_pos):
                 if mouse_click[0]:
-                    choice10_text = "Low (1-18)"
+                    choice10_text = "High (19-36)"
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
             if left_choice1_button.collidepoint(mouse_pos):
                 if mouse_click[0]:
-                    choice10_text = "High (19-36)"
+                    choice10_text = "Low (1-18)"
         elif choice == 11:
             draw_functions.draw_button(const.screen, const.blue, choice1_button, choice11_text, font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
+            right_choice1_clicked_up = utils.handle_mouse_button_up_event(events, right_choice1_clicked_up)
+            left_choice1_clicked_up = utils.handle_mouse_button_up_event(events, left_choice1_clicked_up)
             if right_choice1_button.collidepoint(mouse_pos):
-                if mouse_click[0] and not right_choice11_clicked_up:
+                if mouse_click[0] and not right_choice1_clicked_up:
                     choice11_counter += 1  
-                    right_choice11_clicked_up = True
+                    right_choice1_clicked_up = True
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
             if left_choice1_button.collidepoint(mouse_pos):
-                if mouse_click[0] and not left_choice11_clicked_up:
+                if mouse_click[0] and not left_choice1_clicked_up:
                     choice11_counter -= 1
-                    left_choice11_clicked_up = True
+                    left_choice1_clicked_up = True
             
             if choice11_counter == 1:
                 choice11_text = "Nums: 1-12"

@@ -46,7 +46,7 @@ def draw_button(surface, colour, rect, text, font, text_color):
 
 def draw_title(screen, color, text = "GAMBLING ADDICTION"):
     font_size = 100
-    # Kreiraj font objekat
+    # Create font object
     title_font = pygame.font.Font(None, font_size)
 
     title_text = text
@@ -77,7 +77,7 @@ def load_icons(screen, imagePath, icon_width, icon_height, icon_position_x, icon
 
 def resource_path(relative_path):
     try:
-        # Ako je pokrenuto kao .exe, sys._MEIPASS će postojati
+        # If its .exe, sys._MEIPASS will exist
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
@@ -89,7 +89,7 @@ def draw_text_box(screen, colour, rect, text, font, text_color):
         const.screen.blit(txt_surface, (rect.x + 5, rect.y + 5))
 
 def format_number(string_number):
-    if not string_number:  # Ako je prazan string, vrati prazan string
+    if not string_number:  # If the string is empty, return it
         return ""
     try:
         number = int(string_number)

@@ -64,3 +64,28 @@ def process_bet_text_box_events(events, input_box, text, active):
                 else:
                     draw_functions.draw_message_box('Wrong input', 'You need to input numbers 0-9')
     return text, active
+
+def handle_choice_buttons(events, button, boolChoice, counter, condition, rightButton):
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_click = pygame.mouse.get_pressed()
+    if button.collidepoint(mouse_pos):
+            if mouse_click[0]:
+                if  counter < condition and not boolChoice and rightButton:
+                    counter += 1
+                    boolChoice = True
+                elif counter != condition and not boolChoice and not rightButton:
+                    counter -= 1
+                    boolChoice = True
+
+    for event in events:
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                boolChoice = False
+    return counter, boolChoice
+
+def handle_mouse_button_up_event(events, boolChoice):
+    for event in events:
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                boolChoice = False
+    return boolChoice
