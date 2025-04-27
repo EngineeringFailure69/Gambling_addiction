@@ -101,4 +101,5 @@ def format_number(string_number):
     else:
         formatted = f"{1000000/1000:.3f}" 
         formatted = formatted + "K"
-    return formatted
+    print(f"Tes broj: {number}")
+    return formatted, number

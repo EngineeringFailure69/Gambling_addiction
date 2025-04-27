@@ -3,6 +3,7 @@ import const
 import draw_functions
 import utils
 import sys
+import casino_roulette_logic
 
 def casino_screen():
     running = True
@@ -13,6 +14,7 @@ def casino_screen():
     left_choice_clicked_up = False
     right_choice1_clicked_up = False
     left_choice1_clicked_up = False
+    won = False
 
     # Define textbox
     bet_button = pygame.Rect(const.screen.get_width()//60, const.screen.get_height()//50, const.button_width-250, const.button_height-50)
@@ -50,11 +52,17 @@ def casino_screen():
     choice6_button = pygame.Rect(const.screen.get_width()-460, const.screen.get_height()//2, const.button_width-150, const.button_height-50)
 
     active = False
+    return_colour = "" 
+    info_text = ""
+    choice_text = ""
     text = "Your bet: "
+    your_numbers = []
     selected_colour = "Black"
     choice9_text = "Even num"
     choice10_text = "Low (1-18)"
     choice11_text = "Nums: 1-12"
+    spin = 0
+    spin_colour = ""
     choice11_counter = 1
     choice = 1 
     prev_choice = choice
@@ -64,6 +72,8 @@ def casino_screen():
     counter4  = 0
     counter5  = 0
     counter6  = 0
+    prize = 0
+    table = 0
 
     while running:
 
@@ -115,10 +125,19 @@ def casino_screen():
 
         # end of functionalities elements drawings
 
+        info_text = 'balance:' + str(const.balance) + ' ' + 'your bet: ' + str(const.your_bet) + ' ' + 'Table: ' + str(table) + " " + 'Prize: ' + str(prize)
         if bet_button.collidepoint(mouse_pos):
             if mouse_click[0]:
-                return
-
+                your_numbers = utils.make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counter5, counter6, choice_text)
+                if const.balance < const.your_bet:
+                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, because your current balance is {const.balance}")
+                else:
+                    const.balance, prize, table, won, return_colour, spin, spin_colour = casino_roulette_logic.casino_roulette(const.balance, const.your_bet, choice, selected_colour, your_numbers)
+                    if won == True:
+                        draw_functions.draw_message_box('You won', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You won {prize} dollars\n Your balance now is: {const.balance}")
+                    else:
+                        draw_functions.draw_message_box('You lost', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You lost {const.your_bet} dollars\n Your balance now is: {const.balance}, ")
+ 
         if choice != prev_choice:
             counter = 0
             counter2  = 0
@@ -129,7 +148,7 @@ def casino_screen():
             prev_choice = choice
 
         info = pygame.Rect(const.screen.get_width()-const.button_width-900, const.screen.get_height()-const.button_height+30, const.button_width+800, const.button_height-30)
-        draw_functions.draw_button(const.screen, const.green, info, 'balance:' + str(const.balance), font, const.black)
+        draw_functions.draw_button(const.screen, const.green, info, info_text, font, const.black)
 
         # Draw choices
 
@@ -145,8 +164,8 @@ def casino_screen():
             counter, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice1_button, right_choice1_clicked_up, counter, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
             counter, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice1_button, left_choice1_clicked_up, counter, 0, False)
-        elif choice == 3:
-            print("Something, will make it later")
+        # elif choice == 3:
+        #     print("Something, will make it later")
         elif choice == 4:
             draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: " + str(counter), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
@@ -257,20 +276,24 @@ def casino_screen():
             if right_choice1_button.collidepoint(mouse_pos):
                 if mouse_click[0]:
                     choice9_text = "Odd nums"
+                    choice_text = choice9_text
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
             if left_choice1_button.collidepoint(mouse_pos):
                 if mouse_click[0]:
                     choice9_text = "Even nums"
+                    choice_text = choice9_text
         elif choice == 10:
             draw_functions.draw_button(const.screen, const.blue, choice1_button, choice10_text, font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
             if right_choice1_button.collidepoint(mouse_pos):
                 if mouse_click[0]:
                     choice10_text = "High (19-36)"
+                    choice_text = choice10_text
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
             if left_choice1_button.collidepoint(mouse_pos):
                 if mouse_click[0]:
                     choice10_text = "Low (1-18)"
+                    choice_text = choice10_text
         elif choice == 11:
             draw_functions.draw_button(const.screen, const.blue, choice1_button, choice11_text, font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
@@ -292,6 +315,7 @@ def casino_screen():
                 choice11_text = "Nums: 13-24"
             elif choice11_counter == 3:
                 choice11_text = "Nums: 25-36"
+            choice_text = choice11_text
         # end of draw choices
 
         pygame.display.flip()

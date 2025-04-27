@@ -8,6 +8,7 @@ pygame.display.set_caption('Gambling addiction')
 #Balance, should later be saved and loaded from the txt file
 balance = 500
 bet = ""
+your_bet = 0
 
 # Colours
 white = (255, 255, 255)

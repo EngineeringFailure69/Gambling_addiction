@@ -48,7 +48,7 @@ def process_bet_text_box_events(events, input_box, text, active):
         if event.type == pygame.KEYDOWN and active:
             if event.key == pygame.K_RETURN:
                 if const.bet != "":
-                    formatted_bet = draw_functions.format_number(const.bet)
+                    formatted_bet, const.your_bet = draw_functions.format_number(const.bet)
                     text = "Your bet: " + formatted_bet  # dodaj formatirani broj u tekst
                     const.bet = ""         # resetuj unos
             elif event.key == pygame.K_BACKSPACE:
@@ -74,7 +74,7 @@ def handle_choice_buttons(events, button, boolChoice, counter, condition, rightB
                     counter += 1
                     boolChoice = True
                 elif counter != condition and not boolChoice and not rightButton:
-                    counter -= 1
+                    counter -= 1 
                     boolChoice = True
 
     for event in events:
@@ -89,3 +89,61 @@ def handle_mouse_button_up_event(events, boolChoice):
             if event.button == 1:
                 boolChoice = False
     return boolChoice
+
+def make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counter5, counter6, choice_text = ""):
+    your_numbers = []
+    if choice == 1 or choice == 2:
+        your_numbers.append(counter)
+    elif choice == 3:
+        your_numbers.append(-1)
+    elif choice == 4:
+        your_numbers.append(counter) 
+        your_numbers.append(counter2)
+    elif choice == 5:
+        your_numbers.append(counter) 
+        your_numbers.append(counter2)
+        your_numbers.append(counter3)
+    elif choice == 6:
+        your_numbers.append(counter) 
+        your_numbers.append(counter2)
+        your_numbers.append(counter3)
+        your_numbers.append(counter4)
+    elif choice == 7:
+        your_numbers.append(counter) 
+        your_numbers.append(counter2)
+        your_numbers.append(counter3)
+        your_numbers.append(counter4)
+        your_numbers.append(counter5) 
+        your_numbers.append(counter6)
+    elif choice == 8:
+        your_numbers.append(0)
+        your_numbers.append(counter2)
+        your_numbers.append(counter3)
+    elif choice == 9:
+        if choice_text == "Odd nums":
+            for i in range(0, 37):
+                if(i%2==0):
+                    your_numbers.append(i)
+        else:
+            for i in range(0, 37):
+                if(i%2!=0):
+                    your_numbers.append(i)
+    elif choice == 10:
+        if choice_text == "Low (1-18)":
+            for i in range(1, 19):
+                your_numbers.append(i)
+        else:
+            for i in range(19, 37):
+                your_numbers.append(i)
+    elif choice == 11:
+        if choice_text == "Nums: 1-12":
+            for i in range(1, 13):
+                your_numbers.append(i)
+        elif choice_text == "Nums: 13-24":
+            for i in range(13, 25):
+                your_numbers.append(i)
+        else:
+            for i in range(25, 37):
+                your_numbers.append(i)
+    return your_numbers
+        
