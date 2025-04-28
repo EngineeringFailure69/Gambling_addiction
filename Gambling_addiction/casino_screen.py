@@ -4,12 +4,14 @@ import draw_functions
 import utils
 import sys
 import casino_roulette_logic
+import time
 
 def casino_screen():
     running = True
     pygame.font.init()
     font = pygame.font.SysFont(None, 30)
     drawn = False
+    win_lose_drawn = False
     right_choice_clicked_up = False
     left_choice_clicked_up = False
     right_choice1_clicked_up = False
@@ -58,9 +60,10 @@ def casino_screen():
     text = "Your bet: "
     your_numbers = []
     selected_colour = "Black"
-    choice9_text = "Even num"
+    choice9_text = "Even nums"
     choice10_text = "Low (1-18)"
     choice11_text = "Nums: 1-12"
+    spinning = True
     spin = 0
     spin_colour = ""
     choice11_counter = 1
@@ -75,6 +78,13 @@ def casino_screen():
     prize = 0
     table = 0
 
+    spinning = False
+    done_spinning = False
+    spin_start_ms = 0
+    MESSAGE_DURATION_MS = 5000
+    MESSAGE_GAP = 500
+    spin_end_ms = 0
+
     while running:
 
         events = pygame.event.get()
@@ -86,6 +96,7 @@ def casino_screen():
 
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
+        now = pygame.time.get_ticks()
 
         if drawn == False:
             draw_functions.draw_message_box('Gambling info', const.casino_screen_message_box)
@@ -111,7 +122,7 @@ def casino_screen():
 
         draw_functions.draw_button(const.screen, const.blue, right_choice_button, "->", font, const.black)
         draw_functions.draw_button(const.screen, const.blue, left_choice_button, "<-", font, const.black)
-        
+
         if red_colour_button.collidepoint(mouse_pos):
             if mouse_click[0]:
                 selected_colour = "Red"
@@ -127,17 +138,38 @@ def casino_screen():
 
         info_text = 'balance:' + str(const.balance) + ' ' + 'your bet: ' + str(const.your_bet) + ' ' + 'Table: ' + str(table) + " " + 'Prize: ' + str(prize)
         if bet_button.collidepoint(mouse_pos):
-            if mouse_click[0]:
-                your_numbers = utils.make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counter5, counter6, choice_text)
+            if mouse_click[0] and not spinning:
                 if const.balance < const.your_bet:
                     draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, because your current balance is {const.balance}")
-                else:
-                    const.balance, prize, table, won, return_colour, spin, spin_colour = casino_roulette_logic.casino_roulette(const.balance, const.your_bet, choice, selected_colour, your_numbers)
-                    if won == True:
-                        draw_functions.draw_message_box('You won', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You won {prize} dollars\n Your balance now is: {const.balance}")
-                    else:
-                        draw_functions.draw_message_box('You lost', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You lost {const.your_bet} dollars\n Your balance now is: {const.balance}, ")
- 
+                else:    
+                    spinning = True
+                    spin_start_ms = now
+                    win_lose_drawn = False
+                
+        if spinning:
+            # draw custom box
+            draw_functions.draw_custom_message_box(const.screen, "Spinning the wheel...", font)
+    
+            # check if the spinning is over
+            if now - spin_start_ms >= MESSAGE_DURATION_MS:
+                spinning = False
+                done_spinning = True
+                spin_end_ms = now
+                your_numbers = utils.make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counter5, counter6, choice_text)
+                const.balance, prize, table, won, return_colour, spin, spin_colour = casino_roulette_logic.casino_roulette(const.balance, const.your_bet, choice, selected_colour, your_numbers)
+
+
+        if done_spinning:
+            if now-spin_end_ms >= MESSAGE_GAP: 
+                spinning = False
+                if won == True and not win_lose_drawn:
+                    draw_functions.draw_message_box('You won', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You won {prize} dollars\n Your balance now is: {const.balance}")
+                    win_lose_drawn = True
+                elif won == False and not win_lose_drawn:
+                    draw_functions.draw_message_box('You lost', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You lost {const.your_bet} dollars\n Your balance now is: {const.balance}")
+                    win_lose_drawn = True
+                done_spinning = False
+
         if choice != prev_choice:
             counter = 0
             counter2  = 0

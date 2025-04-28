@@ -5,6 +5,7 @@ import os
 import utils
 from tkinter import *
 from tkinter import messagebox
+import time
 
 def draw_message_box(title, text):
     #Tk().wm_withdraw() #to hide the main window
@@ -103,3 +104,12 @@ def format_number(string_number):
         formatted = formatted + "K"
     print(f"Tes broj: {number}")
     return formatted, number
+
+def draw_custom_message_box(screen, text, font):
+    box_rect = pygame.Rect(450, 275, 300, 50)
+    pygame.draw.rect(screen, const.white, box_rect)
+    pygame.draw.rect(screen, const.white, box_rect, 3)
+
+    msg_surface = font.render(text, True, const.black)
+    msg_rect = msg_surface.get_rect(center=box_rect.center)
+    screen.blit(msg_surface, msg_rect)

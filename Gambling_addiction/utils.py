@@ -122,17 +122,17 @@ def make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counte
     elif choice == 9:
         if choice_text == "Odd nums":
             for i in range(0, 37):
-                if(i%2==0):
+                if(i%2!=0):
                     your_numbers.append(i)
         else:
             for i in range(0, 37):
-                if(i%2!=0):
+                if(i%2==0):
                     your_numbers.append(i)
     elif choice == 10:
         if choice_text == "Low (1-18)":
             for i in range(1, 19):
                 your_numbers.append(i)
-        else:
+        if choice_text == "High (19-36)":
             for i in range(19, 37):
                 your_numbers.append(i)
     elif choice == 11:

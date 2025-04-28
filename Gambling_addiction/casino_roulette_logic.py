@@ -55,7 +55,6 @@ def casino_roulette(balance, your_bet, choice, your_colour, your_numbers = []):
     print(f"Others bet: {others_bet}", "\t", f"Sum on the table: {table}", "\t", f"Amount that you can win: {to_win}", "\n")
     print("Spinning the wheel...")
     won = True
-    time.sleep(5)
     spin = random.randint(0, 36)
     spin_colour = random.choice(["red", "black"])
     print(f"Number that it fell on: {spin}\nColour that it fell on: {spin_colour}")
