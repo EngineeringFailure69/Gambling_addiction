@@ -62,6 +62,7 @@ STATE_APARTMENT = "apartment"
 STATE_CASINO = "casino"
 STATE_EXIT_APARTMENT = "exit_door"
 STATE_WORK = "work"
+STATE_RUSSIAN_ROULETTE = "russian_roulette"
 
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']

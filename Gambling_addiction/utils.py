@@ -5,6 +5,7 @@ import apartment_screen
 import const
 import casino_screen
 import work_screen
+import russian_roulette_screen
 import sys
 
 def get_icon_rect_and_handle_click(position_x, position_y, icon_width, icon_height, type):
@@ -26,6 +27,9 @@ def handle_icon_click(icon_rect, type):
     if icon_rect.collidepoint(mouse_pos) and type == "work":
         if(mouse_click[0]):
             work_screen.work_screen()
+    if icon_rect.collidepoint(mouse_pos) and type == "russian_roulette":
+        if(mouse_click[0]):
+            russian_roulette_screen.russian_roulette_screen()
 
 def handle_quit(running):
     for i in pygame.event.get():
