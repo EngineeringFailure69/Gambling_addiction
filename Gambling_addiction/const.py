@@ -1,4 +1,5 @@
 import pygame
+import utils
 
 pygame.init()
 screen = pygame.display.set_mode((1200, 600))
@@ -6,7 +7,7 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('Gambling addiction')
 
 #Balance, should later be saved and loaded from the txt file
-balance = 500
+balance = utils.load_save_game_info("save_files\information.txt", "balance")
 bet = ""
 your_bet = 0
 

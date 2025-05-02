@@ -133,10 +133,10 @@ def make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counte
                 if(i%2==0):
                     your_numbers.append(i)
     elif choice == 10:
-        if choice_text == "Low (1-18)":
+        if choice_text == "Low":
             for i in range(1, 19):
                 your_numbers.append(i)
-        if choice_text == "High (19-36)":
+        if choice_text == "High":
             for i in range(19, 37):
                 your_numbers.append(i)
     elif choice == 11:
@@ -151,3 +151,26 @@ def make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counte
                 your_numbers.append(i)
     return your_numbers
         
+def load_save_game_info(path, value):
+    money_value = 0
+    with open(path, 'r') as file:
+        while True:
+            line = file.readline()
+            if not line or value in line:
+                money_value = int(line.split(":")[1].strip())
+                break
+    return money_value
+
+def update_value_in_file(path, key):
+    # 1. Load all lines
+    with open(path, 'r') as f:
+        lines = f.readlines()
+    # 2. Change the line
+    for i, line in enumerate(lines):
+        if line.startswith(f"{key}:"):
+            # keep '\n' at the end
+            lines[i] = f"{key}: {str(const.balance)}\n"
+            break
+    # 3. Write back into file
+    with open(path, 'w') as f:
+        f.writelines(lines)
