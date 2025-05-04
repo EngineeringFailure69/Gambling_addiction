@@ -16,6 +16,9 @@ def russian_roulette_screen():
     const.your_bet = 0
     bet = False
     barrell_spin = False
+    you_play_first = False
+    roll_player = 0
+    roll_opponent = 0
 
     spinning = False
     spin_start_ms = 0
@@ -24,7 +27,7 @@ def russian_roulette_screen():
     your_bet = pygame.Rect(const.screen.get_width()-1100, const.screen.get_height()//50, const.button_width, const.button_height-50)
     bet_button = pygame.Rect(const.screen.get_width()//60, const.screen.get_height()//50, const.button_width-250, const.button_height-50)
     pull_the_trigger_button = pygame.Rect(const.screen.get_width()-180, const.screen.get_height()//50, const.button_width-150, const.button_height-50)
-    spin_the_barrell_button = pygame.Rect(const.screen.get_width()-375, const.screen.get_height()//50, const.button_width-140, const.button_height-50)
+    spin_the_barrell_button = pygame.Rect(const.screen.get_width()-510, const.screen.get_height()//50, const.button_width, const.button_height-50)
 
     while running:
 
@@ -48,7 +51,7 @@ def russian_roulette_screen():
 
         draw_functions.draw_button(const.screen, const.blue, bet_button, "Bet", font, const.black)
         draw_functions.draw_button(const.screen, const.blue, pull_the_trigger_button, "Pull the trigger", font, const.black)
-        draw_functions.draw_button(const.screen, const.blue, spin_the_barrell_button, "Spin the barrell", font, const.black)
+        draw_functions.draw_button(const.screen, const.blue, spin_the_barrell_button, "Spin the barrell/roll the dice", font, const.black)
 
         info_text = 'Balance:' + str(const.balance) + ' ' + 'Your bet: ' + str(const.your_bet) + " " + 'Prize: ' + str(prize)
         if bet_button.collidepoint(mouse_pos):
@@ -63,6 +66,7 @@ def russian_roulette_screen():
         if spin_the_barrell_button.collidepoint(mouse_pos):
             if mouse_click[0] and bet == True and not barrell_spin:
                 russian_roulette_logic.spin_the_barrell()
+                you_play_first, roll_player, roll_opponent = russian_roulette_logic.roll_the_dice(you_play_first)
                 #draw_functions.draw_message_box('Spin result', f"Bullet chamber: {const.bullet_chamber}\nCurrent chamber: {const.current_chamber}")
                 barrell_spin = True
                 spinning = True
@@ -74,15 +78,17 @@ def russian_roulette_screen():
                 draw_functions.draw_message_box('Spin error', "Barrell spin has already been done, you can't spin barrell more than once")
 
         if spinning:
-            draw_functions.draw_custom_message_box(const.screen, "Spinning the barrell...", font)
+            draw_functions.draw_custom_message_box(const.screen, const.barrel_text, font)
     
             # check if the spinning is over
             if now - spin_start_ms >= MESSAGE_DURATION_MS:
+                draw_functions.draw_message_box('Dice result', f"{const.dice_text}\nPlayer roll: {roll_player}\nOpponent roll: {roll_opponent}\nPlays first: {str(you_play_first)}")
                 spinning = False
 
         if pull_the_trigger_button.collidepoint(mouse_pos):
             if mouse_click[0] and bet == True and barrell_spin == True:
                 draw_functions.draw_message_box('Under development', "This part is not ready yet :)")
+                russian_roulette_logic.pull_the_trigger()
             elif mouse_click[0] and not bet and barrell_spin == True:
                 draw_functions.draw_message_box('Bet error', "You need to place a bet first")
             elif mouse_click[0] and bet == True and not barrell_spin:

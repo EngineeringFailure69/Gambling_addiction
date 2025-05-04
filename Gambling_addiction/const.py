@@ -59,6 +59,9 @@ choice_info_text = "(1) Number only - If you bet only on number, and guess it co
 "(11) Dozens - if you play dozens (1 - 12, 13 - 24, 25 - 36), you earn double the amount you bet\n"
 
 russian_roulette_text = "This is a russian roulette commrade, you win or you die, if you win, you get up to x100 what you bet, if you lose, well, you know what happens"
+barrel_text = "Spinning the barrell..."
+dice_text = "While the barrell was spinning, the dice was rolled, first roll represents your number, " \
+"2nd roll represents your opponent number, whoever gets bigger number, plays first, the result: "
 
 #States
 STATE_CITY = "city"
@@ -75,3 +78,4 @@ digit_counter = 0
 #russian roulette parameters
 bullet_chamber = 0
 current_chamber = 0
+round_counter = 0
