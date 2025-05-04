@@ -2,10 +2,8 @@ import pygame
 import const
 import sys
 import os
-import utils
 from tkinter import *
 from tkinter import messagebox
-import time
 
 def draw_message_box(title, text):
     #Tk().wm_withdraw() #to hide the main window

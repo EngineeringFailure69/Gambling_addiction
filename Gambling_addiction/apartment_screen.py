@@ -2,7 +2,6 @@ import pygame
 import const
 import draw_functions
 import utils
-import city_screen
 
 def apartment_screen():
     running = True
@@ -20,7 +19,7 @@ def apartment_screen():
         draw_functions.draw_text(const.screen, const.game_screen1_text, const.black, text_rect, font, line_spacing=5)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, 1100, 520)
-        utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_EXIT_APARTMENT)
+        utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
        
         pygame.display.flip()
     pygame.quit()

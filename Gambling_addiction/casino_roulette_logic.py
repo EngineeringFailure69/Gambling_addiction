@@ -1,5 +1,4 @@
 import random
-import time
 
 def to_win_function(choice, your_bet, your_colour, your_numbers = []):
     others_bet = random.randint(your_bet, 10*your_bet)

@@ -6,7 +6,6 @@ import utils
 
 def main_screen():
     running = True
-    drawn = False
     pygame.font.init()
     font = pygame.font.SysFont(None, 30)
     screen_width = const.screen.get_width()

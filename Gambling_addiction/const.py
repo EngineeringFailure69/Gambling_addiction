@@ -20,6 +20,7 @@ text_blue = (0, 0, 128)
 black = (0, 0, 0)
 green = (1, 107, 50)
 brown = (92, 64, 51)
+table_brown = (45, 25, 15)
 
 #Buttons
 button_width = 300
@@ -57,14 +58,20 @@ choice_info_text = "(1) Number only - If you bet only on number, and guess it co
 "(10) Low/High - if you play low/high (1 - 18/19 - 36) you earn same amount you bet\n" \
 "(11) Dozens - if you play dozens (1 - 12, 13 - 24, 25 - 36), you earn double the amount you bet\n"
 
+russian_roulette_text = "This is a russian roulette commrade, you win or you die, if you win, you get up to x100 what you bet, if you lose, well, you know what happens"
+
 #States
 STATE_CITY = "city"
 STATE_APARTMENT = "apartment"
 STATE_CASINO = "casino"
-STATE_EXIT_APARTMENT = "exit_door"
+STATE_TO_THE_STREETS = "exit_door"
 STATE_WORK = "work"
 STATE_RUSSIAN_ROULETTE = "russian_roulette"
 
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 digit_counter = 0
+
+#russian roulette parameters
+bullet_chamber = 0
+current_chamber = 0

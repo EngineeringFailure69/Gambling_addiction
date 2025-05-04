@@ -2,9 +2,7 @@ import pygame
 import const
 import draw_functions
 import utils
-import sys
 import casino_roulette_logic
-import time
 
 def casino_screen():
     running = True
@@ -17,6 +15,7 @@ def casino_screen():
     right_choice1_clicked_up = False
     left_choice1_clicked_up = False
     won = False
+    const.your_bet = 0
 
     # Define textbox
     bet_button = pygame.Rect(const.screen.get_width()//60, const.screen.get_height()//50, const.button_width-250, const.button_height-50)
@@ -92,7 +91,7 @@ def casino_screen():
         draw_functions.load_background_image(const.screen, "background_photos\casino_roulette.jpg")
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, 1120, 520)
-        utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_EXIT_APARTMENT)
+        utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
 
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
@@ -136,7 +135,7 @@ def casino_screen():
 
         # end of functionalities elements drawings
 
-        info_text = 'balance:' + str(const.balance) + ' ' + 'your bet: ' + str(const.your_bet) + ' ' + 'Table: ' + str(table) + " " + 'Prize: ' + str(prize)
+        info_text = 'Balance:' + str(const.balance) + ' ' + 'Your bet: ' + str(const.your_bet) + ' ' + 'Table: ' + str(table) + " " + 'Prize: ' + str(prize)
         if bet_button.collidepoint(mouse_pos):
             if mouse_click[0] and not spinning:
                 if const.balance < const.your_bet:
@@ -198,8 +197,6 @@ def casino_screen():
             counter, right_choice1_clicked_up = utils.handle_choice_buttons(events, right_choice1_button, right_choice1_clicked_up, counter, 36, True)
             draw_functions.draw_button(const.screen, const.blue, left_choice1_button, "<-", font, const.black)
             counter, left_choice1_clicked_up = utils.handle_choice_buttons(events, left_choice1_button, left_choice1_clicked_up, counter, 0, False)
-        # elif choice == 3:
-        #     print("Something, will make it later")
         elif choice == 4:
             draw_functions.draw_button(const.screen, const.blue, choice1_button, "Number: " + str(counter), font, const.black)
             draw_functions.draw_button(const.screen, const.blue, right_choice1_button, "->", font, const.black)
