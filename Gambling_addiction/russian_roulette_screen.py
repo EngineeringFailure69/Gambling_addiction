@@ -16,9 +16,11 @@ def russian_roulette_screen():
     const.your_bet = 0
     bet = False
     barrell_spin = False
-    you_play_first = False
+    you_play = False
     roll_player = 0
     roll_opponent = 0
+    win = False 
+    game_over = False
 
     spinning = False
     spin_start_ms = 0
@@ -66,8 +68,7 @@ def russian_roulette_screen():
         if spin_the_barrell_button.collidepoint(mouse_pos):
             if mouse_click[0] and bet == True and not barrell_spin:
                 russian_roulette_logic.spin_the_barrell()
-                you_play_first, roll_player, roll_opponent = russian_roulette_logic.roll_the_dice(you_play_first)
-                #draw_functions.draw_message_box('Spin result', f"Bullet chamber: {const.bullet_chamber}\nCurrent chamber: {const.current_chamber}")
+                you_play, roll_player, roll_opponent = russian_roulette_logic.roll_the_dice(you_play)
                 barrell_spin = True
                 spinning = True
                 spin_start_ms = now
@@ -82,20 +83,29 @@ def russian_roulette_screen():
     
             # check if the spinning is over
             if now - spin_start_ms >= MESSAGE_DURATION_MS:
-                draw_functions.draw_message_box('Dice result', f"{const.dice_text}\nPlayer roll: {roll_player}\nOpponent roll: {roll_opponent}\nPlays first: {str(you_play_first)}")
+                draw_functions.draw_message_box('Dice result', f"{const.dice_text}\nPlayer roll: {roll_player}\nOpponent roll: {roll_opponent}\n You play first: {str(you_play)}")
                 spinning = False
 
         if pull_the_trigger_button.collidepoint(mouse_pos):
             if mouse_click[0] and bet == True and barrell_spin == True:
-                draw_functions.draw_message_box('Under development', "This part is not ready yet :)")
-                russian_roulette_logic.pull_the_trigger()
+                win, game_over, you_play = russian_roulette_logic.pull_the_trigger(you_play)
+                if win and game_over:
+                    const.balance += prize
+                    draw_functions.draw_message_box('You won', f"You won the game, prize is {str(prize)}, your current balance is {str(const.balance)}")
+                if not win and game_over:
+                    const.balance = 0
+                    draw_functions.draw_message_box('You lost', f"You lost the game, you are dead, your balance is now {str(const.balance)} because you lost everything you had")
+                elif not win and not game_over and you_play:
+                    draw_functions.draw_message_box('Round over', "Your opponent survived, you play now")
+                elif not win and not game_over and not you_play:
+                    draw_functions.draw_message_box('Round over', "You survived, your opponent plays now")
             elif mouse_click[0] and not bet and barrell_spin == True:
                 draw_functions.draw_message_box('Bet error', "You need to place a bet first")
             elif mouse_click[0] and bet == True and not barrell_spin:
                 draw_functions.draw_message_box('Spin error', "You need to spin the barrell first")
             elif mouse_click[0] and not bet and not barrell_spin:
                 draw_functions.draw_message_box('Roulette error', "You need to place the bet and spin the barrell first")
-       
+
         info = pygame.Rect(const.screen.get_width()-const.button_width-900, const.screen.get_height()-const.button_height+30, const.button_width+800, const.button_height-30)
         draw_functions.draw_button(const.screen, const.table_brown, info, info_text, font, const.white)
     

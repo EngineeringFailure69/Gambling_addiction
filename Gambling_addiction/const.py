@@ -79,3 +79,5 @@ digit_counter = 0
 bullet_chamber = 0
 current_chamber = 0
 round_counter = 0
+barrel = []
+current_chamber = 0
