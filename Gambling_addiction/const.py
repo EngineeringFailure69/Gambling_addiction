@@ -2,9 +2,52 @@ import pygame
 import utils
 
 pygame.init()
-screen = pygame.display.set_mode((1200, 600))
+screen = pygame.display.set_mode((1400, 600))
 clock = pygame.time.Clock()
 pygame.display.set_caption('Gambling addiction')
+
+#Buttons
+button_width = 300
+button_height = 80
+
+#Often used UI elements
+bet_button = pygame.Rect(screen.get_width()/60, screen.get_height()//50, button_width-250, button_height-50)
+# your_bet_box = pygame.Rect(screen.get_width()-1100, screen.get_height()//50, button_width, button_height-50)
+your_bet_box = pygame.Rect(screen.get_width()/60 + bet_button.width + 20, screen.get_height()//50, button_width, button_height-50)
+pick_colour_button = pygame.Rect(screen.get_width()-710, screen.get_height()//50, button_width-200, button_height-50)
+red_colour_button = pygame.Rect(screen.get_width()-600, screen.get_height()//50, button_width-250, button_height-50)
+black_colour_button = pygame.Rect(screen.get_width()-770, screen.get_height()//50, button_width-250, button_height-50)
+choice_Info_button = pygame.Rect(screen.get_width()-180, screen.get_height()//50, button_width-150, button_height-50)
+right_choice_button = pygame.Rect(screen.get_width()-300, screen.get_height()//50, button_width-250, button_height-50)
+left_choice_button = pygame.Rect(screen.get_width()-520, screen.get_height()//50, button_width-250, button_height-50)
+choice_button = pygame.Rect(screen.get_width()-460, screen.get_height()//50, button_width-150, button_height-50)
+
+right_choice1_button = pygame.Rect(screen.get_width()-300, screen.get_height()//10, button_width-250, button_height-50)
+left_choice1_button = pygame.Rect(screen.get_width()-520, screen.get_height()//10, button_width-250, button_height-50)
+choice1_button = pygame.Rect(screen.get_width()-460, screen.get_height()//10, button_width-150, button_height-50)
+
+right_choice2_button = pygame.Rect(screen.get_width()-300, screen.get_height()//5.5, button_width-250, button_height-50)
+left_choice2_button = pygame.Rect(screen.get_width()-520, screen.get_height()//5.5, button_width-250, button_height-50)
+choice2_button = pygame.Rect(screen.get_width()-460, screen.get_height()//5.5, button_width-150, button_height-50)
+
+right_choice3_button = pygame.Rect(screen.get_width()-300, screen.get_height()//3.8, button_width-250, button_height-50)
+left_choice3_button = pygame.Rect(screen.get_width()-520, screen.get_height()//3.8, button_width-250, button_height-50)
+choice3_button = pygame.Rect(screen.get_width()-460, screen.get_height()//3.8, button_width-150, button_height-50)
+
+right_choice4_button = pygame.Rect(screen.get_width()-300, screen.get_height()//2.9, button_width-250, button_height-50)
+left_choice4_button = pygame.Rect(screen.get_width()-520, screen.get_height()//2.9, button_width-250, button_height-50)
+choice4_button = pygame.Rect(screen.get_width()-460, screen.get_height()//2.9, button_width-150, button_height-50)
+
+right_choice5_button = pygame.Rect(screen.get_width()-300, screen.get_height()//2.35, button_width-250, button_height-50)
+left_choice5_button = pygame.Rect(screen.get_width()-520, screen.get_height()//2.35, button_width-250, button_height-50)
+choice5_button = pygame.Rect(screen.get_width()-460, screen.get_height()//2.35, button_width-150, button_height-50)
+
+right_choice6_button = pygame.Rect(screen.get_width()-300, screen.get_height()//2, button_width-250, button_height-50)
+left_choice6_button = pygame.Rect(screen.get_width()-520, screen.get_height()//2, button_width-250, button_height-50)
+choice6_button = pygame.Rect(screen.get_width()-460, screen.get_height()//2, button_width-150, button_height-50)
+
+pull_the_trigger_button = pygame.Rect(screen.get_width()-180, screen.get_height()//50, button_width-150, button_height-50)
+spin_the_barrell_button = pygame.Rect(screen.get_width()-510, screen.get_height()//50, button_width, button_height-50)
 
 #Balance, should later be saved and loaded from the txt file
 balance = utils.load_save_game_info("save_files\information.txt", "balance")
@@ -21,10 +64,6 @@ black = (0, 0, 0)
 green = (1, 107, 50)
 brown = (92, 64, 51)
 table_brown = (45, 25, 15)
-
-#Buttons
-button_width = 300
-button_height = 80
 
 #Text
 start_screen_info = "Welcome traveller, here is a little starting information about the game here: There are two types of game for you to play: " \

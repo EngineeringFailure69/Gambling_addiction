@@ -104,7 +104,7 @@ def format_number(string_number):
     return formatted, number
 
 def draw_custom_message_box(screen, text, font):
-    box_rect = pygame.Rect(450, 275, 300, 50)
+    box_rect = pygame.Rect(const.screen.get_width()/2-150, const.screen.get_height()/2-25, 300, 50)
     pygame.draw.rect(screen, const.white, box_rect)
     pygame.draw.rect(screen, const.white, box_rect, 3)
 

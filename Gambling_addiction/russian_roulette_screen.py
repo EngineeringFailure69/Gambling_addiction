@@ -25,12 +25,7 @@ def russian_roulette_screen():
     spinning = False
     spin_start_ms = 0
     MESSAGE_DURATION_MS = 2000
-
-    your_bet = pygame.Rect(const.screen.get_width()-1100, const.screen.get_height()//50, const.button_width, const.button_height-50)
-    bet_button = pygame.Rect(const.screen.get_width()//60, const.screen.get_height()//50, const.button_width-250, const.button_height-50)
-    pull_the_trigger_button = pygame.Rect(const.screen.get_width()-180, const.screen.get_height()//50, const.button_width-150, const.button_height-50)
-    spin_the_barrell_button = pygame.Rect(const.screen.get_width()-510, const.screen.get_height()//50, const.button_width, const.button_height-50)
-
+  
     while running:
 
         events = pygame.event.get()
@@ -45,18 +40,18 @@ def russian_roulette_screen():
             draw_functions.draw_message_box('Roulette info', const.russian_roulette_text)
             drawn = True
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, 1100, 520)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, const.screen.get_width()-100, 520)
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
 
-        text, active = utils.process_bet_text_box_events(events, your_bet, text, active)
-        draw_functions.draw_text_box(const.screen, const.blue, your_bet, text, font, const.white)
+        text, active = utils.process_bet_text_box_events(events, const.your_bet_box, text, active)
+        draw_functions.draw_text_box(const.screen, const.blue, const.your_bet_box, text, font, const.white)
 
-        draw_functions.draw_button(const.screen, const.blue, bet_button, "Bet", font, const.black)
-        draw_functions.draw_button(const.screen, const.blue, pull_the_trigger_button, "Pull the trigger", font, const.black)
-        draw_functions.draw_button(const.screen, const.blue, spin_the_barrell_button, "Spin the barrell/roll the dice", font, const.black)
+        draw_functions.draw_button(const.screen, const.blue, const.bet_button, "Bet", font, const.black)
+        draw_functions.draw_button(const.screen, const.blue, const.pull_the_trigger_button, "Pull the trigger", font, const.black)
+        draw_functions.draw_button(const.screen, const.blue, const.spin_the_barrell_button, "Spin the barrell/roll the dice", font, const.black)
 
         info_text = 'Balance:' + str(const.balance) + ' ' + 'Your bet: ' + str(const.your_bet) + " " + 'Prize: ' + str(prize)
-        if bet_button.collidepoint(mouse_pos):
+        if const.bet_button.collidepoint(mouse_pos):
             if mouse_click[0] and not barrell_spin:
                 if const.balance < const.your_bet:
                     draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, because your current balance is {const.balance}")
@@ -65,7 +60,7 @@ def russian_roulette_screen():
                     prize = russian_roulette_logic.to_win(const.your_bet)
                     bet = True
         
-        if spin_the_barrell_button.collidepoint(mouse_pos):
+        if const.spin_the_barrell_button.collidepoint(mouse_pos):
             if mouse_click[0] and bet == True and not barrell_spin:
                 russian_roulette_logic.spin_the_barrell()
                 you_play, roll_player, roll_opponent = russian_roulette_logic.roll_the_dice(you_play)
@@ -86,15 +81,17 @@ def russian_roulette_screen():
                 draw_functions.draw_message_box('Dice result', f"{const.dice_text}\nPlayer roll: {roll_player}\nOpponent roll: {roll_opponent}\n You play first: {str(you_play)}")
                 spinning = False
 
-        if pull_the_trigger_button.collidepoint(mouse_pos):
+        if const.pull_the_trigger_button.collidepoint(mouse_pos):
             if mouse_click[0] and bet == True and barrell_spin == True:
                 win, game_over, you_play = russian_roulette_logic.pull_the_trigger(you_play)
                 if win and game_over:
                     const.balance += prize
                     draw_functions.draw_message_box('You won', f"You won the game, prize is {str(prize)}, your current balance is {str(const.balance)}")
+                    utils.update_value_in_file("save_files\information.txt", "balance")
                 if not win and game_over:
                     const.balance = 0
                     draw_functions.draw_message_box('You lost', f"You lost the game, you are dead, your balance is now {str(const.balance)} because you lost everything you had")
+                    utils.update_value_in_file("save_files\information.txt", "balance")
                 elif not win and not game_over and you_play:
                     draw_functions.draw_message_box('Round over', "Your opponent survived, you play now")
                 elif not win and not game_over and not you_play:

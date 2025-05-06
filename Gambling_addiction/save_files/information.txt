@@ -1,3 +1,3 @@
-balance: 400
+balance: 10500
 salary: 0
 red_luck_casino: 10000000

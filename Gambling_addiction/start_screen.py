@@ -20,8 +20,9 @@ def main_screen():
 
         draw_functions.draw_text(const.screen, const.start_screen_info, const.black, text_rect, font, line_spacing=5)
 
-        Start_button = pygame.Rect(const.screen.get_width()-750, const.screen.get_height()-300, const.button_width, const.button_height)
-        Quit_button = pygame.Rect(const.screen.get_width()-750, const.screen.get_height()-150, const.button_width, const.button_height)
+        Start_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-300, const.button_width, const.button_height)
+        Quit_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-150, const.button_width, const.button_height)
+
 
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
