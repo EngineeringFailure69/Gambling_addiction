@@ -162,15 +162,57 @@ def load_save_game_info(path, value):
     return money_value
 
 def update_value_in_file(path, key):
-    # 1. Load all lines
+    #Load all lines
     with open(path, 'r') as f:
         lines = f.readlines()
-    # 2. Change the line
+    #Grab attribute according to the key
+    new_value = getattr(const, key)
+    #Change the line
     for i, line in enumerate(lines):
         if line.startswith(f"{key}:"):
             # keep '\n' at the end
-            lines[i] = f"{key}: {str(const.balance)}\n"
+            lines[i] = f"{key}: {str(new_value)}\n"
             break
-    # 3. Write back into file
+    #Write back into file
     with open(path, 'w') as f:
         f.writelines(lines)
+
+def date_time_timer():
+    day_duration = 2000 # Day duration is 2 seconds
+    month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    days31 = [1, 3, 5, 7, 8, 10, 12]
+    days30 = [2, 4, 6, 9, 11]
+    now = pygame.time.get_ticks()
+
+    if now - const.date_time_ms >= day_duration:
+        const.day_counter += 1
+        const.return_day_counter += 1
+        const.date_time_ms = now
+    if const.year_counter % 4 == 0 or const.year_counter % 400 == 0:
+        const.leap_year = True 
+    if const.return_day_counter > 6:
+        const.return_day_counter = 0
+    elif const.day_counter > 28 and const.month_counter == 2 and not const.leap_year: #if its February and not leap year
+        const.day_counter = 1
+        const.month_counter += 1
+        const.return_month_counter += 1
+    elif const.day_counter > 29 and const.month_counter == 2 and const.leap_year: #if its February and it is leap year
+        const.day_counter = 1
+        const.month_counter += 1
+        const.return_month_counter += 1
+    elif const.day_counter > 31 and const.month_counter in days31:
+        const.day_counter = 1
+        const.month_counter += 1
+        const.return_month_counter += 1
+        if const.month_counter > 12 or const.return_month_counter > 11:
+            const.month_counter = 1
+            const.return_month_counter = 0
+            const.year_counter += 1
+    elif const.day_counter > 30 and const.month_counter in days30:
+        const.day_counter = 1
+        const.month_counter += 1
+        const.return_month_counter += 1
+    
+    months = str(const.day_counter) + " of " + month[const.return_month_counter]
+    return days[const.return_day_counter], months, const.year_counter

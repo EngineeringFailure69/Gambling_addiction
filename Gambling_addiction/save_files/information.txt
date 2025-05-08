@@ -1,3 +1,8 @@
-balance: 10500
+balance: 12500
 salary: 0
 red_luck_casino: 10000000
+day_counter: 12
+month_counter: 1
+year_counter: 1990
+return_day_counter: 4
+return_month_counter: 0

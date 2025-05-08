@@ -120,3 +120,19 @@ current_chamber = 0
 round_counter = 0
 barrel = []
 current_chamber = 0
+
+#date-time parameters:
+# day_counter = 1
+# month_counter = 1
+# year_counter = 1990
+# date_time_ms = 0
+# return_day_counter = 0
+# return_month_counter = 0
+# leap_year = False
+day_counter = utils.load_save_game_info("save_files\information.txt", "day_counter")
+month_counter = utils.load_save_game_info("save_files\information.txt", "month_counter")
+year_counter = utils.load_save_game_info("save_files\information.txt", "year_counter")
+date_time_ms = 0
+return_day_counter = utils.load_save_game_info("save_files\information.txt", "return_day_counter")
+return_month_counter = utils.load_save_game_info("save_files\information.txt", "return_month_counter")
+leap_year = False
