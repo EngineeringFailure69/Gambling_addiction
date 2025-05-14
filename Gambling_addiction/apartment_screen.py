@@ -2,6 +2,8 @@ import pygame
 import const
 import draw_functions
 import utils
+import file_utils
+import sys
 
 def apartment_screen():
     running = True
@@ -20,7 +22,7 @@ def apartment_screen():
         
         running = utils.handle_quit(running)
 
-        draw_functions.draw_text(const.screen, const.game_screen1_text, const.black, text_rect, font, line_spacing=5)
+        draw_functions.draw_text(const.screen, const.game_screen1_text + f"{const.balance} dollars", const.black, text_rect, font, line_spacing=5)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, const.screen.get_width()-100, 520)
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
@@ -28,12 +30,12 @@ def apartment_screen():
         day, month, year = utils.date_time_timer()
         draw_functions.draw_text(const.screen, f"Date: {day}, {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
 
-        utils.update_value_in_file("save_files\information.txt", "day_counter")        
-        utils.update_value_in_file("save_files\information.txt", "month_counter")
-        utils.update_value_in_file("save_files\information.txt", "year_counter")
-        utils.update_value_in_file("save_files\information.txt", "return_day_counter")
-        utils.update_value_in_file("save_files\information.txt", "return_month_counter")
+        file_utils.update_value_in_file("save_files\information.txt", "day_counter")        
+        file_utils.update_value_in_file("save_files\information.txt", "month_counter")
+        file_utils.update_value_in_file("save_files\information.txt", "year_counter")
+        file_utils.update_value_in_file("save_files\information.txt", "return_day_counter")
+        file_utils.update_value_in_file("save_files\information.txt", "return_month_counter")
 
         pygame.display.flip()
     pygame.quit()
-    exit()
+    sys.exit(0)

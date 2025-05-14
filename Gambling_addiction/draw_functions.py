@@ -1,9 +1,8 @@
 import pygame
 import const
-import sys
-import os
 from tkinter import *
 from tkinter import messagebox
+import file_utils
 
 def draw_message_box(title, text):
     #Tk().wm_withdraw() #to hide the main window
@@ -64,23 +63,15 @@ def change_rect_colour(Start_button, Quit_button, mouse_pos):
     return start_colour, quit_colour
 
 def load_background_image(screen, imagePath):
-    image = pygame.image.load(resource_path(imagePath))
+    image = pygame.image.load(file_utils.resource_path(imagePath))
     scaled_image = pygame.transform.scale(image, (const.screen.get_width(), const.screen.get_height()))
     screen.blit(scaled_image, (0, 0))
 
 def load_icons(screen, imagePath, icon_width, icon_height, icon_position_x, icon_position_y):
-    image = pygame.image.load(resource_path(imagePath))
+    image = pygame.image.load(file_utils.resource_path(imagePath))
     scaled_image = pygame.transform.scale(image, (icon_width, icon_height))
     screen.blit(scaled_image, (icon_position_x, icon_position_y))
     return icon_position_x, icon_position_y, icon_width, icon_height
-
-def resource_path(relative_path):
-    try:
-        # If its .exe, sys._MEIPASS will exist
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
 
 def draw_text_box(screen, colour, rect, text, font, text_color):
         txt_surface = font.render(text, True, text_color)
@@ -111,3 +102,12 @@ def draw_custom_message_box(screen, text, font):
     msg_surface = font.render(text, True, const.black)
     msg_rect = msg_surface.get_rect(center=box_rect.center)
     screen.blit(msg_surface, msg_rect)
+
+def draw_info_cards(surface, number):
+    #cards_number = len(const.jobs_list)
+    screen_width = const.screen.get_width() #take screen width
+    screen_height = const.screen.get_height() #take screen height
+    start_x_coordinate = 100
+    start_y_coordinate = 1
+    for i in range(number):
+        pygame.draw.rect(surface, const.job_box)

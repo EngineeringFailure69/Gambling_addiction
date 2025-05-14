@@ -151,32 +151,6 @@ def make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counte
                 your_numbers.append(i)
     return your_numbers
         
-def load_save_game_info(path, value):
-    money_value = 0
-    with open(path, 'r') as file:
-        while True:
-            line = file.readline()
-            if not line or value in line:
-                money_value = int(line.split(":")[1].strip())
-                break
-    return money_value
-
-def update_value_in_file(path, key):
-    #Load all lines
-    with open(path, 'r') as f:
-        lines = f.readlines()
-    #Grab attribute according to the key
-    new_value = getattr(const, key)
-    #Change the line
-    for i, line in enumerate(lines):
-        if line.startswith(f"{key}:"):
-            # keep '\n' at the end
-            lines[i] = f"{key}: {str(new_value)}\n"
-            break
-    #Write back into file
-    with open(path, 'w') as f:
-        f.writelines(lines)
-
 def date_time_timer():
     day_duration = 2000 # Day duration is 2 seconds
     month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]

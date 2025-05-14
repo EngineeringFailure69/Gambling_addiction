@@ -4,7 +4,8 @@
 a = Analysis(
     ['start_screen.py'],
     pathex=['.'],
-    binaries=[
+    binaries=[],
+    datas=[
         ('icons/casino_icon.webp', 'icons'),
         ('icons/door_icon.webp', 'icons'),
         ('icons/home_icon.webp', 'icons'),
@@ -17,7 +18,6 @@ a = Analysis(
         ('background_photos/game_russian_roulette_background.png', 'background_photos'),
         ('save_files/information.txt', 'save_files')
     ],
-    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -34,7 +34,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='GamblingGame',
+    name='Gambling_addiction',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

@@ -3,6 +3,8 @@ import const
 import draw_functions
 import utils
 import russian_roulette_logic
+import file_utils
+import sys
 
 def russian_roulette_screen():
     running = True
@@ -87,11 +89,11 @@ def russian_roulette_screen():
                 if win and game_over:
                     const.balance += prize
                     draw_functions.draw_message_box('You won', f"You won the game, prize is {str(prize)}, your current balance is {str(const.balance)}")
-                    utils.update_value_in_file("save_files\information.txt", "balance")
+                    file_utils.update_value_in_file("save_files\information.txt", "balance")
                 if not win and game_over:
                     const.balance = 0
                     draw_functions.draw_message_box('You lost', f"You lost the game, you are dead, your balance is now {str(const.balance)} because you lost everything you had")
-                    utils.update_value_in_file("save_files\information.txt", "balance")
+                    file_utils.utils.update_value_in_file("save_files\information.txt", "balance")
                 elif not win and not game_over and you_play:
                     draw_functions.draw_message_box('Round over', "Your opponent survived, you play now")
                 elif not win and not game_over and not you_play:
@@ -108,4 +110,4 @@ def russian_roulette_screen():
     
         pygame.display.flip()
     pygame.quit()
-    exit()
+    sys.exit(0)

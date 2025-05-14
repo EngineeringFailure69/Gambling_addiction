@@ -2,6 +2,7 @@ import pygame
 import const
 import draw_functions
 import utils
+import sys
 
 def city_screen():
     running = True
@@ -27,4 +28,4 @@ def city_screen():
        
         pygame.display.flip()
     pygame.quit()
-    exit()
+    sys.exit(0)

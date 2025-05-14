@@ -3,6 +3,7 @@ import draw_functions
 import const
 import apartment_screen
 import utils 
+import sys
 
 def main_screen():
     running = True
@@ -42,5 +43,5 @@ def main_screen():
 
         pygame.display.flip()
     pygame.quit()
-    exit()
+    sys.exit(0)
 main_screen()

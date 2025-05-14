@@ -1,5 +1,5 @@
 import pygame
-import utils
+import file_utils
 
 pygame.init()
 screen = pygame.display.set_mode((1400, 600))
@@ -12,7 +12,6 @@ button_height = 80
 
 #Often used UI elements
 bet_button = pygame.Rect(screen.get_width()/60, screen.get_height()//50, button_width-250, button_height-50)
-# your_bet_box = pygame.Rect(screen.get_width()-1100, screen.get_height()//50, button_width, button_height-50)
 your_bet_box = pygame.Rect(screen.get_width()/60 + bet_button.width + 20, screen.get_height()//50, button_width, button_height-50)
 pick_colour_button = pygame.Rect(screen.get_width()-710, screen.get_height()//50, button_width-200, button_height-50)
 red_colour_button = pygame.Rect(screen.get_width()-600, screen.get_height()//50, button_width-250, button_height-50)
@@ -50,7 +49,7 @@ pull_the_trigger_button = pygame.Rect(screen.get_width()-180, screen.get_height(
 spin_the_barrell_button = pygame.Rect(screen.get_width()-510, screen.get_height()//50, button_width, button_height-50)
 
 #Balance, should later be saved and loaded from the txt file
-balance = utils.load_save_game_info("save_files\information.txt", "balance")
+balance = file_utils.load_save_game_info("save_files\information.txt", "balance")
 bet = ""
 your_bet = 0
 
@@ -64,6 +63,8 @@ black = (0, 0, 0)
 green = (1, 107, 50)
 brown = (92, 64, 51)
 table_brown = (45, 25, 15)
+job_box = (243, 213, 168)
+job_title = (254, 195, 102)
 
 #Text
 start_screen_info = "Welcome traveller, here is a little starting information about the game here: There are two types of game for you to play: " \
@@ -85,7 +86,7 @@ casino_screen_message_box = "Welcome to Gambling Addiction Casion, your luck is 
 "0 + 2 other numbers, you can win 11x the amount you bet\n if you play even/odd, you can win the same amount you bet\n if you play low/high (1 - 18/19 - 36) " \
 "you earn same amount you bet\n if you play dozens (1 - 12, 13 - 24, 25 - 36), you earn double the amount you bet"
 
-game_screen1_text = f"You are chilling at your home, your current bank balance is {balance} dollars, what do you want to do"
+game_screen1_text = f"You are chilling at your home, what do you want to do, your current bank balance is: "
 
 choice_info_text = "(1) Number only - If you bet only on number, and guess it correctly, you can win 35x the amount of the money you bet\n" \
 "(2) Colour and number - you can win all the money on the table\n" \
@@ -121,18 +122,19 @@ round_counter = 0
 barrel = []
 current_chamber = 0
 
-#date-time parameters:
-# day_counter = 1
-# month_counter = 1
-# year_counter = 1990
-# date_time_ms = 0
-# return_day_counter = 0
-# return_month_counter = 0
-# leap_year = False
-day_counter = utils.load_save_game_info("save_files\information.txt", "day_counter")
-month_counter = utils.load_save_game_info("save_files\information.txt", "month_counter")
-year_counter = utils.load_save_game_info("save_files\information.txt", "year_counter")
+day_counter = file_utils.load_save_game_info("save_files\information.txt", "day_counter")
+month_counter = file_utils.load_save_game_info("save_files\information.txt", "month_counter")
+year_counter = file_utils.load_save_game_info("save_files\information.txt", "year_counter")
 date_time_ms = 0
-return_day_counter = utils.load_save_game_info("save_files\information.txt", "return_day_counter")
-return_month_counter = utils.load_save_game_info("save_files\information.txt", "return_month_counter")
+return_day_counter = file_utils.load_save_game_info("save_files\information.txt", "return_day_counter")
+return_month_counter = file_utils.load_save_game_info("save_files\information.txt", "return_month_counter")
 leap_year = False
+
+#jobs
+jobs_list = [
+    {"title": "Janitor",    "salary": 300},
+    {"title": "Waiter",     "salary": 800},
+    {"title": "Bartender",  "salary": 1200},
+    {"title": "Security",   "salary": 2000},
+    {"title": "Manager",    "salary": 5000},
+]
