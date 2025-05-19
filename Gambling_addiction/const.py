@@ -65,6 +65,8 @@ brown = (92, 64, 51)
 table_brown = (45, 25, 15)
 job_box = (243, 213, 168)
 job_title = (254, 195, 102)
+job_button = (230, 192, 137)
+job_cards_text = (74, 40, 15)
 
 #Text
 start_screen_info = "Welcome traveller, here is a little starting information about the game here: There are two types of game for you to play: " \
@@ -132,9 +134,9 @@ leap_year = False
 
 #jobs
 jobs_list = [
-    {"title": "Janitor",    "salary": 300},
-    {"title": "Waiter",     "salary": 800},
-    {"title": "Bartender",  "salary": 1200},
-    {"title": "Security",   "salary": 2000},
-    {"title": "Manager",    "salary": 5000},
+    ["Janitor", 300, "You keep the casino clean"],
+    ["Waiter", 800, "You serve drinks to the guests"],
+    ["Bartender", 1200, "You oversee the operations on the floor"],
+    ["Security", 2000, "You protect the casino"],
+    ["Manager", 5000, "You control everything in the casino"],
 ]

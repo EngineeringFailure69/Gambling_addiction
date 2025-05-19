@@ -22,7 +22,7 @@ def work_screen():
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
 
         draw_functions.draw_text(const.screen, "JOB OPENINGS", const.black, text_rect, font, line_spacing=5)
-        #draw_functions.draw_info_cards(const.screen)
+        draw_functions.draw_info_cards(const.screen)
 
         running = utils.handle_quit(running)
        

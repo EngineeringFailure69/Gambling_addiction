@@ -103,11 +103,36 @@ def draw_custom_message_box(screen, text, font):
     msg_rect = msg_surface.get_rect(center=box_rect.center)
     screen.blit(msg_surface, msg_rect)
 
-def draw_info_cards(surface, number):
-    #cards_number = len(const.jobs_list)
+def draw_info_cards(screen):
     screen_width = const.screen.get_width() #take screen width
     screen_height = const.screen.get_height() #take screen height
-    start_x_coordinate = 100
-    start_y_coordinate = 1
-    for i in range(number):
-        pygame.draw.rect(surface, const.job_box)
+    x_coordinate = 100
+    y_coordinate = 100
+    card_width = 200
+    card_height = 200
+    title_font_size = 40
+    button_font_size = 30
+    title_counter = 0
+    title_font = pygame.font.SysFont(None, title_font_size, bold = True)
+    button_font_size = pygame.font.SysFont(None, button_font_size, bold = False)
+    for i in const.jobs_list:
+        pygame.draw.rect(screen, const.job_box, pygame.Rect(x_coordinate, y_coordinate, card_width, card_height))
+
+        salary_text = "Monthly: " + str(const.jobs_list[title_counter][1])
+        title_text = const.jobs_list[title_counter][0]
+        description_text = const.jobs_list[title_counter][2]
+        title_surface = title_font.render(title_text, True, const.job_cards_text)
+        salary_surface = button_font_size.render(salary_text, True, const.job_cards_text)
+        title_rect = title_surface.get_rect(center=(x_coordinate + (card_width / 2), y_coordinate + 30))
+        salary_rect = salary_surface.get_rect(center=(x_coordinate + (card_width / 2), y_coordinate + 130))
+
+        draw_text(screen, description_text, const.job_cards_text, pygame.Rect(x_coordinate, y_coordinate + 50, card_width, card_height), button_font_size, line_spacing=2)
+        draw_button(screen, const.job_button, pygame.Rect(x_coordinate + 20, y_coordinate + 150, 160, 40), "Apply", button_font_size, const.job_cards_text)
+
+        screen.blit(title_surface, title_rect)
+        screen.blit(salary_surface, salary_rect)
+        x_coordinate += 300
+        if x_coordinate + 100 == screen_width:
+            y_coordinate += 250
+            x_coordinate = 100
+        title_counter += 1
