@@ -115,6 +115,7 @@ def draw_info_cards(screen):
     title_counter = 0
     title_font = pygame.font.SysFont(None, title_font_size, bold = True)
     button_font_size = pygame.font.SysFont(None, button_font_size, bold = False)
+    button = []
     for i in const.jobs_list:
         pygame.draw.rect(screen, const.job_box, pygame.Rect(x_coordinate, y_coordinate, card_width, card_height))
 
@@ -127,7 +128,15 @@ def draw_info_cards(screen):
         salary_rect = salary_surface.get_rect(center=(x_coordinate + (card_width / 2), y_coordinate + 130))
 
         draw_text(screen, description_text, const.job_cards_text, pygame.Rect(x_coordinate, y_coordinate + 50, card_width, card_height), button_font_size, line_spacing=2)
-        draw_button(screen, const.job_button, pygame.Rect(x_coordinate + 20, y_coordinate + 150, 160, 40), "Apply", button_font_size, const.job_cards_text)
+        draw_button(screen, const.job_button, pygame.Rect(x_coordinate + 20, y_coordinate + 150, 160, 40), "View details", button_font_size, const.job_cards_text)
+        button.append(x_coordinate + 20) 
+        button.append(y_coordinate + 150) 
+        button.append(title_text) 
+        button.append(salary_text) 
+        button.append(description_text)
+        button.append([x_coordinate + 20, y_coordinate + 150, 160, 40])
+        const.buttons_list.append(button)
+        button = []
 
         screen.blit(title_surface, title_rect)
         screen.blit(salary_surface, salary_rect)

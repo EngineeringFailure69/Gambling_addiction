@@ -6,7 +6,17 @@ import const
 import casino_screen
 import work_screen
 import russian_roulette_screen
+import janitor_screen
+import waiter_screen
+import slot_attendant_screen
+import dealer_screen
+import shift_manager_screen
+import pit_boss_screen
+import shift_lead_screen
+import manager_screen
 import sys
+from tkinter import * 
+from tkinter.ttk import *
 
 def get_icon_rect_and_handle_click(position_x, position_y, icon_width, icon_height, type):
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
@@ -190,3 +200,35 @@ def date_time_timer():
     
     months = str(const.day_counter) + " of " + month[const.return_month_counter]
     return days[const.return_day_counter], months, const.year_counter
+
+def get_screen_resolution():
+    root = Tk()
+    height = root.winfo_screenheight()
+    width = root.winfo_screenwidth()
+    return height, width
+
+def job_apply():
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_click = pygame.mouse.get_pressed()
+    position_button = ""
+
+    for button in const.buttons_list:
+        button_rect = pygame.Rect(button[5][0], button[5][1], button[5][2], button[5][3])
+        if button_rect.collidepoint(mouse_pos):
+            position_button = button[2]
+        if mouse_click[0] and position_button == "Janitor":
+            janitor_screen.janitor_screen()
+        if mouse_click[0] and position_button == "Waiter":
+            waiter_screen.waiter_screen()
+        if mouse_click[0] and position_button == "Slot Attendant":
+            slot_attendant_screen.slot_attendant_screen()
+        if mouse_click[0] and position_button == "Dealer":
+            dealer_screen.dealer_screen()
+        if mouse_click[0] and position_button == "Shift Manager":
+            shift_manager_screen.shift_manager_screen()
+        if mouse_click[0] and position_button == "Pit Boss":
+            pit_boss_screen.pit_boss_screen()
+        if mouse_click[0] and position_button == "Shift Lead":
+            shift_lead_screen.shift_lead_screen()
+        if mouse_click[0] and position_button == "Manager":
+            manager_screen.manager_screen()

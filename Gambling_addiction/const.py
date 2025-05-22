@@ -1,7 +1,10 @@
 import pygame
 import file_utils
+#import utils
 
 pygame.init()
+#screen_height, screen_width = utils.get_screen_resolution()
+#screen = pygame.display.set_mode((screen_width-100, screen_height-100))
 screen = pygame.display.set_mode((1400, 600))
 clock = pygame.time.Clock()
 pygame.display.set_caption('Gambling addiction')
@@ -136,7 +139,13 @@ leap_year = False
 jobs_list = [
     ["Janitor", 300, "You keep the casino clean"],
     ["Waiter", 800, "You serve drinks to the guests"],
-    ["Bartender", 1200, "You oversee the operations on the floor"],
-    ["Security", 2000, "You protect the casino"],
-    ["Manager", 5000, "You control everything in the casino"],
+    ["Slot Attendant", 2500, "Assists with slot machines"],
+    ["Dealer", 3500, "Conducts table games and manages plays"],
+    ["Shift Lead", 4500, "Ovresees dealers and floor personnel"], 
+    ["Pit Boss", 6000, "Supervises floor staff"],
+    ["Shift Manager", 7500, "Assists in in managing casino"],
+    ["Manager", 10000, "You control everything in the casino"],
 ]
+
+buttons_list = []
+tes = False
