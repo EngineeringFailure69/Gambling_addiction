@@ -5,6 +5,7 @@ import utils
 import russian_roulette_logic
 import file_utils
 import sys
+import text_messages
 
 def russian_roulette_screen():
     running = True
@@ -39,10 +40,10 @@ def russian_roulette_screen():
         now = pygame.time.get_ticks()
 
         if drawn == False:
-            draw_functions.draw_message_box('Roulette info', const.russian_roulette_text)
+            draw_functions.draw_message_box('Roulette info', text_messages.russian_roulette_text)
             drawn = True
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, const.screen.get_width()-100, 520)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, const.screen.get_width()-100, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
 
         text, active = utils.process_bet_text_box_events(events, const.your_bet_box, text, active)
@@ -76,11 +77,11 @@ def russian_roulette_screen():
                 draw_functions.draw_message_box('Spin error', "Barrell spin has already been done, you can't spin barrell more than once")
 
         if spinning:
-            draw_functions.draw_custom_message_box(const.screen, const.barrel_text, font)
+            draw_functions.draw_custom_message_box(const.screen, text_messages.barrel_text, font)
     
             # check if the spinning is over
             if now - spin_start_ms >= MESSAGE_DURATION_MS:
-                draw_functions.draw_message_box('Dice result', f"{const.dice_text}\nPlayer roll: {roll_player}\nOpponent roll: {roll_opponent}\n You play first: {str(you_play)}")
+                draw_functions.draw_message_box('Dice result', f"{text_messages.dice_text}\nPlayer roll: {roll_player}\nOpponent roll: {roll_opponent}\n You play first: {str(you_play)}")
                 spinning = False
 
         if const.pull_the_trigger_button.collidepoint(mouse_pos):
@@ -105,8 +106,7 @@ def russian_roulette_screen():
             elif mouse_click[0] and not bet and not barrell_spin:
                 draw_functions.draw_message_box('Roulette error', "You need to place the bet and spin the barrell first")
 
-        info = pygame.Rect(const.screen.get_width()-const.button_width-900, const.screen.get_height()-const.button_height+30, const.button_width+800, const.button_height-30)
-        draw_functions.draw_button(const.screen, const.table_brown, info, info_text, font, const.white)
+        draw_functions.draw_button(const.screen, const.table_brown, const.info, info_text, font, const.white)
     
         pygame.display.flip()
     pygame.quit()

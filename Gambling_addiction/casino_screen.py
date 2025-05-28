@@ -5,6 +5,7 @@ import utils
 import casino_roulette_logic
 import file_utils
 import sys
+import text_messages
 
 def casino_screen():
     running = True
@@ -57,7 +58,7 @@ def casino_screen():
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, "background_photos\casino_roulette.jpg")
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, const.screen.get_width()-100, 520)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, const.screen.get_width()-100, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
 
         mouse_pos = pygame.mouse.get_pos()
@@ -65,7 +66,7 @@ def casino_screen():
         now = pygame.time.get_ticks()
 
         if drawn == False:
-            draw_functions.draw_message_box('Gambling info', const.casino_screen_message_box)
+            draw_functions.draw_message_box('Gambling info', text_messages.casino_screen_message_box)
             drawn = True
 
         # Casino functionalities elements drawings
@@ -74,7 +75,7 @@ def casino_screen():
         draw_functions.draw_button(const.screen, const.blue, const.choice_Info_button, "Choice Info", font, const.black)
         if const.choice_Info_button.collidepoint(mouse_pos):
             if mouse_click[0]:
-                draw_functions.draw_message_box('Choice info', const.choice_info_text)
+                draw_functions.draw_message_box('Choice info', text_messages.choice_info_text)
 
         text, active = utils.process_bet_text_box_events(events, const.your_bet_box, text, active)
         draw_functions.draw_text_box(const.screen, const.blue, const.your_bet_box, text, font, const.black)
@@ -146,9 +147,8 @@ def casino_screen():
             counter5  = 0
             counter6  = 0
             prev_choice = choice
-
-        info = pygame.Rect(const.screen.get_width()-const.button_width-900, const.screen.get_height()-const.button_height+30, const.button_width+800, const.button_height-30)
-        draw_functions.draw_button(const.screen, const.green, info, info_text, font, const.black)
+            
+        draw_functions.draw_button(const.screen, const.green, const.info, info_text, font, const.black)
 
         # Draw choices
 

@@ -25,20 +25,20 @@ def get_icon_rect_and_handle_click(position_x, position_y, icon_width, icon_heig
 def handle_icon_click(icon_rect, type):
     mouse_pos = pygame.mouse.get_pos()
     mouse_click = pygame.mouse.get_pressed()
-    if icon_rect.collidepoint(mouse_pos) and type == "casino":
-        if(mouse_click[0]):
+    if icon_rect.collidepoint(mouse_pos):
+        if mouse_click[0] and type == "casino":
             casino_screen.casino_screen()
-    if icon_rect.collidepoint(mouse_pos) and type == "apartment":
-        if(mouse_click[0]):
+    if icon_rect.collidepoint(mouse_pos):
+        if mouse_click[0] and type == "apartment":
             apartment_screen.apartment_screen()
-    if icon_rect.collidepoint(mouse_pos) and type == "exit_door":
-        if(mouse_click[0]):
+    if icon_rect.collidepoint(mouse_pos):
+        if mouse_click[0] and type == "exit_door":
             city_screen.city_screen()
-    if icon_rect.collidepoint(mouse_pos) and type == "work":
-        if(mouse_click[0]):
+    if icon_rect.collidepoint(mouse_pos):
+        if mouse_click[0] and type == "work":
             work_screen.work_screen()
-    if icon_rect.collidepoint(mouse_pos) and type == "russian_roulette":
-        if(mouse_click[0]):
+    if icon_rect.collidepoint(mouse_pos):
+        if mouse_click[0] and type == "russian_roulette":
             russian_roulette_screen.russian_roulette_screen()
 
 def handle_quit(running):

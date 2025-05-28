@@ -4,6 +4,7 @@ import const
 import apartment_screen
 import utils 
 import sys
+import text_messages
 
 def main_screen():
     running = True
@@ -19,7 +20,7 @@ def main_screen():
         
         running = utils.handle_quit(running)
 
-        draw_functions.draw_text(const.screen, const.start_screen_info, const.black, text_rect, font, line_spacing=5)
+        draw_functions.draw_text(const.screen, text_messages.start_screen_info, const.black, text_rect, font, line_spacing=5)
 
         Start_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-300, const.button_width, const.button_height)
         Quit_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-150, const.button_width, const.button_height)
@@ -36,7 +37,7 @@ def main_screen():
         if Quit_button.collidepoint(mouse_pos):
             if mouse_click[0]:
                 pygame.quit()
-                exit()
+                sys.exit(0)
         elif Start_button.collidepoint(mouse_pos):
             if mouse_click[0]:
                 apartment_screen.apartment_screen()

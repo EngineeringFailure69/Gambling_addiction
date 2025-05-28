@@ -49,7 +49,7 @@ def draw_title(screen, color, text = "GAMBLING ADDICTION"):
 
     title_text = text
     title_surface = title_font.render(title_text, True, color)
-    title_rect = title_surface.get_rect(center=((screen.get_width() - 50) // 2, screen.get_height() - 550))
+    title_rect = title_surface.get_rect(center=((screen.get_width() - 50) // 2, screen.get_height() / 12))
     
     screen.blit(title_surface, title_rect)
 

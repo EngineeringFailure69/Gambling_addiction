@@ -16,6 +16,9 @@ a = Analysis(
         ('background_photos/home_background.png', 'background_photos'),
         ('background_photos/start_screen_background.webp', 'background_photos'),
         ('background_photos/game_russian_roulette_background.png', 'background_photos'),
+        ('background_photos/game_russian_roulette_background.png', 'background_photos'),
+        ('background_photos/work_screen_background.png', 'background_photos'),
+        ('background_photos/janitor_screen_background.png', 'background_photos'),
         ('save_files/information.txt', 'save_files')
     ],
     hiddenimports=[],
@@ -41,7 +44,7 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=True,
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
