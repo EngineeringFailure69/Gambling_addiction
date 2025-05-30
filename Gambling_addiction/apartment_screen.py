@@ -11,7 +11,7 @@ def apartment_screen():
     pygame.font.init()
     font = pygame.font.SysFont(None, 30)
     screen_width = const.screen.get_width()
-    text_rect = pygame.Rect(220, 50, screen_width, 300)
+    text_rect = pygame.Rect(100, 50, screen_width, 300)
     calendar_rect = pygame.Rect(20, 10, screen_width, 50)
     day = ""
     month = ""
@@ -23,7 +23,7 @@ def apartment_screen():
         
         running = utils.handle_quit(running)
 
-        draw_functions.draw_text(const.screen, text_messages.game_screen1_text + f"{const.balance} dollars", const.black, text_rect, font, line_spacing=5)
+        draw_functions.draw_text(const.screen, text_messages.game_screen1_text + f"{const.balance} dollars, and your salary is {const.salary}", const.black, text_rect, font, line_spacing=5)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, const.screen.get_width()-100, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)

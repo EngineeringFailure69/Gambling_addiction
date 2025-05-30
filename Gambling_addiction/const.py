@@ -55,8 +55,10 @@ info = pygame.Rect(0, screen.get_height()-button_height+30, screen.get_width()-2
 apply_button = pygame.Rect(screen.get_width()/2-button_width/2, screen.get_height()-(screen.get_height()/3), button_width, button_height) 
 
 balance = file_utils.load_save_game_info("save_files\information.txt", "balance")
+salary = 0#file_utils.load_save_game_info("save_files\information.txt", "salary")
 bet = ""
 your_bet = 0
+working = 0# file_utils.load_save_game_info("save_files\information.txt", "working")
 
 # Colours
 white = (255, 255, 255)
@@ -111,6 +113,10 @@ jobs_list = [
     ["Shift Manager", 7500, "Assists in in managing casino"],
     ["Manager", 10000, "You control everything in the casino"],
 ]
+
+job_positions_list = [["janitor", 0,  False, 0, False], ["waiter", 5, False, 0, False], ["slot attendant", 10, False, 0, False], ["dealer",  15, False, 0, False], ["shift lead", 20, False, 0, False], ["pit boss", 25, False, 0, False], 
+                      ["shift manager", 30, False, 0, False], ["manager", 35, False, 0, False]] 
+index = 0
 
 buttons_list = []
 tes = False

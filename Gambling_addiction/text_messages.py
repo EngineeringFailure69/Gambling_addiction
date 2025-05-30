@@ -17,25 +17,29 @@ waiter_job_description  = "A casino waiter, also known as a server, is responsib
 "In some cases, waiters may also work as bartenders or cocktail servers, taking beverage orders and serving drinks." \
 "They are expected to provide quality service and interact with guests and co-workers to ensure customer satisfaction.\n" \
 "The job can be physically demanding, requiring long hours and the ability to carry heavy trays of food and drinks." \
-"However, experienced servers can move to higher-paying positions such as working in high-limit slot areas and table game pits."
+"However, experienced servers can move to higher-paying positions such as working in high-limit slot areas and table game pits.\n" \
+"Job requirements: working 2 years as a janitor."
 
 slot_attendant_job_description = "A Slot Attendant works in a casino or gaming establishment and is responsible for ensuring the smooth running of slot machines. They " \
 "assist customers in using slot machines, troubleshoot any technical issues with the machines, and manage payouts and winnings.\n" \
 "The role of a Slot Attendant involves enhancing the guest experience on the casino floor by providing friendly and efficient service. " \
-"This includes actively engaging with guests, managing slot machine operations, and ensuring a clean and secure environment."
+"This includes actively engaging with guests, managing slot machine operations, and ensuring a clean and secure environment.\n" \
+"Job requirements: working 3 years as a waiter."
 
 shift_manager_job_description = "A shift manager is responsible for overseeing daily operations during specific working periods, ensuring that all tasks are completed " \
 "efficiently and effectively. They manage staff, assign duties, and ensure that the workplace runs smoothly. Key responsibilities " \
 "include managing personnel, creating schedules, overseeing financial transactions, and ensuring a positive customer experience.\n" \
 "Shift managers are also expected to maintain high standards of cleanliness, ensure compliance with company policies, and handle various " \
 "administrative tasks such as balancing the cash register at the end of the shift. " \
-"They must be able to multitask, have excellent interpersonal skills, and possess leadership abilities to motivate and guide their team."
+"They must be able to multitask, have excellent interpersonal skills, and possess leadership abilities to motivate and guide their team.\n" \
+"Job requirements: working 3 years as a pit boss."
 
 shift_lead_job_description = "A Shift Leader is responsible for managing the store or shift in the absence of management, ensuring all tasks are completed and " \
 "maintaining a positive work environment. They perform a variety of tasks including food preparation, point of sale operations, customer " \
 "service, and general housekeeping.\n" \
 "The Shift Leader's role involves supervising employees, ensuring they understand goals and expectations, and maintaining cleanliness and product knowledge." \
-"They must be self-motivated, dependable, and able to work effectively in a fast-paced environment, focusing on customer service and operational excellence."
+"They must be self-motivated, dependable, and able to work effectively in a fast-paced environment, focusing on customer service and operational excellence.\n" \
+"Job requirements: working 3 years as a dealer."
 
 pit_boss_job_position = "A casino pit boss, also known as a pit manager or gaming supervisor, oversees the operations of a casino's gaming floor, ensuring games " \
 "are conducted fairly and efficiently while maintaining compliance with regulations. " \
@@ -44,14 +48,16 @@ pit_boss_job_position = "A casino pit boss, also known as a pit manager or gamin
 "Key duties of a pit boss include:\nMonitoring game integrity and resolving disputes.\nManaging staff schedules and ensuring all procedures are followed according to company and regulatory standards.\n" \
 "Handling customer complaints diplomatically and making quick decisions to resolve issues as they arise.\n" \
 "Ensuring the proper handling of payoffs and preventing cheating or suspicious activity.\nTracking table earnings and coordinating with security.\n" \
-"Providing quality customer service to high-value players."
+"Providing quality customer service to high-value players.\n" \
+"Job requirements: working 3 years as a shift leader."
 
 manager_job_description = "A Casino Manager oversees the daily operations of a casino, ensuring smooth functioning, compliance with regulations, and customer " \
 "satisfaction. They manage staff, monitor gaming activities, handle financial performance, and implement strategies to attract and retain customers. " \
 "Junior roles, such as Assistant Casino Manager, focus on supporting operations, while senior roles involve strategic planning, team " \
 "leadership, and overall management of casino operations. " \
 "Responsibilities include supervising staff members, overseeing security operations, monitoring gaming facilities, and providing excellent customer service. " \
-"Casino Managers also ensure that local and state regulatory requirements are followed and that the casino operates profitably."
+"Casino Managers also ensure that local and state regulatory requirements are followed and that the casino operates profitably.\n" \
+"Job requirements: working 3 years as a shift manager."
 
 dealer_job_description = "A Casino Dealer is responsible for operating table games such as blackjack, poker, roulette, and baccarat in a casino setting. " \
 "They ensure the games are conducted fairly and according to the rules while providing excellent customer service to players. " \
@@ -59,7 +65,8 @@ dealer_job_description = "A Casino Dealer is responsible for operating table gam
 "tables, mentor new dealers, and assist in managing the gaming floor.\n" \
 "Casino Dealers conduct games in casinos and casino hotels, dealing cards and handling large amounts of money. " \
 "They operate gambling tables and games, ensuring the rules of the game and house rules are being followed. " \
-"They determine winners, pay out winning bets, and collect losing bets."
+"They determine winners, pay out winning bets, and collect losing bets.\n" \
+"Job requirements: working 3 years as a slot attendant."
 
 start_screen_info = "Welcome traveller, here is a little starting information about the game here: There are two types of game for you to play: " \
     "Russian roulette and basic casino roulette. I assume you already know what the difference between these two is, but in case you are" \

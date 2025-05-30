@@ -94,7 +94,7 @@ def russian_roulette_screen():
                 if not win and game_over:
                     const.balance = 0
                     draw_functions.draw_message_box('You lost', f"You lost the game, you are dead, your balance is now {str(const.balance)} because you lost everything you had")
-                    file_utils.utils.update_value_in_file("save_files\information.txt", "balance")
+                    file_utils.update_value_in_file("save_files\information.txt", "balance")
                 elif not win and not game_over and you_play:
                     draw_functions.draw_message_box('Round over', "Your opponent survived, you play now")
                 elif not win and not game_over and not you_play:

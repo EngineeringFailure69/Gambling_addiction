@@ -14,6 +14,7 @@ import shift_manager_screen
 import pit_boss_screen
 import shift_lead_screen
 import manager_screen
+import file_utils
 import sys
 from tkinter import * 
 from tkinter.ttk import *
@@ -170,6 +171,8 @@ def date_time_timer():
     now = pygame.time.get_ticks()
 
     if now - const.date_time_ms >= day_duration:
+        if const.working == 1:
+            const.job_positions_list[const.index][3] += 1
         const.day_counter += 1
         const.return_day_counter += 1
         const.date_time_ms = now
@@ -180,14 +183,17 @@ def date_time_timer():
     elif const.day_counter > 28 and const.month_counter == 2 and not const.leap_year: #if its February and not leap year
         const.day_counter = 1
         const.month_counter += 1
+        const.balance += const.salary
         const.return_month_counter += 1
     elif const.day_counter > 29 and const.month_counter == 2 and const.leap_year: #if its February and it is leap year
         const.day_counter = 1
         const.month_counter += 1
+        const.balance += const.salary
         const.return_month_counter += 1
     elif const.day_counter > 31 and const.month_counter in days31:
         const.day_counter = 1
         const.month_counter += 1
+        const.balance += const.salary
         const.return_month_counter += 1
         if const.month_counter > 12 or const.return_month_counter > 11:
             const.month_counter = 1
@@ -196,6 +202,7 @@ def date_time_timer():
     elif const.day_counter > 30 and const.month_counter in days30:
         const.day_counter = 1
         const.month_counter += 1
+        const.balance += const.salary
         const.return_month_counter += 1
     
     months = str(const.day_counter) + " of " + month[const.return_month_counter]
@@ -207,7 +214,7 @@ def get_screen_resolution():
     width = root.winfo_screenwidth()
     return height, width
 
-def job_apply():
+def job_details():
     mouse_pos = pygame.mouse.get_pos()
     mouse_click = pygame.mouse.get_pressed()
     position_button = ""
@@ -232,3 +239,65 @@ def job_apply():
             shift_lead_screen.shift_lead_screen()
         if mouse_click[0] and position_button == "Manager":
             manager_screen.manager_screen()
+
+def job_apply(button_rect, salary, working_days_requirements, job):
+    index = next((i for i, sublist in enumerate(const.job_positions_list) if sublist[0] == job), None)
+    if index is None:
+        draw_functions.draw_message_box('Application', "Job does not exist")
+        return
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_click = pygame.mouse.get_pressed()
+    if button_rect.collidepoint(mouse_pos):
+        if mouse_click[0]:  
+            if index == 0 and const.job_positions_list[0][2] == False:
+                const.index = index
+                const.job_positions_list[0][2] = True
+                const.job_positions_list[0][3] = 0
+                const.working = 1
+                draw_functions.draw_message_box('Application', f"You have been accepted on the {job} position")
+                const.salary = salary
+                for job in const.job_positions_list: #reset all other currently working states on other jobs
+                    job[4] = False
+                const.job_positions_list[0][4] = True
+                return
+            elif index == 0 and const.job_positions_list[0][2] == True and const.job_positions_list[0][4] == False:
+                draw_functions.draw_message_box('Application', f"You are back at the {job} position")
+                const.index = index
+                const.salary = salary
+                for job in const.job_positions_list:
+                    job[4] = False
+                const.job_positions_list[0][4] == True
+                return
+
+            prev_index = index - 1
+            prev_done = const.job_positions_list[prev_index][2]
+            prev_days = const.job_positions_list[prev_index][3]
+
+            if prev_done and prev_days >= working_days_requirements and const.job_positions_list[index][4] == False:
+                const.index = index
+                const.job_positions_list[index][2] = True  
+                const.working = 1
+                const.salary = salary
+                draw_functions.draw_message_box('Application', f"You have been accepted on the {job} position")
+                for job in const.job_positions_list:
+                    job[4] = False
+                const.job_positions_list[index][4] = True
+                return
+            elif const.job_positions_list[index][2] == True and const.job_positions_list[index][4] == False:
+                draw_functions.draw_message_box('Application', f"You are back at the {job} position")
+                const.index = index
+                const.salary = salary
+                for job in const.job_positions_list: 
+                    job[4] = False
+                const.job_positions_list[index][4] == True
+                return
+            
+            if const.job_positions_list[index][4] == True:
+                draw_functions.draw_message_box('Application', f"You are already working as {job}")
+                for job in const.job_positions_list: 
+                    job[4] = False
+                const.job_positions_list[index][4] = True
+                return
+
+            draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][0]} position."
+            )

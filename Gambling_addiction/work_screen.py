@@ -24,7 +24,7 @@ def work_screen():
         draw_functions.draw_text(const.screen, text, const.black, text_rect, font, line_spacing=5)
         draw_functions.draw_info_cards(const.screen)
         
-        utils.job_apply()
+        utils.job_details()
 
         running = utils.handle_quit(running)
        

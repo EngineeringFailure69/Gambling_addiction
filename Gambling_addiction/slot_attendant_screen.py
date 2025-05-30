@@ -27,6 +27,7 @@ def slot_attendant_screen():
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_WORK)
 
         draw_functions.draw_button(const.screen, const.blue, const.apply_button, "Apply", font, const.white)
+        utils.job_apply(const.apply_button, 2500, 10, "slot attendant") #1095
 
         running = utils.handle_quit(running)
        

@@ -6,3 +6,7 @@ month_counter: 1
 year_counter: 1990
 return_day_counter: 0
 return_month_counter: 0
+working_days: 0
+total_working_days: 0 
+working: 0
+job_positions_list: []

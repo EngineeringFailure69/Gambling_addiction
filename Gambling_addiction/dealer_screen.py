@@ -27,7 +27,8 @@ def dealer_screen():
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_WORK)
 
         draw_functions.draw_button(const.screen, const.blue, const.apply_button, "Apply", font, const.white)
-        
+        utils.job_apply(const.apply_button, 3500, 15, "dealer")
+
         running = utils.handle_quit(running)
        
         pygame.display.flip()

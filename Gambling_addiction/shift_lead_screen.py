@@ -27,6 +27,7 @@ def shift_lead_screen():
         utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_WORK)
 
         draw_functions.draw_button(const.screen, const.blue, const.apply_button, "Apply", font, const.white)
+        utils.job_apply(const.apply_button, 4500, 20, "shift leader") #1095
 
         running = utils.handle_quit(running)
        
