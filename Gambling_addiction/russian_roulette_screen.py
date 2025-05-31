@@ -56,7 +56,13 @@ def russian_roulette_screen():
         info_text = 'Balance:' + str(const.balance) + ' ' + 'Your bet: ' + str(const.your_bet) + " " + 'Prize: ' + str(prize)
         if const.bet_button.collidepoint(mouse_pos):
             if mouse_click[0] and not barrell_spin:
-                if const.balance < const.your_bet:
+                if const.your_bet <= 0:
+                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars")
+                    bet = False
+                elif const.your_bet < const.balance * 0.20:
+                    draw_functions.draw_message_box('Bet error', f"You  have to bet at least {int(const.balance * 0.20)+1} dollars, which is 20% of your total balance")
+                    bet = False
+                elif const.balance < const.your_bet:
                     draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, because your current balance is {const.balance}")
                     bet = False
                 else:

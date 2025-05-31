@@ -184,16 +184,19 @@ def date_time_timer():
         const.day_counter = 1
         const.month_counter += 1
         const.balance += const.salary
+        file_utils.update_value_in_file("save_files\information.txt", "balance")
         const.return_month_counter += 1
     elif const.day_counter > 29 and const.month_counter == 2 and const.leap_year: #if its February and it is leap year
         const.day_counter = 1
         const.month_counter += 1
         const.balance += const.salary
+        file_utils.update_value_in_file("save_files\information.txt", "balance")
         const.return_month_counter += 1
     elif const.day_counter > 31 and const.month_counter in days31:
         const.day_counter = 1
         const.month_counter += 1
         const.balance += const.salary
+        file_utils.update_value_in_file("save_files\information.txt", "balance")
         const.return_month_counter += 1
         if const.month_counter > 12 or const.return_month_counter > 11:
             const.month_counter = 1
@@ -203,6 +206,7 @@ def date_time_timer():
         const.day_counter = 1
         const.month_counter += 1
         const.balance += const.salary
+        file_utils.update_value_in_file("save_files\information.txt", "balance")
         const.return_month_counter += 1
     
     months = str(const.day_counter) + " of " + month[const.return_month_counter]
@@ -241,7 +245,10 @@ def job_details():
             manager_screen.manager_screen()
 
 def job_apply(button_rect, salary, working_days_requirements, job):
+    save_path = file_utils.extract_default_save()
+    file_utils.update_value_in_file(save_path, "index")
     index = next((i for i, sublist in enumerate(const.job_positions_list) if sublist[0] == job), None)
+    file_utils.update_value_in_file(save_path, "index")
     if index is None:
         draw_functions.draw_message_box('Application', "Job does not exist")
         return
@@ -254,19 +261,25 @@ def job_apply(button_rect, salary, working_days_requirements, job):
                 const.job_positions_list[0][2] = True
                 const.job_positions_list[0][3] = 0
                 const.working = 1
+                file_utils.update_value_in_file(save_path, "working")
                 draw_functions.draw_message_box('Application', f"You have been accepted on the {job} position")
                 const.salary = salary
+                file_utils.update_value_in_file(save_path, "salary")
                 for job in const.job_positions_list: #reset all other currently working states on other jobs
                     job[4] = False
-                const.job_positions_list[0][4] = True
+                const.job_positions_list[0][4] = True 
+                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
                 return
             elif index == 0 and const.job_positions_list[0][2] == True and const.job_positions_list[0][4] == False:
                 draw_functions.draw_message_box('Application', f"You are back at the {job} position")
                 const.index = index
+                file_utils.update_value_in_file(save_path, "index")
                 const.salary = salary
+                file_utils.update_value_in_file(save_path, "salary")
                 for job in const.job_positions_list:
                     job[4] = False
-                const.job_positions_list[0][4] == True
+                const.job_positions_list[0][4] = True
+                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
                 return
 
             prev_index = index - 1
@@ -275,21 +288,28 @@ def job_apply(button_rect, salary, working_days_requirements, job):
 
             if prev_done and prev_days >= working_days_requirements and const.job_positions_list[index][4] == False:
                 const.index = index
+                file_utils.update_value_in_file(save_path, "index")
                 const.job_positions_list[index][2] = True  
                 const.working = 1
+                file_utils.update_value_in_file(save_path, "working")
                 const.salary = salary
+                file_utils.update_value_in_file(save_path, "salary")
                 draw_functions.draw_message_box('Application', f"You have been accepted on the {job} position")
                 for job in const.job_positions_list:
                     job[4] = False
                 const.job_positions_list[index][4] = True
+                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
                 return
             elif const.job_positions_list[index][2] == True and const.job_positions_list[index][4] == False:
                 draw_functions.draw_message_box('Application', f"You are back at the {job} position")
                 const.index = index
+                file_utils.update_value_in_file(save_path, "index")
                 const.salary = salary
+                file_utils.update_value_in_file(save_path, "salary")
                 for job in const.job_positions_list: 
                     job[4] = False
-                const.job_positions_list[index][4] == True
+                const.job_positions_list[index][4] = True
+                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
                 return
             
             if const.job_positions_list[index][4] == True:
@@ -297,7 +317,7 @@ def job_apply(button_rect, salary, working_days_requirements, job):
                 for job in const.job_positions_list: 
                     job[4] = False
                 const.job_positions_list[index][4] = True
+                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
                 return
 
-            draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][0]} position."
-            )
+            draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][0]} position.")

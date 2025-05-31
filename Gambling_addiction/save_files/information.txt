@@ -6,7 +6,6 @@ month_counter: 1
 year_counter: 1990
 return_day_counter: 0
 return_month_counter: 0
-working_days: 0
-total_working_days: 0 
 working: 0
-job_positions_list: []
+job_positions_list: [['janitor', 0, False, 0, False], ['waiter', 5, False, 0, False], ['slot attendant', 10, False, 0, False], ['dealer', 15, False, 0, False], ['shift lead', 20, False, 0, False], ['pit boss', 25, False, 0, False], ['shift manager', 30, False, 0, False], ['manager', 35, False, 0, False]]
+index: 0

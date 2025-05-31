@@ -4,11 +4,12 @@ import const
 import shutil
 import const 
 from platformdirs import user_data_dir
+import ast
 
 def get_user_save_dir():
     # name of the exe file, example: "Gambling_addiction"
     exe_name = os.path.splitext(os.path.basename(sys.executable))[0]
-    VERSION = "0.11111"   # change this before making new .exe
+    VERSION = "0.11111111111111212"   # change this before making new .exe
     path = user_data_dir(exe_name, "YourName", version=VERSION)
     os.makedirs(path, exist_ok=True)
     return path
@@ -45,6 +46,31 @@ def update_value_in_file(path, key):
 
     with open(full_path, 'w', encoding='utf-8') as f:
         f.writelines(lines)
+
+def load_list_from_file(path, key):
+    full_path = extract_default_save()
+    with open(full_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            if line.startswith(f"{key}:"):
+                value_str = line.split(":", 1)[1].strip()
+                return ast.literal_eval(value_str)
+    raise ValueError(f"Key '{key}' not found in file.")
+
+def update_list_in_file(path, key, new_list):
+    lines = []
+    full_path = extract_default_save()
+    key_found = False
+    with open(full_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            if line.startswith(f"{key}:"):
+                lines.append(f"{key}: {repr(new_list)}\n")
+                key_found = True
+            else:
+                lines.append(line)
+    if not key_found:
+        lines.append(f"{key}: {repr(new_list)}\n")
+    with open(path, 'w', encoding='utf-8') as file:
+        file.writelines(lines)
 
 def resource_path(relative_path):
     try:
