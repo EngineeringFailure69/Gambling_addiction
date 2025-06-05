@@ -14,33 +14,64 @@ import shift_manager_screen
 import pit_boss_screen
 import shift_lead_screen
 import manager_screen
+import shopping_center_screen
+import cars_screen
+import electronics_screen
+import furniture_screen
+import clothing_screen
+import tools_screen
+import groceries_screen
 import file_utils
 import sys
 from tkinter import * 
 from tkinter.ttk import *
 
-def get_icon_rect_and_handle_click(position_x, position_y, icon_width, icon_height, type):
+def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, type):
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
-    handle_icon_click(icon_rect, type)
+    handle_icon_click(events, icon_rect, type)
 
-def handle_icon_click(icon_rect, type):
-    mouse_pos = pygame.mouse.get_pos()
-    mouse_click = pygame.mouse.get_pressed()
-    if icon_rect.collidepoint(mouse_pos):
-        if mouse_click[0] and type == "casino":
-            casino_screen.casino_screen()
-    if icon_rect.collidepoint(mouse_pos):
-        if mouse_click[0] and type == "apartment":
-            apartment_screen.apartment_screen()
-    if icon_rect.collidepoint(mouse_pos):
-        if mouse_click[0] and type == "exit_door":
-            city_screen.city_screen()
-    if icon_rect.collidepoint(mouse_pos):
-        if mouse_click[0] and type == "work":
-            work_screen.work_screen()
-    if icon_rect.collidepoint(mouse_pos):
-        if mouse_click[0] and type == "russian_roulette":
-            russian_roulette_screen.russian_roulette_screen()
+def handle_icon_click(events, icon_rect, type):
+    for event in events:
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
+            if type == const.STATE_CASINO:
+                casino_screen.casino_screen()
+                return
+            elif type == const.STATE_APARTMENT:
+                apartment_screen.apartment_screen()
+                return
+            elif type == const.STATE_TO_THE_STREETS:
+                city_screen.city_screen()
+                return
+            elif type == const.STATE_WORK:
+                work_screen.work_screen()
+                return
+            elif type == const.STATE_RUSSIAN_ROULETTE:
+                russian_roulette_screen.russian_roulette_screen()
+                return
+            elif type == const.STATE_SHOPPING:
+                shopping_center_screen.shopping_center_screen()
+                return
+            elif type == const.STATE_CARS:
+                cars_screen.cars_screen()
+                return
+            elif type == const.STATE_ELECTRONICS:
+                electronics_screen.electronics_screen()
+                return
+            elif type == const.STATE_FURNITURE:
+                furniture_screen.furniture_screen()
+                return
+            elif type == const.STATE_CLOTHING:
+                clothing_screen.clothing_screen()
+                return
+            elif type == const.STATE_TOOLS:
+                tools_screen.tools_screen()
+                return
+            elif type == const.STATE_GROCERIES:
+                groceries_screen.groceries_screen()
+                return
 
 def handle_quit(running):
     for i in pygame.event.get():

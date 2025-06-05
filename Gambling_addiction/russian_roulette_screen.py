@@ -30,7 +30,6 @@ def russian_roulette_screen():
     MESSAGE_DURATION_MS = 2000
   
     while running:
-
         events = pygame.event.get()
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, "background_photos\game_russian_roulette_background.png")
@@ -44,7 +43,7 @@ def russian_roulette_screen():
             drawn = True
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\door_icon.webp", 75, 75, const.screen.get_width()-100, const.screen.get_height()-80)
-        utils.get_icon_rect_and_handle_click(icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
 
         text, active = utils.process_bet_text_box_events(events, const.your_bet_box, text, active)
         draw_functions.draw_text_box(const.screen, const.blue, const.your_bet_box, text, font, const.white)

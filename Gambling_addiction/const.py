@@ -75,6 +75,8 @@ job_box = (243, 213, 168)
 job_title = (254, 195, 102)
 job_button = (230, 192, 137)
 job_cards_text = (74, 40, 15)
+store_bckgd = (250, 237, 216)
+store_text = (25, 69, 89)
 
 #States
 STATE_CITY = "city"
@@ -83,6 +85,13 @@ STATE_CASINO = "casino"
 STATE_TO_THE_STREETS = "exit_door"
 STATE_WORK = "work"
 STATE_RUSSIAN_ROULETTE = "russian_roulette"
+STATE_SHOPPING = "shopping_center"
+STATE_CARS = "cars_screen"
+STATE_ELECTRONICS = "electronics_screen"
+STATE_FURNITURE = "furniture_screen"
+STATE_CLOTHING = "clothing_screen"
+STATE_TOOLS = "tools_screen"
+STATE_GROCERIES = "groceries_screen"
 
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
