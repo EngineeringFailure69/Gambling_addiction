@@ -15,7 +15,6 @@ def dealer_screen():
         events = pygame.event.get()
 
         const.screen.fill(const.white)
-
         draw_functions.load_background_image(const.screen, "background_photos\dealer_screen_background.png")
 
         draw_functions.draw_title(const.screen, const.white, "DEALER POSITION")

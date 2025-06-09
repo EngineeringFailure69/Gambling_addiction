@@ -107,6 +107,8 @@ def casino_screen():
             if mouse_click[0] and not spinning:
                 if const.balance < const.your_bet:
                     draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, because your current balance is {const.balance}")
+                elif const.your_bet <= 0:
+                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars")
                 elif choice == 3 and const.your_bet > const.balance * 0.1 + 1:
                     draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 10% of your budget, which is {int(const.balance * 0.1)+1}")
                 elif choice == 9 and const.your_bet > const.balance * 0.1 + 1:

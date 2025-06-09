@@ -22,8 +22,6 @@ def apartment_screen():
 
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, "background_photos\home_background.png")
-        
-        running = utils.handle_quit(running)
 
         draw_functions.draw_text(const.screen, text_messages.game_screen1_text + f"{const.balance} dollars, and your salary is {const.salary}", const.black, text_rect, font, line_spacing=5)
 

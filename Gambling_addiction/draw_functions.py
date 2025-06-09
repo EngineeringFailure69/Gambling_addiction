@@ -5,7 +5,6 @@ from tkinter import messagebox
 import file_utils
 
 def draw_message_box(title, text):
-    #Tk().wm_withdraw() #to hide the main window
     messagebox.showinfo(title, text)
 
 def draw_text(surface, text, color, rect, font, line_spacing=0, antialias=True):
@@ -67,11 +66,6 @@ def load_background_image(screen, imagePath):
     scaled_image = pygame.transform.scale(image, (const.screen.get_width(), const.screen.get_height()))
     screen.blit(scaled_image, (0, 0))
 
-def load_image_element(screen, imagePath, imgWidth, imgHeight, positionX, positionY):
-    image = pygame.image.load(file_utils.resource_path(imagePath))
-    scaled_image = pygame.transform.scale(image, (imgWidth, imgHeight))
-    screen.blit(scaled_image, (positionX, positionY))
-
 def load_icons(screen, imagePath, icon_width, icon_height, icon_position_x, icon_position_y):
     image = pygame.image.load(file_utils.resource_path(imagePath))
     scaled_image = pygame.transform.scale(image, (icon_width, icon_height))
@@ -82,22 +76,6 @@ def draw_text_box(screen, colour, rect, text, font, text_color):
         txt_surface = font.render(text, True, text_color)
         pygame.draw.rect(screen, colour, rect, 2)
         const.screen.blit(txt_surface, (rect.x + 5, rect.y + 5))
-
-def format_number(string_number):
-    if not string_number:  # If the string is empty, return it
-        return ""
-    try:
-        number = int(string_number)
-    except ValueError:
-        return ""
-    if(number<=1000000):
-        formatted = f"{number/1000:.3f}" 
-        formatted = formatted + "K"
-    else:
-        formatted = f"{1000000/1000:.3f}" 
-        formatted = formatted + "K"
-    print(f"Tes broj: {number}")
-    return formatted, number
 
 def draw_custom_message_box(screen, text, font):
     box_rect = pygame.Rect(const.screen.get_width()/2-150, const.screen.get_height()/2-25, 300, 50)
@@ -110,7 +88,6 @@ def draw_custom_message_box(screen, text, font):
 
 def draw_info_cards(screen):
     screen_width = const.screen.get_width() #take screen width
-    screen_height = const.screen.get_height() #take screen height
     x_coordinate = 100
     y_coordinate = 100
     card_width = 200

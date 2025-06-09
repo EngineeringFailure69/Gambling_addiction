@@ -21,6 +21,11 @@ import furniture_screen
 import clothing_screen
 import tools_screen
 import groceries_screen
+import sedan_car_section_screen
+import sports_car_section_screen
+import pickup_car_section_screen
+import hatchback_car_section_screen
+import suv_car_section_screen
 import file_utils
 import sys
 from tkinter import * 
@@ -72,6 +77,21 @@ def handle_icon_click(events, icon_rect, type):
             elif type == const.STATE_GROCERIES:
                 groceries_screen.groceries_screen()
                 return
+            elif type == const.STATE_SPORTS_CAR:
+                sports_car_section_screen.sports_car_section_screen()
+                return
+            elif type == const.STATE_SEDAN:
+                sedan_car_section_screen.sedan_car_section_screen()
+                return
+            elif type == const.STATE_HATCHBACK:
+                hatchback_car_section_screen.hatchback_car_section_screen()
+                return
+            elif type == const.STATE_SUV:
+                suv_car_section_screen.suv_car_section_screen()
+                return
+            elif type == const.STATE_PICKUP:
+                pickup_car_section_screen.pickup_car_section_screen()
+                return
 
 def handle_quit(running):
     for i in pygame.event.get():
@@ -92,19 +112,15 @@ def process_bet_text_box_events(events, input_box, text, active):
             else:
                 active = False
         if event.type == pygame.KEYDOWN and active:
-            if event.key == pygame.K_RETURN:
-                if const.bet != "":
-                    formatted_bet, const.your_bet = draw_functions.format_number(const.bet)
-                    text = "Your bet: " + formatted_bet  # dodaj formatirani broj u tekst
-                    const.bet = ""         # resetuj unos
-            elif event.key == pygame.K_BACKSPACE:
+            if event.key == pygame.K_BACKSPACE:
                 text = text[:-1]
                 const.digit_counter -= 1
             else:
                 if event.unicode in const.numbers and const.digit_counter < 7:
                     const.digit_counter += 1
                     const.bet += event.unicode 
-                    text += event.unicode 
+                    text += event.unicode
+                    const.your_bet = int(const.bet) 
                 elif const.digit_counter >= 7:
                     draw_functions.draw_message_box('Wrong input', 'Nuber can not have more than 7 digits')
                 else:
@@ -280,8 +296,9 @@ def job_apply(button_rect, salary, working_days_requirements, job):
     file_utils.update_value_in_file(save_path, "index")
     index = next((i for i, sublist in enumerate(const.job_positions_list) if sublist[0] == job), None)
     file_utils.update_value_in_file(save_path, "index")
-    if index is None:
+    if index is None and not const.job_apply:
         draw_functions.draw_message_box('Application', "Job does not exist")
+        const.job_apply = True
         return
     mouse_pos = pygame.mouse.get_pos()
     mouse_click = pygame.mouse.get_pressed()

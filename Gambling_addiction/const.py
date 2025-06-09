@@ -1,10 +1,7 @@
 import pygame
 import file_utils
-#import utils
 
 pygame.init()
-#screen_height, screen_width = utils.get_screen_resolution()
-#screen = pygame.display.set_mode((screen_width-100, screen_height-100))
 screen = pygame.display.set_mode((1400, 600))
 clock = pygame.time.Clock()
 pygame.display.set_caption('Gambling addiction')
@@ -92,6 +89,11 @@ STATE_FURNITURE = "furniture_screen"
 STATE_CLOTHING = "clothing_screen"
 STATE_TOOLS = "tools_screen"
 STATE_GROCERIES = "groceries_screen"
+STATE_SPORTS_CAR = "sports_car_section_screen"
+STATE_SUV = "suv_section_screen"
+STATE_HATCHBACK = "hatchback_section_screen"
+STATE_SEDAN = "sedan_section_screen"
+STATE_PICKUP = "pickup_section_screen"
 
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -129,3 +131,4 @@ index = file_utils.load_save_game_info(save_path, "index") #0
 
 buttons_list = []
 tes = False
+job_apply = False
