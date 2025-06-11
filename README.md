@@ -7,4 +7,4 @@ Door icon: https://icon-icons.com/search/icons/door
 Revolver icon: https://www.reshot.com/free-svg-icons/revolver/
 Casino, home and work icon i can not remember where did i take them from :(
 
-All images were ChatGPT generated, because am not good enough to make them myself, except roulette screen background image which i found on google
+All images were ChatGPT generated, because am not good enough to make them myself

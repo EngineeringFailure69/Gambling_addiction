@@ -1,8 +1,8 @@
 import pygame
-import draw_functions
+import utils.draw_functions as draw_functions
 import const
-import apartment_screen
-import utils 
+import interface.apartment_screen as apartment_screen
+import utils.utils as utils
 import sys
 import text_messages
 

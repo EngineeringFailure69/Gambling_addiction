@@ -1,5 +1,5 @@
 import pygame
-import file_utils
+import utils.file_utils as file_utils
 
 pygame.init()
 screen = pygame.display.set_mode((1400, 600))
