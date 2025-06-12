@@ -9,7 +9,7 @@ import ast
 def get_user_save_dir():
     # name of the exe file, example: "Gambling_addiction"
     exe_name = os.path.splitext(os.path.basename(sys.executable))[0]
-    VERSION = "0.11111111111111212121212"   # change this before making new .exe
+    VERSION = "0.11111111111111212121212121"   # change this before making new .exe
     path = user_data_dir(exe_name, "YourName", version=VERSION)
     os.makedirs(path, exist_ok=True)
     return path
@@ -18,8 +18,15 @@ def extract_default_save():
     user_dir = get_user_save_dir()
     target = os.path.join(user_dir, "information.txt")
     if not os.path.exists(target):
-        base = getattr(sys, "_MEIPASS", os.path.abspath(os.path.dirname(__file__)))
+        if hasattr(sys, "_MEIPASS"):
+            base = sys._MEIPASS
+        else:
+            base = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
         src = os.path.join(base, "save_files", "information.txt")
+        if not os.path.isfile(src):
+            os.makedirs(os.path.dirname(src), exist_ok=True)
+            with open(src, "w", encoding="utf-8") as f:
+                f.write("")  
         shutil.copy(src, target)
     return target
 

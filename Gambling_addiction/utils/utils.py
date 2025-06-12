@@ -109,12 +109,17 @@ def process_bet_text_box_events(events, input_box, text, active):
                 text = "Your bet: "
                 active = True
                 const.digit_counter = 0
+                const.your_bet = 0
+                const.bet = "" 
             else:
                 active = False
         if event.type == pygame.KEYDOWN and active:
             if event.key == pygame.K_BACKSPACE:
-                text = text[:-1]
-                const.digit_counter -= 1
+                if not text.endswith(' '):
+                    text = text[:-1]
+                    const.digit_counter -= 1
+                    const.bet = const.bet[:-1]
+                    const.your_bet = int(const.bet) 
             else:
                 if event.unicode in const.numbers and const.digit_counter < 7:
                     const.digit_counter += 1
