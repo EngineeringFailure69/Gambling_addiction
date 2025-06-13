@@ -74,6 +74,7 @@ job_button = (230, 192, 137)
 job_cards_text = (74, 40, 15)
 store_bckgd = (250, 237, 216)
 store_text = (25, 69, 89)
+elecs_bckgd = (53, 112, 61)
 
 #States
 STATE_CITY = "city"
@@ -94,6 +95,10 @@ STATE_SUV = "suv_section_screen"
 STATE_HATCHBACK = "hatchback_section_screen"
 STATE_SEDAN = "sedan_section_screen"
 STATE_PICKUP = "pickup_section_screen"
+STATE_ACCESSORIES = "accessories_section_screen"
+STATE_CONSOLES = "consoles_section_screen"
+STATE_LAPTOPS = "laptops_section_screen"
+STATE_SMARTPHONES = "smartphones_section_screen"
 
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']

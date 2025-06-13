@@ -9,7 +9,7 @@ import ast
 def get_user_save_dir():
     # name of the exe file, example: "Gambling_addiction"
     exe_name = os.path.splitext(os.path.basename(sys.executable))[0]
-    VERSION = "0.11111111111111212121212121"   # change this before making new .exe
+    VERSION = "0.111111111111112121212121212"   # change this before making new .exe
     path = user_data_dir(exe_name, "YourName", version=VERSION)
     os.makedirs(path, exist_ok=True)
     return path

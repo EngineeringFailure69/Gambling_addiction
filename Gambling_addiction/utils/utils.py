@@ -26,6 +26,10 @@ import interface.shopping_interface.cars_section.sports_car_section_screen as sp
 import interface.shopping_interface.cars_section.pickup_car_section_screen as pickup_car_section_screen
 import interface.shopping_interface.cars_section.hatchback_car_section_screen as hatchback_car_section_screen
 import interface.shopping_interface.cars_section.suv_car_section_screen as suv_car_section_screen
+import interface.shopping_interface.electronics_section.accessories_section_screen as accessories_section_screen
+import interface.shopping_interface.electronics_section.consoles_section_screen as consoles_section_screen
+import interface.shopping_interface.electronics_section.laptops_section_screen as laptops_section_screen
+import interface.shopping_interface.electronics_section.smartphones_section_screen as smartphones_section_screen
 import utils.file_utils as file_utils
 import sys
 from tkinter import * 
@@ -91,6 +95,18 @@ def handle_icon_click(events, icon_rect, type):
                 return
             elif type == const.STATE_PICKUP:
                 pickup_car_section_screen.pickup_car_section_screen()
+                return
+            elif type == const.STATE_ACCESSORIES:
+                accessories_section_screen.accessories_section_screen()
+                return
+            elif type == const.STATE_CONSOLES:
+                consoles_section_screen.consoles_section_screen()
+                return
+            elif type == const.STATE_LAPTOPS: 
+                laptops_section_screen.laptops_section_screen()
+                return
+            elif type == const.STATE_SMARTPHONES:
+                smartphones_section_screen.smartphones_section_screen()
                 return
 
 def handle_quit(running):
