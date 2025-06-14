@@ -75,6 +75,7 @@ job_cards_text = (74, 40, 15)
 store_bckgd = (250, 237, 216)
 store_text = (25, 69, 89)
 elecs_bckgd = (53, 112, 61)
+furniture_bckgd = (36, 35, 58)
 
 #States
 STATE_CITY = "city"
@@ -99,6 +100,10 @@ STATE_ACCESSORIES = "accessories_section_screen"
 STATE_CONSOLES = "consoles_section_screen"
 STATE_LAPTOPS = "laptops_section_screen"
 STATE_SMARTPHONES = "smartphones_section_screen"
+STATE_ARMCHAIRS = "armchairs_section_screen"
+STATE_BEDS = "beds_section_screen"
+STATE_BOOKSHELVES = "bookshelves_section_screen"
+STATE_TABLES = "tables_section_screen"
 
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']

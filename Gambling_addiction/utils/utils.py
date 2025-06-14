@@ -30,6 +30,10 @@ import interface.shopping_interface.electronics_section.accessories_section_scre
 import interface.shopping_interface.electronics_section.consoles_section_screen as consoles_section_screen
 import interface.shopping_interface.electronics_section.laptops_section_screen as laptops_section_screen
 import interface.shopping_interface.electronics_section.smartphones_section_screen as smartphones_section_screen
+import interface.shopping_interface.furniture_section.armchairs_section_screen as armchairs_section_screen
+import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
+import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
+import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
 import utils.file_utils as file_utils
 import sys
 from tkinter import * 
@@ -108,6 +112,18 @@ def handle_icon_click(events, icon_rect, type):
             elif type == const.STATE_SMARTPHONES:
                 smartphones_section_screen.smartphones_section_screen()
                 return
+            elif type == const.STATE_ARMCHAIRS:
+                armchairs_section_screen.armchairs_section_screen()
+                return
+            elif type == const.STATE_BOOKSHELVES:
+                bookshleves_section_screen.bookshelves_section_screen()
+                return
+            elif type == const.STATE_BEDS:
+                beds_section_screen.beds_section_screen()
+                return
+            elif type == const.STATE_TABLES:
+                tables_section_screen.tables_section_screen()
+                return 
 
 def handle_quit(running):
     for i in pygame.event.get():
