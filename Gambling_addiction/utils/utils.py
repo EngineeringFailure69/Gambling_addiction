@@ -34,6 +34,10 @@ import interface.shopping_interface.furniture_section.armchairs_section_screen a
 import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
 import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
 import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
+import interface.shopping_interface.clothing_section.hoodie_section_screen as hoodie_section_screen
+import interface.shopping_interface.clothing_section.pants_section_screen as pants_section_screen
+import interface.shopping_interface.clothing_section.snees_section_screen as snees_section_screen
+import interface.shopping_interface.clothing_section.tshirt_section_screen as tshirt_section_screen
 import utils.file_utils as file_utils
 import sys
 from tkinter import * 
@@ -124,6 +128,18 @@ def handle_icon_click(events, icon_rect, type):
             elif type == const.STATE_TABLES:
                 tables_section_screen.tables_section_screen()
                 return 
+            elif type == const.STATE_TSHIRT:
+                tshirt_section_screen.tshirt_section_screen()
+                return
+            elif type == const.STATE_HOODIE:
+                hoodie_section_screen.hoodie_section_screen()
+                return
+            elif type == const.STATE_PANTS:
+                pants_section_screen.pants_section_screen()
+                return
+            elif type == const.STATE_SNEES:
+                snees_section_screen.snees_section_screen()
+                return
 
 def handle_quit(running):
     for i in pygame.event.get():

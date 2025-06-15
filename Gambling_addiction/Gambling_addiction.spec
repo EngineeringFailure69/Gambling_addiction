@@ -8,6 +8,11 @@ a = Analysis(
     datas=[
         ('icons/car_section_icon.svg', 'icons'),
         ('icons/casino_icon.webp', 'icons'),
+        ('icons/clothing_hoodie_icon.png', 'icons'),
+        ('icons/clothing_pants_icon.png', 'icons'),
+        ('icons/clothing_section_icon.svg', 'icons'),
+        ('icons/clothing_snees_icon.png', 'icons'),
+        ('icons/clothing_tshirt_icon.png', 'icons'),
         ('icons/door_icon.webp', 'icons'),
         ('icons/electronics_accessories_icon.png', 'icons'),
         ('icons/electronics_consoles_icon.png', 'icons'),
