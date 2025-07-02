@@ -58,7 +58,7 @@ def russian_roulette_screen():
                 if const.your_bet <= 0:
                     draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars")
                     bet = False
-                elif const.your_bet < const.balance * 0.20:
+                elif const.your_bet < const.balance * 0.20 and const.balance <= 9999999:
                     draw_functions.draw_message_box('Bet error', f"You  have to bet at least {int(const.balance * 0.20)+1} dollars, which is 20% of your total balance")
                     bet = False
                 elif const.balance < const.your_bet:
@@ -96,10 +96,11 @@ def russian_roulette_screen():
                     const.balance += prize
                     draw_functions.draw_message_box('You won', f"You won the game, prize is {str(prize)}, your current balance is {str(const.balance)}")
                     file_utils.update_value_in_file("save_files\information.txt", "balance")
+                    barrell_spin = False
                 if not win and game_over:
-                    const.balance = 0
-                    draw_functions.draw_message_box('You lost', f"You lost the game, you are dead, your balance is now {str(const.balance)} because you lost everything you had")
-                    file_utils.update_value_in_file("save_files\information.txt", "balance")
+                    draw_functions.draw_message_box('You lost', f"You lost the game, you are dead, your balance is now 0 because you lost everything you had, and your game will restart")
+                    utils.restart_game()
+                    return
                 elif not win and not game_over and you_play:
                     draw_functions.draw_message_box('Round over', "Your opponent survived, you play now")
                 elif not win and not game_over and not you_play:

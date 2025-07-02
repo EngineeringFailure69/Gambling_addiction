@@ -164,10 +164,14 @@ def process_bet_text_box_events(events, input_box, text, active):
         if event.type == pygame.KEYDOWN and active:
             if event.key == pygame.K_BACKSPACE:
                 if not text.endswith(' '):
-                    text = text[:-1]
-                    const.digit_counter -= 1
-                    const.bet = const.bet[:-1]
-                    const.your_bet = int(const.bet) 
+                    if len(const.bet) > 0:
+                        text = text[:-1]
+                        const.digit_counter -= 1
+                        const.bet = const.bet[:-1]
+                        if const.bet:
+                            const.your_bet = int(const.bet) 
+                        else:
+                            const.your_bet = 0
             else:
                 if event.unicode in const.numbers and const.digit_counter < 7:
                     const.digit_counter += 1
@@ -422,3 +426,28 @@ def job_apply(button_rect, salary, working_days_requirements, job):
                 return
 
             draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][0]} position.")
+
+def restart_game():
+    save_path = file_utils.extract_default_save()
+    const.balance = 500
+    const.salary = 0
+    const.working = 0
+    const.day_counter = 1
+    const.month_counter = 1
+    const.year_counter = 1990
+    const.return_day_counter = 0
+    const.return_month_counter = 0
+    const.job_positions_list = [['janitor', 0, False, 0, False], ['waiter', 5, False, 0, False], ['slot attendant', 10, False, 0, False], ['dealer', 15, False, 0, False], ['shift leader', 20, False, 0, False], ['pit boss', 25, False, 0, False], ['shift manager', 30, False, 0, False], ['manager', 35, False, 0, False]]
+    const.index = 0
+    file_utils.update_value_in_file(save_path, "balance")
+    file_utils.update_value_in_file(save_path, "salary")
+    file_utils.update_value_in_file(save_path, "working")
+    file_utils.update_value_in_file(save_path, "day_counter")
+    file_utils.update_value_in_file(save_path, "month_counter")
+    file_utils.update_value_in_file(save_path, "year_counter")
+    file_utils.update_value_in_file(save_path, "return_day_counter")
+    file_utils.update_value_in_file(save_path, "return_month_counter")
+    file_utils.update_value_in_file(save_path, "index")
+    file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
+    import start_screen  
+    start_screen.main_screen() 
