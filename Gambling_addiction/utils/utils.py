@@ -38,6 +38,14 @@ import interface.shopping_interface.clothing_section.hoodie_section_screen as ho
 import interface.shopping_interface.clothing_section.pants_section_screen as pants_section_screen
 import interface.shopping_interface.clothing_section.snees_section_screen as snees_section_screen
 import interface.shopping_interface.clothing_section.tshirt_section_screen as tshirt_section_screen
+import interface.shopping_interface.groceries_section.fruits_section_screen as fruits_section_screen
+import interface.shopping_interface.groceries_section.bread_section_screen as bread_section_screen
+import interface.shopping_interface.groceries_section.milk_section_screen as milk_section_screen
+import interface.shopping_interface.groceries_section.vegetables_section_sceen as vegetables_section_screen
+import interface.shopping_interface.tools_section.hand_tools_section_screen as hand_tools_section_screen
+import interface.shopping_interface.tools_section.power_tools_section_screen as power_tools_section_screen
+import interface.shopping_interface.tools_section.safety_gear_section_screen as safety_gear_section_screen
+import interface.shopping_interface.tools_section.tools_accessories_section_screen as tools_accessories_section_screen
 import utils.file_utils as file_utils
 import sys
 from tkinter import * 
@@ -140,7 +148,31 @@ def handle_icon_click(events, icon_rect, type):
             elif type == const.STATE_SNEES:
                 snees_section_screen.snees_section_screen()
                 return
-
+            elif type == const.STATE_FRUITS:
+                fruits_section_screen.fruits_section_screen()
+                return
+            elif type == const.STATE_VEGETABLES:
+                vegetables_section_screen.vegetables_section_screen()
+                return
+            elif type == const.STATE_BREAD:
+                bread_section_screen.bread_section_screen()
+                return
+            elif type == const.STATE_MILK:
+                milk_section_screen.milk_section_screen()
+                return
+            elif type == const.STATE_HAND_TOOLS:
+                hand_tools_section_screen.hand_tools_section_screen()
+                return
+            elif type == const.STATE_TOOLS_ACCESSORIES:
+                tools_accessories_section_screen.tools_accessories_section_screen()
+                return
+            elif type == const.STATE_POWER_TOOLS:
+                power_tools_section_screen.power_tools_section_screen()
+                return
+            elif type == const.STATE_SAFETY_GEAR:
+                safety_gear_section_screen.safety_gear_section_screen()
+                return
+            
 def handle_quit(running):
     for i in pygame.event.get():
             if i.type == pygame.QUIT:

@@ -77,6 +77,8 @@ store_text = (25, 69, 89)
 elecs_bckgd = (53, 112, 61)
 furniture_bckgd = (36, 35, 58)
 clothing_bckgd = (63, 49, 67)
+groceries_bckgd = (78, 120, 100)
+tools_bckgd = (55, 111, 118)
 
 #States
 STATE_CITY = "city"
@@ -109,6 +111,14 @@ STATE_TSHIRT = "tshirt_section_screen"
 STATE_HOODIE = "hoodie_section_screen"
 STATE_PANTS = "pants_section_screen"
 STATE_SNEES = "snees_Section_screen"
+STATE_FRUITS =  "fruits_section_screen"
+STATE_BREAD = "bread_section_screen"
+STATE_VEGETABLES = "vegetables_section_screen"
+STATE_MILK = "milk_section_screen"
+STATE_HAND_TOOLS = "hand_tools_section_screen"
+STATE_POWER_TOOLS = "power_tools_section_screen"
+STATE_SAFETY_GEAR = "safety_gear_section_screen"
+STATE_TOOLS_ACCESSORIES = "tool_accessories_section_screen"
 
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']

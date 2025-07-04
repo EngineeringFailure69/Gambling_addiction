@@ -8,6 +8,8 @@ Revolver icon: https://www.reshot.com/free-svg-icons/revolver/
 Electronics icon: https://www.reshot.com/free-svg-icons/electronics/
 Furniture icon: https://www.reshot.com/free-svg-icons/furniture/
 Clothing icon: https://www.reshot.com/free-svg-icons/clothes/
+Groceries icon: https://www.reshot.com/free-svg-icons/groceries/
+Tools icon: https://www.reshot.com/free-svg-icons/tool/
 Casino, home and work icon i can not remember where did i take them from :(
 
 All images were ChatGPT generated, because am not good enough to make them myself
