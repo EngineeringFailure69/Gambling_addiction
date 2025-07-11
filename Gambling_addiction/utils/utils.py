@@ -172,6 +172,66 @@ def handle_icon_click(events, icon_rect, type):
             elif type == const.STATE_SAFETY_GEAR:
                 safety_gear_section_screen.safety_gear_section_screen()
                 return
+            elif type == const.STATE_SPORTS_CAR_1:
+                buy_product(45000)
+                return
+            elif type == const.STATE_SPORTS_CAR_2:
+                buy_product(60000)
+                return
+            elif type == const.STATE_SPORTS_CAR_3:
+                buy_product(110000)
+                return
+            elif type == const.STATE_SPORTS_CAR_4:
+                buy_product(160000)
+                return
+            elif type == const.STATE_SEDAN_CAR_1:
+                buy_product(25700)
+                return
+            elif type == const.STATE_SEDAN_CAR_2:
+                buy_product(28200)
+                return
+            elif type == const.STATE_SEDAN_CAR_3:
+                buy_product(23900)
+                return
+            elif type == const.STATE_SEDAN_CAR_4:
+                buy_product(27500)
+                return
+            elif type == const.STATE_SUV_CAR_1:
+                buy_product(28500)
+                return
+            elif type == const.STATE_SUV_CAR_2:
+                buy_product(36800)
+                return
+            elif type == const.STATE_SUV_CAR_3:
+                buy_product(35000)
+                return
+            elif type == const.STATE_SUV_CAR_4:
+                buy_product(29500)
+                return  
+            elif type == const.STATE_HATCHBACK_CAR_1:
+                buy_product(34500)
+                return  
+            elif type == const.STATE_HATCHBACK_CAR_2:
+                buy_product(19200)
+                return 
+            elif type == const.STATE_HATCHBACK_CAR_3:
+                buy_product(26700)
+                return 
+            elif type == const.STATE_HATCHBACK_CAR_4:
+                buy_product(23900)
+                return  
+            elif type == const.STATE_PICKUP_CAR_1:
+                buy_product(32500)
+                return  
+            elif type == const.STATE_PICKUP_CAR_2:
+                buy_product(36800)
+                return 
+            elif type == const.STATE_PICKUP_CAR_3:
+                buy_product(40200)
+                return 
+            elif type == const.STATE_PICKUP_CAR_4:
+                buy_product(43500)
+                return                   
             
 def handle_quit(running):
     for i in pygame.event.get():
@@ -483,3 +543,6 @@ def restart_game():
     file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
     import start_screen  
     start_screen.main_screen() 
+
+def buy_product(price):
+    draw_functions.draw_message_box("Work in progress", f"Coming soon: {price}")

@@ -103,3 +103,5 @@ russian_roulette_text = "This is a russian roulette commrade, you win or you die
 barrel_text = "Spinning the barrell..."
 dice_text = "While the barrell was spinning, the dice was rolled, first roll represents your number, " \
 "2nd roll represents your opponent number, whoever gets bigger number, plays first, the result: "
+
+buy_text = "You buy product by clicking on the photo of it, price is written on the photo"

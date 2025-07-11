@@ -16,7 +16,7 @@ def main_screen():
     while running:
         const.screen.fill(const.white)
 
-        draw_functions.load_background_image(const.screen,  "background_photos\start_screen_background.png")
+        draw_functions.load_background_image(const.screen,  "background_photos\\start_screen_background.png")
         draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
         
         running = utils.handle_quit(running)
