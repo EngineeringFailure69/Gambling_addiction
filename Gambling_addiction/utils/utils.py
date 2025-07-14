@@ -46,6 +46,14 @@ import interface.shopping_interface.tools_section.hand_tools_section_screen as h
 import interface.shopping_interface.tools_section.power_tools_section_screen as power_tools_section_screen
 import interface.shopping_interface.tools_section.safety_gear_section_screen as safety_gear_section_screen
 import interface.shopping_interface.tools_section.tools_accessories_section_screen as tools_accessories_section_screen
+import interface.shopping_interface.electronics_section.accessories_section_screen as accessories_section_screen
+import interface.shopping_interface.electronics_section.consoles_section_screen as consoles_section_screen
+import interface.shopping_interface.electronics_section.laptops_section_screen as laptops_section_screen
+import interface.shopping_interface.electronics_section.smartphones_section_screen as smartphones_section_screen
+import interface.shopping_interface.furniture_section.armchairs_section_screen as armchairs_section_screen
+import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
+import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
+import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
 import utils.file_utils as file_utils
 import sys
 from tkinter import * 
@@ -231,7 +239,104 @@ def handle_icon_click(events, icon_rect, type):
                 return 
             elif type == const.STATE_PICKUP_CAR_4:
                 buy_product(43500)
-                return                   
+                return   
+            elif type == const.STATE_ACC_1:
+                buy_product(129)
+                return
+            elif type == const.STATE_ACC_2:
+                buy_product(35)
+                return
+            elif type == const.STATE_ACC_3: 
+                buy_product(49)
+                return 
+            elif type == const.STATE_ACC_4:
+                buy_product(79)
+                return
+            elif type ==  const.STATE_CONSOLE_1:
+                buy_product(499)
+                return
+            elif type == const.STATE_CONSOLE_2:
+                buy_product(399)
+                return
+            elif type == const.STATE_CONSOLE_3:
+                buy_product(299)
+                return
+            elif type == const.STATE_CONSOLE_4:
+                buy_product(349)
+                return
+            elif type == const.STATE_LAPTOP_1:
+                buy_product(1800)
+                return
+            elif type == const.STATE_LAPTOP_2:
+                buy_product(2200)
+                return
+            elif type == const.STATE_LAPTOP_3:
+                buy_product(1400)
+                return
+            elif type == const.STATE_LAPTOP_4:
+                buy_product(1000)
+                return  
+            elif type == const.STATE_SMARTPHONE_1:
+                buy_product(299)
+                return
+            elif type == const.STATE_SMARTPHONE_2:
+                buy_product(499)
+                return
+            elif type == const.STATE_SMARTPHONE_3:
+                buy_product(199)
+                return
+            elif type == const.STATE_SMARTPHONE_4:
+                buy_product(379)
+                return
+            elif type == const.STATE_CHAIR_1:
+                buy_product(350)
+                return
+            elif type == const.STATE_CHAIR_2:
+                buy_product(425)
+                return
+            elif type == const.STATE_CHAIR_3:
+                buy_product(300)
+                return
+            elif type == const.STATE_CHAIR_4:
+                buy_product(445)
+                return
+            elif type == const.STATE_BED_1:
+                buy_product(550)
+                return
+            elif type == const.STATE_BED_2:
+                buy_product(720)
+                return
+            elif type == const.STATE_BED_3:
+                buy_product(620)
+                return
+            elif type == const.STATE_BED_4:
+                buy_product(650)
+                return
+            elif type == const.STATE_SHELF_1:
+                buy_product(849)
+                return
+            elif type ==  const.STATE_SHELF_2:
+                buy_product(659)
+                return
+            elif type == const.STATE_SHELF_3:
+                buy_product(659)
+                return 
+            elif type == const.STATE_SHELF_4:
+                buy_product(849)
+                return
+            elif type == const.STATE_TABLE_1:
+                buy_product(299)
+                return
+            elif type == const.STATE_TABLE_2:
+                buy_product(349)
+                return
+            elif type == const.STATE_TABLE_3:
+                buy_product(225)
+                return
+            elif type == const.STATE_TABLE_4:
+                buy_product(189)
+                return    
+                      
             
 def handle_quit(running):
     for i in pygame.event.get():
