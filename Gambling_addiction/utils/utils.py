@@ -335,8 +335,103 @@ def handle_icon_click(events, icon_rect, type):
                 return
             elif type == const.STATE_TABLE_4:
                 buy_product(189)
-                return    
-                      
+                return
+            elif type == const.STATE_HOODIE_1:
+                buy_product(45)
+                return  
+            elif type == const.STATE_HOODIE_2:
+                buy_product(60)
+                return   
+            elif type == const.STATE_HOODIE_3:
+                buy_product(55)
+                return 
+            elif type == const.STATE_HOODIE_4:
+                buy_product(50)
+                return 
+            elif type == const.STATE_PANTS_1:
+                buy_product(50)
+                return
+            elif type == const.STATE_PANTS_2:
+                buy_product(65)
+                return
+            elif type == const.STATE_PANTS_3:
+                buy_product(40)
+                return
+            elif type == const.STATE_PANTS_4:
+                buy_product(45)
+                return
+            elif type == const.STATE_SHOE_1:
+                buy_product(120)
+                return
+            elif type == const.STATE_SHOE_2:
+                buy_product(95)
+                return
+            elif type == const.STATE_SHOE_3:
+                buy_product(80)
+                return
+            elif type == const.STATE_SHOE_4:
+                buy_product(110)
+                return
+            elif type == const.STATE_TSHIRT_1:
+                buy_product(15)
+                return
+            elif type == const.STATE_TSHIRT_2:
+                buy_product(10)
+                return
+            elif type == const.STATE_TSHIRT_3:
+                buy_product(18)
+                return
+            elif type == const.STATE_TSHIRT_4:
+                buy_product(20)
+                return
+            elif type == const.STATE_HAND_TOOL_1:
+                buy_product(29)
+                return
+            elif type == const.STATE_HAND_TOOL_2:
+                buy_product(12)
+                return
+            elif type == const.STATE_HAND_TOOL_3:
+                buy_product(35)
+                return
+            elif type == const.STATE_HAND_TOOL_4:
+                buy_product(42)
+                return
+            elif type == const.STATE_POWER_TOOL_1:
+                buy_product(125)
+                return
+            elif type == const.STATE_POWER_TOOL_2:
+                buy_product(230)
+                return
+            elif type == const.STATE_POWER_TOOL_3:
+                buy_product(140)
+                return
+            elif type == const.STATE_POWER_TOOL_4:
+                buy_product(195)
+                return
+            elif type == const.STATE_SAFETY_TOOL_1:
+                buy_product(25)
+                return
+            elif type == const.STATE_SAFETY_TOOL_2:
+                buy_product(60)
+                return
+            elif type == const.STATE_SAFETY_TOOL_3:
+                buy_product(15)
+                return
+            elif type == const.STATE_SAFETY_TOOL_4:
+                buy_product(40)
+                return
+            elif type == const.STATE_ACCS_TOOL_1:
+                buy_product(15)
+                return
+            elif type == const.STATE_ACCS_TOOL_2:
+                buy_product(22)
+                return
+            elif type == const.STATE_ACCS_TOOL_3:
+                buy_product(60)
+                return
+            elif type == const.STATE_ACCS_TOOL_4:
+                buy_product(30)
+                return
             
 def handle_quit(running):
     for i in pygame.event.get():

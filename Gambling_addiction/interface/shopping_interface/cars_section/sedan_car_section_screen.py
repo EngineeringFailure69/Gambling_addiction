@@ -23,7 +23,7 @@ def sedan_car_section_screen():
 
         const.screen.fill(const.store_bckgd)
 
-        draw_functions.draw_title(const.screen, const.store_text, "SEDAN SECTION")
+        draw_functions.draw_title(const.screen, const.black, "SEDAN SECTION")
         draw_functions.draw_text(const.screen, info_text, const.black, text_rect, font,line_spacing=5)
 
         mouse_pos = pygame.mouse.get_pos()

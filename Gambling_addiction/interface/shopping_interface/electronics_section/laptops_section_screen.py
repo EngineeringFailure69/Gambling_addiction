@@ -20,15 +20,15 @@ def laptops_section_screen():
     while running:
         events = pygame.event.get()
 
-        const.screen.fill(const.store_bckgd)
+        const.screen.fill(const.laptops_bckgd)
 
-        draw_functions.draw_title(const.screen, const.store_text, "LAPTOPS SECTION")
-        draw_functions.draw_text(const.screen, info_text, const.black, text_rect, font,line_spacing=5)
+        draw_functions.draw_title(const.screen, const.white, "LAPTOPS SECTION")
+        draw_functions.draw_text(const.screen, info_text, const.white, text_rect, font,line_spacing=5)
 
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
 
-        draw_functions.draw_button(const.screen, const.store_bckgd, const.choice_Info_button, "Buy Info", font, const.black)
+        draw_functions.draw_button(const.screen, const.laptops_bckgd, const.choice_Info_button, "Buy Info", font, const.white)
         if const.choice_Info_button.collidepoint(mouse_pos):
             if mouse_click[0]: 
                 draw_functions.draw_message_box('Buy info', text_messages.buy_text)
