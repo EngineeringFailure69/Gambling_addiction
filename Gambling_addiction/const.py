@@ -1,5 +1,52 @@
 import pygame
 import utils.file_utils as file_utils
+import utils.utils as utils
+from utils.utils import* #buy_product
+import interface.city_screen as city_screen
+import interface.apartment_screen as apartment_screen
+import interface.casino_screen as casino_screen
+import interface.job_interface.work_screen as work_screen
+import interface.russian_roulette_screen as russian_roulette_screen
+import interface.shopping_interface.shopping_center_screen as shopping_center_screen
+import interface.shopping_interface.cars_section.cars_screen as cars_screen
+import interface.shopping_interface.electronics_section.electronics_screen as electronics_screen
+import interface.shopping_interface.furniture_section.furniture_screen as furniture_screen
+import interface.shopping_interface.clothing_section.clothing_screen as clothing_screen
+import interface.shopping_interface.tools_section.tools_screen as tools_screen
+import interface.shopping_interface.groceries_section.groceries_screen as groceries_screen
+import interface.shopping_interface.cars_section.sedan_car_section_screen as sedan_car_section_screen
+import interface.shopping_interface.cars_section.sports_car_section_screen as sports_car_section_screen
+import interface.shopping_interface.cars_section.pickup_car_section_screen as pickup_car_section_screen
+import interface.shopping_interface.cars_section.hatchback_car_section_screen as hatchback_car_section_screen
+import interface.shopping_interface.cars_section.suv_car_section_screen as suv_car_section_screen
+import interface.shopping_interface.electronics_section.accessories_section_screen as accessories_section_screen
+import interface.shopping_interface.electronics_section.consoles_section_screen as consoles_section_screen
+import interface.shopping_interface.electronics_section.laptops_section_screen as laptops_section_screen
+import interface.shopping_interface.electronics_section.smartphones_section_screen as smartphones_section_screen
+import interface.shopping_interface.furniture_section.armchairs_section_screen as armchairs_section_screen
+import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
+import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
+import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
+import interface.shopping_interface.clothing_section.hoodie_section_screen as hoodie_section_screen
+import interface.shopping_interface.clothing_section.pants_section_screen as pants_section_screen
+import interface.shopping_interface.clothing_section.snees_section_screen as snees_section_screen
+import interface.shopping_interface.clothing_section.tshirt_section_screen as tshirt_section_screen
+import interface.shopping_interface.groceries_section.fruits_section_screen as fruits_section_screen
+import interface.shopping_interface.groceries_section.bread_section_screen as bread_section_screen
+import interface.shopping_interface.groceries_section.milk_section_screen as milk_section_screen
+import interface.shopping_interface.groceries_section.vegetables_section_sceen as vegetables_section_screen
+import interface.shopping_interface.tools_section.hand_tools_section_screen as hand_tools_section_screen
+import interface.shopping_interface.tools_section.power_tools_section_screen as power_tools_section_screen
+import interface.shopping_interface.tools_section.safety_gear_section_screen as safety_gear_section_screen
+import interface.shopping_interface.tools_section.tools_accessories_section_screen as tools_accessories_section_screen
+import interface.shopping_interface.electronics_section.accessories_section_screen as accessories_section_screen
+import interface.shopping_interface.electronics_section.consoles_section_screen as consoles_section_screen
+import interface.shopping_interface.electronics_section.laptops_section_screen as laptops_section_screen
+import interface.shopping_interface.electronics_section.smartphones_section_screen as smartphones_section_screen
+import interface.shopping_interface.furniture_section.armchairs_section_screen as armchairs_section_screen
+import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
+import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
+import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
 
 pygame.init()
 screen = pygame.display.set_mode((1400, 600))
@@ -92,130 +139,138 @@ beds_bckgd = (228, 166, 59)
 shelves_bckgd = (52, 90, 123)
 pants_bckgd = (141, 81, 37)
 snees_bckgd = (56, 46, 95)
+bread_bckgd = (59, 120, 173)
+fruit_bckg = (100, 160, 185)
+vegetables_bckgd = (251, 231, 198)
+milk_bckgd = (255, 207, 134)
 
 #States
-STATE_CITY = "city"
-STATE_APARTMENT = "apartment"
-STATE_CASINO = "casino"
-STATE_TO_THE_STREETS = "exit_door"
-STATE_WORK = "work"
-STATE_RUSSIAN_ROULETTE = "russian_roulette"
-STATE_SHOPPING = "shopping_center"
-STATE_CARS = "cars_screen"
-STATE_ELECTRONICS = "electronics_screen"
-STATE_FURNITURE = "furniture_screen"
-STATE_CLOTHING = "clothing_screen"
-STATE_TOOLS = "tools_screen"
-STATE_GROCERIES = "groceries_screen"
-STATE_SPORTS_CAR = "sports_car_section_screen"
-STATE_SUV = "suv_section_screen"
-STATE_HATCHBACK = "hatchback_section_screen"
-STATE_SEDAN = "sedan_section_screen"
-STATE_PICKUP = "pickup_section_screen"
-STATE_ACCESSORIES = "accessories_section_screen"
-STATE_CONSOLES = "consoles_section_screen"
-STATE_LAPTOPS = "laptops_section_screen"
-STATE_SMARTPHONES = "smartphones_section_screen"
-STATE_ARMCHAIRS = "armchairs_section_screen"
-STATE_BEDS = "beds_section_screen"
-STATE_BOOKSHELVES = "bookshelves_section_screen"
-STATE_TABLES = "tables_section_screen"
-STATE_TSHIRT = "tshirt_section_screen"
-STATE_HOODIE = "hoodie_section_screen"
-STATE_PANTS = "pants_section_screen"
-STATE_SNEES = "snees_Section_screen"
-STATE_FRUITS =  "fruits_section_screen"
-STATE_BREAD = "bread_section_screen"
-STATE_VEGETABLES = "vegetables_section_screen"
-STATE_MILK = "milk_section_screen"
-STATE_HAND_TOOLS = "hand_tools_section_screen"
-STATE_POWER_TOOLS = "power_tools_section_screen"
-STATE_SAFETY_GEAR = "safety_gear_section_screen"
-STATE_TOOLS_ACCESSORIES = "tool_accessories_section_screen"
-STATE_SPORTS_CAR_1 = "sports_car_1"
-STATE_SPORTS_CAR_2 = "sports_car_2"
-STATE_SPORTS_CAR_3 = "sports_car_3"
-STATE_SPORTS_CAR_4 = "sports_car_4"
-STATE_SEDAN_CAR_1 = "sedan_car_1"
-STATE_SEDAN_CAR_2 = "sedan_car_2"
-STATE_SEDAN_CAR_3 = "sedan_car_3"
-STATE_SEDAN_CAR_4 = "sedan_car_4"
-STATE_SUV_CAR_1 = "suv_car_1"
-STATE_SUV_CAR_2 = "suv_car_2"
-STATE_SUV_CAR_3 = "suv_car_3"
-STATE_SUV_CAR_4 = "suv_car_4"
-STATE_PICKUP_CAR_1 = "pickup_car_1"
-STATE_PICKUP_CAR_2 = "pickup_car_2"
-STATE_PICKUP_CAR_3 = "pickup_car_3"
-STATE_PICKUP_CAR_4 = "pickup_car_4"
-STATE_HATCHBACK_CAR_1 = "hatchback_car_1"
-STATE_HATCHBACK_CAR_2 = "hatchback_car_2"
-STATE_HATCHBACK_CAR_3 = "hatchback_car_3"
-STATE_HATCHBACK_CAR_4 = "hatchback_car_4"
-STATE_CONSOLE_1 = "console_1"
-STATE_CONSOLE_2 = "console_2"
-STATE_CONSOLE_3 = "console_3"
-STATE_CONSOLE_4 = "console_4"
-STATE_ACC_1 = "acc_1"
-STATE_ACC_2 = "acc_2"
-STATE_ACC_3 = "acc_3"
-STATE_ACC_4 = "acc_4"
-STATE_LAPTOP_1 = "laptop_1"
-STATE_LAPTOP_2 = "laptop_2"
-STATE_LAPTOP_3 = "laptop_3"
-STATE_LAPTOP_4 = "laptop_4"
-STATE_SMARTPHONE_1 = "smartphone_1"
-STATE_SMARTPHONE_2 = "smartphone_2"
-STATE_SMARTPHONE_3 = "smartphone_3"
-STATE_SMARTPHONE_4 = "smartphone_4"
-STATE_CHAIR_1 = "chair_1"
-STATE_CHAIR_2 = "chair_2"
-STATE_CHAIR_3 = "chair_3"
-STATE_CHAIR_4 = "chair_4"
-STATE_BED_1 = "bed_1"
-STATE_BED_2 = "bed_2"
-STATE_BED_3 = "bed_3"
-STATE_BED_4 = "bed_4"
-STATE_SHELF_1 = "shelf_1"
-STATE_SHELF_2 = "shelf_2"
-STATE_SHELF_3 = "shelf_3"
-STATE_SHELF_4 = "shelf_4"
-STATE_TABLE_1 = "table_1"
-STATE_TABLE_2 = "table_2"
-STATE_TABLE_3 = "table_3"
-STATE_TABLE_4 = "table_4"
-STATE_HOODIE_1 = "hoodie_1"
-STATE_HOODIE_2 = "hoodie_2"
-STATE_HOODIE_3 = "hoodie_3"
-STATE_HOODIE_4 = "hoodie_4"
-STATE_PANTS_1 = "pants_1"
-STATE_PANTS_2 = "pants_2"
-STATE_PANTS_3 = "pants_3"
-STATE_PANTS_4 = "pants_4"
-STATE_SHOE_1 = "shoe_1"
-STATE_SHOE_2 = "shoe_2"
-STATE_SHOE_3 = "shoe_3"
-STATE_SHOE_4 = "shoe_4"
-STATE_TSHIRT_1 = "tshirt_1"
-STATE_TSHIRT_2 = "tshirt_2"
-STATE_TSHIRT_3 = "tshirt_3"
-STATE_TSHIRT_4 = "tshirt_4"
-STATE_HAND_TOOL_1 = "hand_tool_1"
-STATE_HAND_TOOL_2 = "hand_tool_2"
-STATE_HAND_TOOL_3 = "hand_tool_3"
-STATE_HAND_TOOL_4 = "hand_tool_4"
-STATE_ACCS_TOOL_1 = "accs_tool_1"
-STATE_ACCS_TOOL_2 = "accs_tool_2"
-STATE_ACCS_TOOL_3 = "accs_tool_3"
-STATE_ACCS_TOOL_4 = "accs_tool_4"
-STATE_POWER_TOOL_1 = "power_tool_1"
-STATE_POWER_TOOL_2 = "power_tool_2"
-STATE_POWER_TOOL_3 = "power_tool_3"
-STATE_POWER_TOOL_4 = "power_tool_4"
-STATE_SAFETY_TOOL_1 = "safety_tool_1"
-STATE_SAFETY_TOOL_2 = "safety_tool_2"
-STATE_SAFETY_TOOL_3 = "safety_tool_3"
-STATE_SAFETY_TOOL_4 = "safety_tool_4"
+STATE_APARTMENT = apartment_screen.apartment_screen
+STATE_CASINO = casino_screen.casino_screen
+STATE_TO_THE_STREETS = city_screen.city_screen
+STATE_WORK = work_screen.work_screen
+STATE_RUSSIAN_ROULETTE = russian_roulette_screen.russian_roulette_screen
+STATE_SHOPPING = shopping_center_screen.shopping_center_screen
+STATE_CARS = cars_screen.cars_screen
+STATE_ELECTRONICS = electronics_screen.electronics_screen
+STATE_FURNITURE = furniture_screen.furniture_screen
+STATE_CLOTHING = clothing_screen.clothing_screen
+STATE_TOOLS = tools_screen.tools_screen
+STATE_GROCERIES = groceries_screen.groceries_screen
+STATE_SPORTS_CAR = sports_car_section_screen.sports_car_section_screen
+STATE_SUV = suv_car_section_screen.suv_car_section_screen
+STATE_HATCHBACK = hatchback_car_section_screen.hatchback_car_section_screen
+STATE_SEDAN = sedan_car_section_screen.sedan_car_section_screen
+STATE_PICKUP = pickup_car_section_screen.pickup_car_section_screen
+STATE_ACCESSORIES = accessories_section_screen.accessories_section_screen
+STATE_CONSOLES = consoles_section_screen.consoles_section_screen
+STATE_LAPTOPS = laptops_section_screen.laptops_section_screen
+STATE_SMARTPHONES = smartphones_section_screen.smartphones_section_screen
+STATE_ARMCHAIRS = armchairs_section_screen.armchairs_section_screen
+STATE_BEDS = beds_section_screen.beds_section_screen
+STATE_BOOKSHELVES = bookshleves_section_screen.bookshelves_section_screen
+STATE_TABLES = tables_section_screen.tables_section_screen
+STATE_TSHIRT = tshirt_section_screen.tshirt_section_screen
+STATE_HOODIE = hoodie_section_screen.hoodie_section_screen
+STATE_PANTS = pants_section_screen.pants_section_screen
+STATE_SNEES = snees_section_screen.snees_section_screen
+STATE_FRUITS  =  fruits_section_screen.fruits_section_screen
+STATE_BREAD = bread_section_screen.bread_section_screen
+STATE_VEGETABLES = vegetables_section_screen.vegetables_section_screen
+STATE_MILK = milk_section_screen.milk_section_screen
+STATE_HAND_TOOLS = hand_tools_section_screen.hand_tools_section_screen
+STATE_POWER_TOOLS = power_tools_section_screen.power_tools_section_screen
+STATE_SAFETY_GEAR = safety_gear_section_screen.safety_gear_section_screen
+STATE_TOOLS_ACCESSORIES = tools_accessories_section_screen.tools_accessories_section_screen
+STATE_SPORTS_CAR_1 = buy_product
+STATE_SPORTS_CAR_2 = buy_product
+STATE_SPORTS_CAR_3 = buy_product
+STATE_SPORTS_CAR_4 = buy_product
+STATE_SEDAN_CAR_1 = buy_product
+STATE_SEDAN_CAR_2 = buy_product
+STATE_SEDAN_CAR_3 = buy_product
+STATE_SEDAN_CAR_4 = buy_product
+STATE_SUV_CAR_1 = buy_product
+STATE_SUV_CAR_2 = buy_product
+STATE_SUV_CAR_3 = buy_product
+STATE_SUV_CAR_4 = buy_product
+STATE_PICKUP_CAR_1 = buy_product
+STATE_PICKUP_CAR_2 = buy_product
+STATE_PICKUP_CAR_3 = buy_product
+STATE_PICKUP_CAR_4 = buy_product
+STATE_HATCHBACK_CAR_1 = buy_product
+STATE_HATCHBACK_CAR_2 = buy_product
+STATE_HATCHBACK_CAR_3 = buy_product
+STATE_HATCHBACK_CAR_4 = buy_product
+STATE_CONSOLE_1 = buy_product
+STATE_CONSOLE_2 = buy_product
+STATE_CONSOLE_3 = buy_product
+STATE_CONSOLE_4 = buy_product
+STATE_ACC_1 = buy_product
+STATE_ACC_2 = buy_product
+STATE_ACC_3 = buy_product
+STATE_ACC_4 = buy_product
+STATE_LAPTOP_1 = buy_product
+STATE_LAPTOP_2 = buy_product
+STATE_LAPTOP_3 = buy_product
+STATE_LAPTOP_4 = buy_product
+STATE_SMARTPHONE_1 = buy_product
+STATE_SMARTPHONE_2 = buy_product
+STATE_SMARTPHONE_3 = buy_product
+STATE_SMARTPHONE_4 = buy_product
+STATE_CHAIR_1 = buy_product
+STATE_CHAIR_2 = buy_product
+STATE_CHAIR_3 = buy_product
+STATE_CHAIR_4 = buy_product
+STATE_BED_1 = buy_product
+STATE_BED_2 = buy_product
+STATE_BED_3 = buy_product
+STATE_BED_4 = buy_product
+STATE_SHELF_1 = buy_product
+STATE_SHELF_2 = buy_product
+STATE_SHELF_3 = buy_product
+STATE_SHELF_4 = buy_product
+STATE_TABLE_1 = buy_product
+STATE_TABLE_2 = buy_product
+STATE_TABLE_3 = buy_product
+STATE_TABLE_4 = buy_product
+STATE_HOODIE_1 = buy_product
+STATE_HOODIE_2 = buy_product
+STATE_HOODIE_3 = buy_product 
+STATE_HOODIE_4 = buy_product
+STATE_PANTS_1 = buy_product
+STATE_PANTS_2 = buy_product
+STATE_PANTS_3 = buy_product
+STATE_PANTS_4 = buy_product
+STATE_SHOE_1 = buy_product
+STATE_SHOE_2 = buy_product
+STATE_SHOE_3 = buy_product
+STATE_SHOE_4 = buy_product
+STATE_TSHIRT_1 = buy_product
+STATE_TSHIRT_2 = buy_product
+STATE_TSHIRT_3 = buy_product
+STATE_TSHIRT_4 = buy_product
+STATE_HAND_TOOL_1 = buy_product
+STATE_HAND_TOOL_2 = buy_product
+STATE_HAND_TOOL_3 = buy_product
+STATE_HAND_TOOL_4 = buy_product
+STATE_ACCS_TOOL_1 = buy_product
+STATE_ACCS_TOOL_2 = buy_product
+STATE_ACCS_TOOL_3 = buy_product
+STATE_ACCS_TOOL_4 = buy_product
+STATE_POWER_TOOL_1 = buy_product
+STATE_POWER_TOOL_2 = buy_product
+STATE_POWER_TOOL_3 = buy_product
+STATE_POWER_TOOL_4 = buy_product
+STATE_SAFETY_TOOL_1 = buy_product
+STATE_SAFETY_TOOL_2 = buy_product
+STATE_SAFETY_TOOL_3 = buy_product
+STATE_SAFETY_TOOL_4 = buy_product
+
+#list with all function names (its filled in automatically) and all states
+function_names = []
+states = []
+screen_and_buy_functions = {}
 
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']

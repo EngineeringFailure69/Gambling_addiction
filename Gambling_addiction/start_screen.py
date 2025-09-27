@@ -13,6 +13,8 @@ def main_screen():
     screen_width = const.screen.get_width()
     text_rect = pygame.Rect(10, 100, screen_width, 300)
 
+    utils.grab_all_variables("const.py", "STATE")
+
     while running:
         const.screen.fill(const.white)
 
@@ -25,7 +27,6 @@ def main_screen():
 
         Start_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-300, const.button_width, const.button_height)
         Quit_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-150, const.button_width, const.button_height)
-
 
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()

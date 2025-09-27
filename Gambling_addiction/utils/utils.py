@@ -58,381 +58,50 @@ import utils.file_utils as file_utils
 import sys
 from tkinter import * 
 from tkinter.ttk import *
+import os
+import ast
 
-def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, type):
+def grab_all_variables(file_path = "const.py", starts_with="STATE"):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        tree = ast.parse(file.read())
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and target.id.startswith(starts_with):
+                        value = eval(ast.unparse(node.value))
+                        key = target.id
+                        const.screen_and_buy_functions.update({key:value})  
+
+def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, type, buy = False, price  = 0):
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
-    handle_icon_click(events, icon_rect, type)
+    handle_icon_click(events, icon_rect, type, buy, price)
 
-def handle_icon_click(events, icon_rect, type):
+def handle_icon_click(events, icon_rect, type, buy, price):
     for event in events:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
-            if type == const.STATE_CASINO:
-                casino_screen.casino_screen()
-                return
-            elif type == const.STATE_APARTMENT:
-                apartment_screen.apartment_screen()
-                return
-            elif type == const.STATE_TO_THE_STREETS:
-                city_screen.city_screen()
-                return
-            elif type == const.STATE_WORK:
-                work_screen.work_screen()
-                return
-            elif type == const.STATE_RUSSIAN_ROULETTE:
-                russian_roulette_screen.russian_roulette_screen()
-                return
-            elif type == const.STATE_SHOPPING:
-                shopping_center_screen.shopping_center_screen()
-                return
-            elif type == const.STATE_CARS:
-                cars_screen.cars_screen()
-                return
-            elif type == const.STATE_ELECTRONICS:
-                electronics_screen.electronics_screen()
-                return
-            elif type == const.STATE_FURNITURE:
-                furniture_screen.furniture_screen()
-                return
-            elif type == const.STATE_CLOTHING:
-                clothing_screen.clothing_screen()
-                return
-            elif type == const.STATE_TOOLS:
-                tools_screen.tools_screen()
-                return
-            elif type == const.STATE_GROCERIES:
-                groceries_screen.groceries_screen()
-                return
-            elif type == const.STATE_SPORTS_CAR:
-                sports_car_section_screen.sports_car_section_screen()
-                return
-            elif type == const.STATE_SEDAN:
-                sedan_car_section_screen.sedan_car_section_screen()
-                return
-            elif type == const.STATE_HATCHBACK:
-                hatchback_car_section_screen.hatchback_car_section_screen()
-                return
-            elif type == const.STATE_SUV:
-                suv_car_section_screen.suv_car_section_screen()
-                return
-            elif type == const.STATE_PICKUP:
-                pickup_car_section_screen.pickup_car_section_screen()
-                return
-            elif type == const.STATE_ACCESSORIES:
-                accessories_section_screen.accessories_section_screen()
-                return
-            elif type == const.STATE_CONSOLES:
-                consoles_section_screen.consoles_section_screen()
-                return
-            elif type == const.STATE_LAPTOPS: 
-                laptops_section_screen.laptops_section_screen()
-                return
-            elif type == const.STATE_SMARTPHONES:
-                smartphones_section_screen.smartphones_section_screen()
-                return
-            elif type == const.STATE_ARMCHAIRS:
-                armchairs_section_screen.armchairs_section_screen()
-                return
-            elif type == const.STATE_BOOKSHELVES:
-                bookshleves_section_screen.bookshelves_section_screen()
-                return
-            elif type == const.STATE_BEDS:
-                beds_section_screen.beds_section_screen()
-                return
-            elif type == const.STATE_TABLES:
-                tables_section_screen.tables_section_screen()
-                return 
-            elif type == const.STATE_TSHIRT:
-                tshirt_section_screen.tshirt_section_screen()
-                return
-            elif type == const.STATE_HOODIE:
-                hoodie_section_screen.hoodie_section_screen()
-                return
-            elif type == const.STATE_PANTS:
-                pants_section_screen.pants_section_screen()
-                return
-            elif type == const.STATE_SNEES:
-                snees_section_screen.snees_section_screen()
-                return
-            elif type == const.STATE_FRUITS:
-                fruits_section_screen.fruits_section_screen()
-                return
-            elif type == const.STATE_VEGETABLES:
-                vegetables_section_screen.vegetables_section_screen()
-                return
-            elif type == const.STATE_BREAD:
-                bread_section_screen.bread_section_screen()
-                return
-            elif type == const.STATE_MILK:
-                milk_section_screen.milk_section_screen()
-                return
-            elif type == const.STATE_HAND_TOOLS:
-                hand_tools_section_screen.hand_tools_section_screen()
-                return
-            elif type == const.STATE_TOOLS_ACCESSORIES:
-                tools_accessories_section_screen.tools_accessories_section_screen()
-                return
-            elif type == const.STATE_POWER_TOOLS:
-                power_tools_section_screen.power_tools_section_screen()
-                return
-            elif type == const.STATE_SAFETY_GEAR:
-                safety_gear_section_screen.safety_gear_section_screen()
-                return
-            elif type == const.STATE_SPORTS_CAR_1:
-                buy_product(45000)
-                return
-            elif type == const.STATE_SPORTS_CAR_2:
-                buy_product(60000)
-                return
-            elif type == const.STATE_SPORTS_CAR_3:
-                buy_product(110000)
-                return
-            elif type == const.STATE_SPORTS_CAR_4:
-                buy_product(160000)
-                return
-            elif type == const.STATE_SEDAN_CAR_1:
-                buy_product(25700)
-                return
-            elif type == const.STATE_SEDAN_CAR_2:
-                buy_product(28200)
-                return
-            elif type == const.STATE_SEDAN_CAR_3:
-                buy_product(23900)
-                return
-            elif type == const.STATE_SEDAN_CAR_4:
-                buy_product(27500)
-                return
-            elif type == const.STATE_SUV_CAR_1:
-                buy_product(28500)
-                return
-            elif type == const.STATE_SUV_CAR_2:
-                buy_product(36800)
-                return
-            elif type == const.STATE_SUV_CAR_3:
-                buy_product(35000)
-                return
-            elif type == const.STATE_SUV_CAR_4:
-                buy_product(29500)
-                return  
-            elif type == const.STATE_HATCHBACK_CAR_1:
-                buy_product(34500)
-                return  
-            elif type == const.STATE_HATCHBACK_CAR_2:
-                buy_product(19200)
-                return 
-            elif type == const.STATE_HATCHBACK_CAR_3:
-                buy_product(26700)
-                return 
-            elif type == const.STATE_HATCHBACK_CAR_4:
-                buy_product(23900)
-                return  
-            elif type == const.STATE_PICKUP_CAR_1:
-                buy_product(32500)
-                return  
-            elif type == const.STATE_PICKUP_CAR_2:
-                buy_product(36800)
-                return 
-            elif type == const.STATE_PICKUP_CAR_3:
-                buy_product(40200)
-                return 
-            elif type == const.STATE_PICKUP_CAR_4:
-                buy_product(43500)
-                return   
-            elif type == const.STATE_ACC_1:
-                buy_product(129)
-                return
-            elif type == const.STATE_ACC_2:
-                buy_product(35)
-                return
-            elif type == const.STATE_ACC_3: 
-                buy_product(49)
-                return 
-            elif type == const.STATE_ACC_4:
-                buy_product(79)
-                return
-            elif type ==  const.STATE_CONSOLE_1:
-                buy_product(499)
-                return
-            elif type == const.STATE_CONSOLE_2:
-                buy_product(399)
-                return
-            elif type == const.STATE_CONSOLE_3:
-                buy_product(299)
-                return
-            elif type == const.STATE_CONSOLE_4:
-                buy_product(349)
-                return
-            elif type == const.STATE_LAPTOP_1:
-                buy_product(1800)
-                return
-            elif type == const.STATE_LAPTOP_2:
-                buy_product(2200)
-                return
-            elif type == const.STATE_LAPTOP_3:
-                buy_product(1400)
-                return
-            elif type == const.STATE_LAPTOP_4:
-                buy_product(1000)
-                return  
-            elif type == const.STATE_SMARTPHONE_1:
-                buy_product(299)
-                return
-            elif type == const.STATE_SMARTPHONE_2:
-                buy_product(499)
-                return
-            elif type == const.STATE_SMARTPHONE_3:
-                buy_product(199)
-                return
-            elif type == const.STATE_SMARTPHONE_4:
-                buy_product(379)
-                return
-            elif type == const.STATE_CHAIR_1:
-                buy_product(350)
-                return
-            elif type == const.STATE_CHAIR_2:
-                buy_product(425)
-                return
-            elif type == const.STATE_CHAIR_3:
-                buy_product(300)
-                return
-            elif type == const.STATE_CHAIR_4:
-                buy_product(445)
-                return
-            elif type == const.STATE_BED_1:
-                buy_product(550)
-                return
-            elif type == const.STATE_BED_2:
-                buy_product(720)
-                return
-            elif type == const.STATE_BED_3:
-                buy_product(620)
-                return
-            elif type == const.STATE_BED_4:
-                buy_product(650)
-                return
-            elif type == const.STATE_SHELF_1:
-                buy_product(849)
-                return
-            elif type ==  const.STATE_SHELF_2:
-                buy_product(659)
-                return
-            elif type == const.STATE_SHELF_3:
-                buy_product(659)
-                return 
-            elif type == const.STATE_SHELF_4:
-                buy_product(849)
-                return
-            elif type == const.STATE_TABLE_1:
-                buy_product(299)
-                return
-            elif type == const.STATE_TABLE_2:
-                buy_product(349)
-                return
-            elif type == const.STATE_TABLE_3:
-                buy_product(225)
-                return
-            elif type == const.STATE_TABLE_4:
-                buy_product(189)
-                return
-            elif type == const.STATE_HOODIE_1:
-                buy_product(45)
-                return  
-            elif type == const.STATE_HOODIE_2:
-                buy_product(60)
-                return   
-            elif type == const.STATE_HOODIE_3:
-                buy_product(55)
-                return 
-            elif type == const.STATE_HOODIE_4:
-                buy_product(50)
-                return 
-            elif type == const.STATE_PANTS_1:
-                buy_product(50)
-                return
-            elif type == const.STATE_PANTS_2:
-                buy_product(65)
-                return
-            elif type == const.STATE_PANTS_3:
-                buy_product(40)
-                return
-            elif type == const.STATE_PANTS_4:
-                buy_product(45)
-                return
-            elif type == const.STATE_SHOE_1:
-                buy_product(120)
-                return
-            elif type == const.STATE_SHOE_2:
-                buy_product(95)
-                return
-            elif type == const.STATE_SHOE_3:
-                buy_product(80)
-                return
-            elif type == const.STATE_SHOE_4:
-                buy_product(110)
-                return
-            elif type == const.STATE_TSHIRT_1:
-                buy_product(15)
-                return
-            elif type == const.STATE_TSHIRT_2:
-                buy_product(10)
-                return
-            elif type == const.STATE_TSHIRT_3:
-                buy_product(18)
-                return
-            elif type == const.STATE_TSHIRT_4:
-                buy_product(20)
-                return
-            elif type == const.STATE_HAND_TOOL_1:
-                buy_product(29)
-                return
-            elif type == const.STATE_HAND_TOOL_2:
-                buy_product(12)
-                return
-            elif type == const.STATE_HAND_TOOL_3:
-                buy_product(35)
-                return
-            elif type == const.STATE_HAND_TOOL_4:
-                buy_product(42)
-                return
-            elif type == const.STATE_POWER_TOOL_1:
-                buy_product(125)
-                return
-            elif type == const.STATE_POWER_TOOL_2:
-                buy_product(230)
-                return
-            elif type == const.STATE_POWER_TOOL_3:
-                buy_product(140)
-                return
-            elif type == const.STATE_POWER_TOOL_4:
-                buy_product(195)
-                return
-            elif type == const.STATE_SAFETY_TOOL_1:
-                buy_product(25)
-                return
-            elif type == const.STATE_SAFETY_TOOL_2:
-                buy_product(60)
-                return
-            elif type == const.STATE_SAFETY_TOOL_3:
-                buy_product(15)
-                return
-            elif type == const.STATE_SAFETY_TOOL_4:
-                buy_product(40)
-                return
-            elif type == const.STATE_ACCS_TOOL_1:
-                buy_product(15)
-                return
-            elif type == const.STATE_ACCS_TOOL_2:
-                buy_product(22)
-                return
-            elif type == const.STATE_ACCS_TOOL_3:
-                buy_product(60)
-                return
-            elif type == const.STATE_ACCS_TOOL_4:
-                buy_product(30)
-                return
+            if type in const.screen_and_buy_functions.values():
+                if buy == False:
+                    type()
+                    return
+                else:
+                    type(price)
+                    return
             
+def fill_dictionary_with_screen_functions():
+    directory_paths = "interface"
+    for dirpath, _, filenames in os.walk(directory_paths):
+        for filename in filenames:
+            if filename.endswith('.py'):
+                file_path = os.path.join(dirpath, filename)
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    tree = ast.parse(file.read())
+                    for node in ast.walk(tree):
+                        if isinstance(node, ast.FunctionDef):
+                            const.function_names.append(node.name)
+
 def handle_quit(running):
     for i in pygame.event.get():
             if i.type == pygame.QUIT:
