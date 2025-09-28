@@ -15,23 +15,23 @@ def main_screen():
 
     utils.grab_all_variables("const.py", "STATE")
 
-    while running:
-        const.screen.fill(const.white)
+    Start_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-300, const.button_width, const.button_height)
+    Quit_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-150, const.button_width, const.button_height)
 
-        draw_functions.load_background_image(const.screen,  "background_photos\\start_screen_background.png")
-        draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
+    draw_functions.load_background_image(const.screen, "background_photos\\start_screen_background.png")
+    draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
+
+    draw_functions.draw_text(const.screen, text_messages.start_screen_info, const.black, text_rect, font, line_spacing=5)
+
+    while running:
         
         running = utils.handle_quit(running)
 
-        draw_functions.draw_text(const.screen, text_messages.start_screen_info, const.black, text_rect, font, line_spacing=5)
-
-        Start_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-300, const.button_width, const.button_height)
-        Quit_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-150, const.button_width, const.button_height)
-
         mouse_pos = pygame.mouse.get_pos()
-        mouse_click = pygame.mouse.get_pressed()
+        mouse_click = pygame.mouse.get_pressed() 
 
-        start_colour, quit_colour = draw_functions.change_rect_colour(Start_button, Quit_button, mouse_pos)
+        start_colour = draw_functions.change_rect_colour(Start_button, mouse_pos)
+        quit_colour = draw_functions.change_rect_colour(Quit_button, mouse_pos) 
 
         draw_functions.draw_button(const.screen, start_colour, Start_button, "Start", font, const.black)
         draw_functions.draw_button(const.screen, quit_colour, Quit_button, "Quit", font, const.black)

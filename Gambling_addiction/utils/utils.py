@@ -74,9 +74,6 @@ def grab_all_variables(file_path = "const.py", starts_with="STATE"):
 
 def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, type, buy = False, price  = 0):
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
-    handle_icon_click(events, icon_rect, type, buy, price)
-
-def handle_icon_click(events, icon_rect, type, buy, price):
     for event in events:
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -89,18 +86,6 @@ def handle_icon_click(events, icon_rect, type, buy, price):
                 else:
                     type(price)
                     return
-            
-def fill_dictionary_with_screen_functions():
-    directory_paths = "interface"
-    for dirpath, _, filenames in os.walk(directory_paths):
-        for filename in filenames:
-            if filename.endswith('.py'):
-                file_path = os.path.join(dirpath, filename)
-                with open(file_path, 'r', encoding='utf-8') as file:
-                    tree = ast.parse(file.read())
-                    for node in ast.walk(tree):
-                        if isinstance(node, ast.FunctionDef):
-                            const.function_names.append(node.name)
 
 def handle_quit(running):
     for i in pygame.event.get():
@@ -156,7 +141,6 @@ def handle_choice_buttons(events, button, boolChoice, counter, condition, rightB
                 elif counter != condition and not boolChoice and not rightButton:
                     counter -= 1 
                     boolChoice = True
-
     for event in events:
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
@@ -276,12 +260,6 @@ def date_time_timer():
     
     months = str(const.day_counter) + " of " + month[const.return_month_counter]
     return days[const.return_day_counter], months, const.year_counter
-
-def get_screen_resolution():
-    root = Tk()
-    height = root.winfo_screenheight()
-    width = root.winfo_screenwidth()
-    return height, width
 
 def job_details():
     mouse_pos = pygame.mouse.get_pos()

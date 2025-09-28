@@ -52,14 +52,11 @@ def draw_title(screen, color, text = "GAMBLING ADDICTION"):
     
     screen.blit(title_surface, title_rect)
 
-def change_rect_colour(Start_button, Quit_button, mouse_pos):
-    start_colour = const.blue
-    quit_colour = const.blue
-    if Start_button.collidepoint(mouse_pos):
-        start_colour = const.hover_blue
-    if Quit_button.collidepoint(mouse_pos):
-        quit_colour = const.hover_blue
-    return start_colour, quit_colour
+def change_rect_colour(button_rect, mouse_pos):
+    colour = const.blue
+    if button_rect.collidepoint(mouse_pos):
+        colour = const.hover_blue
+    return colour
 
 def load_background_image(screen, imagePath):
     image = pygame.image.load(file_utils.resource_path(imagePath))

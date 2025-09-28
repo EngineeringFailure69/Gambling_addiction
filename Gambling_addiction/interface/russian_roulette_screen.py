@@ -48,9 +48,13 @@ def russian_roulette_screen():
         text, active = utils.process_bet_text_box_events(events, const.your_bet_box, text, active)
         draw_functions.draw_text_box(const.screen, const.blue, const.your_bet_box, text, font, const.white)
 
-        draw_functions.draw_button(const.screen, const.blue, const.bet_button, "Bet", font, const.black)
-        draw_functions.draw_button(const.screen, const.blue, const.pull_the_trigger_button, "Pull the trigger", font, const.black)
-        draw_functions.draw_button(const.screen, const.blue, const.spin_the_barrell_button, "Spin the barrell/roll the dice", font, const.black)
+        bet_colour = draw_functions.change_rect_colour(const.bet_button, mouse_pos)
+        pull_the_trigger_button_colour = draw_functions.change_rect_colour(const.pull_the_trigger_button, mouse_pos)
+        spin_the_barrell_button_colour = draw_functions.change_rect_colour(const.spin_the_barrell_button, mouse_pos)
+
+        draw_functions.draw_button(const.screen, bet_colour, const.bet_button, "Bet", font, const.black)
+        draw_functions.draw_button(const.screen, pull_the_trigger_button_colour, const.pull_the_trigger_button, "Pull the trigger", font, const.black)
+        draw_functions.draw_button(const.screen, spin_the_barrell_button_colour, const.spin_the_barrell_button, "Spin the barrell/roll the dice", font, const.black)
 
         info_text = 'Balance:' + str(const.balance) + ' ' + 'Your bet: ' + str(const.your_bet) + " " + 'Prize: ' + str(prize)
         if const.bet_button.collidepoint(mouse_pos):
