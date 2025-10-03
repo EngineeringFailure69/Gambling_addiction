@@ -58,15 +58,24 @@ def change_rect_colour(button_rect, mouse_pos):
         colour = const.hover_blue
     return colour
 
-def load_background_image(screen, imagePath):
-    image = pygame.image.load(file_utils.resource_path(imagePath))
-    scaled_image = pygame.transform.scale(image, (const.screen.get_width(), const.screen.get_height()))
-    screen.blit(scaled_image, (0, 0))
+def cache_and_get_images_and_icons(imagePath, size=None):
+    key = (imagePath, size)
+    if key not in const.images_cache:
+        loaded_image = pygame.image.load(file_utils.resource_path(imagePath)).convert_alpha()
+        if size:
+            loaded_image = pygame.transform.scale(loaded_image, size)
+        const.images_cache[key] = loaded_image
+    return const.images_cache[key]
 
-def load_icons(screen, imagePath, icon_width, icon_height, icon_position_x, icon_position_y):
-    image = pygame.image.load(file_utils.resource_path(imagePath))
-    scaled_image = pygame.transform.scale(image, (icon_width, icon_height))
-    screen.blit(scaled_image, (icon_position_x, icon_position_y))
+def load_background_image(screen, imagePath):
+    size = (const.screen.get_width(), const.screen.get_height())
+    image = cache_and_get_images_and_icons(imagePath, size)
+    screen.blit(image, (0, 0))
+
+def load_icons(screen, iconPath, icon_width, icon_height, icon_position_x, icon_position_y):
+    size = (icon_width, icon_height)
+    icon = cache_and_get_images_and_icons(iconPath, size)
+    screen.blit(icon, (icon_position_x, icon_position_y))
     return icon_position_x, icon_position_y, icon_width, icon_height
 
 def draw_text_box(screen, colour, rect, text, font, text_color):

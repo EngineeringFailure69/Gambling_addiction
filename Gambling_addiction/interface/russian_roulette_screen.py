@@ -99,7 +99,7 @@ def russian_roulette_screen():
                 if win and game_over:
                     const.balance += prize
                     draw_functions.draw_message_box('You won', f"You won the game, prize is {str(prize)}, your current balance is {str(const.balance)}")
-                    file_utils.update_value_in_file("save_files\information.txt", "balance")
+                    file_utils.update_value_in_file("save_files\\information.txt", "balance")
                     barrell_spin = False
                 if not win and game_over:
                     draw_functions.draw_message_box('You lost', f"You lost the game, you are dead, your balance is now 0 because you lost everything you had, and your game will restart")

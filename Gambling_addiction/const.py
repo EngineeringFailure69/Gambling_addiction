@@ -187,6 +187,9 @@ STATE_BUY_PRODUCT = buy_product
 #list with all state names and all functions connected to them (its filled in automatically, no need to touch)
 screen_and_buy_functions = {}
 
+#Image/icons caching dictionary
+images_cache = {}
+
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 digit_counter = 0
@@ -223,4 +226,4 @@ index = file_utils.load_save_game_info(save_path, "index") #0
 
 buttons_list = []
 tes = False
-job_apply = False
+job_apply = False 

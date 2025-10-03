@@ -233,19 +233,19 @@ def date_time_timer():
         const.day_counter = 1
         const.month_counter += 1
         const.balance += const.salary
-        file_utils.update_value_in_file("save_files\information.txt", "balance")
+        file_utils.update_value_in_file("save_files\\information.txt", "balance")
         const.return_month_counter += 1
     elif const.day_counter > 29 and const.month_counter == 2 and const.leap_year: #if its February and it is leap year
         const.day_counter = 1
         const.month_counter += 1
         const.balance += const.salary
-        file_utils.update_value_in_file("save_files\information.txt", "balance")
+        file_utils.update_value_in_file("save_files\\information.txt", "balance")
         const.return_month_counter += 1
     elif const.day_counter > 31 and const.month_counter in days31:
         const.day_counter = 1
         const.month_counter += 1
         const.balance += const.salary
-        file_utils.update_value_in_file("save_files\information.txt", "balance")
+        file_utils.update_value_in_file("save_files\\information.txt", "balance")
         const.return_month_counter += 1
         if const.month_counter > 12 or const.return_month_counter > 11:
             const.month_counter = 1
@@ -255,7 +255,7 @@ def date_time_timer():
         const.day_counter = 1
         const.month_counter += 1
         const.balance += const.salary
-        file_utils.update_value_in_file("save_files\information.txt", "balance")
+        file_utils.update_value_in_file("save_files\\information.txt", "balance")
         const.return_month_counter += 1
     
     months = str(const.day_counter) + " of " + month[const.return_month_counter]

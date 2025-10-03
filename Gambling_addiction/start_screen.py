@@ -3,6 +3,7 @@ import utils.draw_functions as draw_functions
 import const
 import interface.apartment_screen as apartment_screen
 import utils.utils as utils
+import utils.file_utils as file_utils
 import sys
 import text_messages
 
@@ -13,7 +14,8 @@ def main_screen():
     screen_width = const.screen.get_width()
     text_rect = pygame.Rect(10, 100, screen_width, 300)
 
-    utils.grab_all_variables("const.py", "STATE")
+    const_path = file_utils.resource_path("const.py")
+    utils.grab_all_variables(const_path, "STATE")
 
     Start_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-300, const.button_width, const.button_height)
     Quit_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-150, const.button_width, const.button_height)
