@@ -35,11 +35,40 @@ def draw_text(surface, text, color, rect, font, line_spacing=0, antialias=True):
         rendered_line = font.render(line, antialias, color)
         surface.blit(rendered_line, (x, y))
 
-def draw_button(surface, colour, rect, text, font, text_color):
-    pygame.draw.rect(surface, colour, rect)
+def draw_button(surface, colour, rect, text, font, text_color, mouse_pos = (0, 0)):
+    hover_red = 0
+    hover_green = 0
+    hover_blue = 55
+    hover_colour =() #colour
+    if rect.collidepoint(mouse_pos):
+        hover_colour = determine_colour(hover_red, hover_green, hover_blue, hover_colour, colour)
+    else:
+        hover_colour = colour
+    pygame.draw.rect(surface, hover_colour, rect)
     text_surface = font.render(text, True, text_color)
     text_rect = text_surface.get_rect(center=(rect[0] + rect[2] // 2, rect[1] + rect[3] // 2))
     surface.blit(text_surface, text_rect)
+
+def determine_colour(hover_red, hover_green, hover_blue, hover_colour, colour):
+    r = colour[0] #taking colour red, which is the first element of the colour tupple
+    g = colour[1] #taking colour green, which is the second element of the colour tupple
+    b = colour[2] #taking colour blue, which is the third element of the colour tupple
+    if r <= 255 and r + hover_red <= 255:
+            r = r + hover_red
+            hover_colour = hover_colour + (r,)
+    else:
+        hover_colour = hover_colour + (r,)
+    if g <= 255 and g + hover_green <= 255:
+            g = g + hover_green
+            hover_colour = hover_colour + (g,)
+    else:
+        hover_colour = hover_colour + (g,)
+    if b <= 255 and b + hover_blue <= 255:
+            b = b + hover_blue
+            hover_colour = hover_colour + (b,)
+    else:
+        hover_colour = hover_colour + (b,)
+    return hover_colour        
 
 def draw_title(screen, color, text = "GAMBLING ADDICTION"):
     font_size = 100
@@ -51,12 +80,6 @@ def draw_title(screen, color, text = "GAMBLING ADDICTION"):
     title_rect = title_surface.get_rect(center=((screen.get_width() - 50) // 2, screen.get_height() / 12))
     
     screen.blit(title_surface, title_rect)
-
-def change_rect_colour(button_rect, mouse_pos):
-    colour = const.blue
-    if button_rect.collidepoint(mouse_pos):
-        colour = const.hover_blue
-    return colour
 
 def cache_and_get_images_and_icons(imagePath, size=None):
     key = (imagePath, size)

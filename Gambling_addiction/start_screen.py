@@ -32,11 +32,8 @@ def main_screen():
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed() 
 
-        start_colour = draw_functions.change_rect_colour(Start_button, mouse_pos)
-        quit_colour = draw_functions.change_rect_colour(Quit_button, mouse_pos) 
-
-        draw_functions.draw_button(const.screen, start_colour, Start_button, "Start", font, const.black)
-        draw_functions.draw_button(const.screen, quit_colour, Quit_button, "Quit", font, const.black)
+        draw_functions.draw_button(const.screen, const.blue, Start_button, "Start", font, const.black, mouse_pos)
+        draw_functions.draw_button(const.screen, const.blue, Quit_button, "Quit", font, const.black, mouse_pos)
 
         if Quit_button.collidepoint(mouse_pos):
             if mouse_click[0]:
