@@ -13,14 +13,17 @@ def main_screen():
     font = pygame.font.SysFont(None, 30)
     screen_width = const.screen.get_width()
     text_rect = pygame.Rect(10, 100, screen_width, 300)
+    img_path = "background_photos\\start_screen_background.png"
+    start_button_y = const.screen.get_height()-300
+    quit_button_y = const.screen.get_height()-150
 
     const_path = file_utils.resource_path("const.py")
     utils.grab_all_variables(const_path, "STATE")
 
-    Start_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-300, const.button_width, const.button_height)
-    Quit_button = pygame.Rect(const.screen.get_width()/2-const.button_width/2, const.screen.get_height()-150, const.button_width, const.button_height)
+    start_button_rect = pygame.Rect(const.button_center_x, start_button_y, const.button_width, const.button_height)
+    quit_button_rect = pygame.Rect(const.button_center_x, quit_button_y, const.button_width, const.button_height)
 
-    draw_functions.load_background_image(const.screen, "background_photos\\start_screen_background.png")
+    draw_functions.load_background_image(const.screen, img_path)
     draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
 
     draw_functions.draw_text(const.screen, text_messages.start_screen_info, const.black, text_rect, font, line_spacing=5)
@@ -32,14 +35,14 @@ def main_screen():
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed() 
 
-        draw_functions.draw_button(const.screen, const.blue, Start_button, "Start", font, const.black, mouse_pos)
-        draw_functions.draw_button(const.screen, const.blue, Quit_button, "Quit", font, const.black, mouse_pos)
+        draw_functions.draw_button(const.screen, const.blue, start_button_rect, "Start", font, const.black, mouse_pos)
+        draw_functions.draw_button(const.screen, const.blue, quit_button_rect, "Quit", font, const.black, mouse_pos)
 
-        if Quit_button.collidepoint(mouse_pos):
+        if quit_button_rect.collidepoint(mouse_pos):
             if mouse_click[0]:
                 pygame.quit()
                 sys.exit(0)
-        elif Start_button.collidepoint(mouse_pos):
+        elif start_button_rect.collidepoint(mouse_pos):
             if mouse_click[0]:
                 apartment_screen.apartment_screen()
 

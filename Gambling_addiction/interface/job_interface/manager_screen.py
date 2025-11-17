@@ -18,13 +18,15 @@ def manager_screen():
     while running:
         events = pygame.event.get()
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\door_icon.webp", 75, 75, const.screen.get_width()-100, const.screen.get_height()-80)
+        mouse_pos = pygame.mouse.get_pos()
+
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
         
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\work_icon.webp", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
+        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.work_icon_path, const.work_icon_width, const.work_icon_height, const.work_icon_position_x, const.work_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_WORK)
 
-        draw_functions.draw_button(const.screen, const.blue, const.apply_button, "Apply", font, const.white)
+        draw_functions.draw_button(const.screen, const.blue, const.apply_button, "Apply", font, const.white, mouse_pos)
         utils.job_apply(const.apply_button, 10000, 1095, "manager")
        
         pygame.display.flip()

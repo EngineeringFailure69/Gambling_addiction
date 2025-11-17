@@ -28,11 +28,13 @@ def russian_roulette_screen():
     spinning = False
     spin_start_ms = 0
     MESSAGE_DURATION_MS = 2000
-  
+
+    bckgd_img_path = "background_photos\\game_russian_roulette_background.png"
+
     while running:
         events = pygame.event.get()
         const.screen.fill(const.white)
-        draw_functions.load_background_image(const.screen, "background_photos\\game_russian_roulette_background.png")
+        draw_functions.load_background_image(const.screen, bckgd_img_path)
 
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
@@ -42,7 +44,7 @@ def russian_roulette_screen():
             draw_functions.draw_message_box('Roulette info', text_messages.russian_roulette_text)
             drawn = True
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\door_icon.webp", 75, 75, const.screen.get_width()-100, const.screen.get_height()-80)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
 
         text, active = utils.process_bet_text_box_events(events, const.your_bet_box, text, active)

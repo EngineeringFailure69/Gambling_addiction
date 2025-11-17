@@ -56,6 +56,28 @@ pygame.display.set_caption('Gambling addiction')
 #Buttons
 button_width = 300
 button_height = 80
+button_center_x = const.screen.get_width()/2-const.button_width/2
+
+#door icon
+door_icon_path = "icons\\door_icon.webp"
+door_icon_width = 75
+door_icon_height = 75
+door_icon_position_x = screen.get_width()-100
+door_icon_position_y = screen.get_height()-80
+
+#shopping icon
+shopping_icon_path = "icons\\shopping_icon.svg"
+shopping_icon_width = 70
+shopping_icon_height = 70
+shopping_icon_position_x = screen.get_width()/47
+shopping_icon_position_y = screen.get_height()-80
+
+#work icon
+work_icon_path = "icons\\work_icon.webp"
+work_icon_width = 70
+work_icon_height = 70
+work_icon_position_x = screen.get_width()/47
+work_icon_position_y = screen.get_height()-80
 
 #Often used UI elements
 bet_button = pygame.Rect(screen.get_width()/60, screen.get_height()//50, button_width-250, button_height-50)
