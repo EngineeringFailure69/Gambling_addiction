@@ -9,7 +9,7 @@ import ast
 def get_user_save_dir():
     # name of the exe file, example: "Gambling_addiction"
     exe_name = os.path.splitext(os.path.basename(sys.executable))[0]
-    VERSION = "0.111111111111112121212121212"   # change this before making new .exe
+    VERSION = "0.111111111111112121212121212121"   # change this before making new .exe
     path = user_data_dir(exe_name, "YourName", version=VERSION)
     os.makedirs(path, exist_ok=True)
     return path
@@ -58,6 +58,7 @@ def load_list_from_file(path, key):
     full_path = extract_default_save()
     with open(full_path, 'r', encoding='utf-8') as file:
         for line in file:
+            line = line.strip()
             if line.startswith(f"{key}:"):
                 value_str = line.split(":", 1)[1].strip()
                 return ast.literal_eval(value_str)

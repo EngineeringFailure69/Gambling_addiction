@@ -16,6 +16,11 @@ def apartment_screen():
     day = ""
     month = ""
     year = 0
+    draw_inventory = False
+    inventory_length = len(const.inventory_list)
+    next_button_rect = pygame.Rect(0, 0, 0, 0)
+    use_button_rect = pygame.Rect(0, 0, 0, 0)
+    product = None
 
     while running:
         events = pygame.event.get()
@@ -29,6 +34,31 @@ def apartment_screen():
         day, month, year = utils.date_time_timer()
         draw_functions.draw_text(const.screen, f"Date: {day}, {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
 
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_click = pygame.mouse.get_pressed()
+        draw_functions.draw_button(const.screen, const.blue, const.inventory_button, "Inventory", font, const.black, mouse_pos)
+
+        if inventory_length > 0:
+            product = const.inventory_list[const.inventory_index]
+
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if const.inventory_button.collidepoint(mouse_pos):
+                    draw_inventory = not draw_inventory
+                if next_button_rect.collidepoint(mouse_pos):
+                    if const.inventory_index == inventory_length - 1:
+                        const.inventory_index = 0
+                    elif const.inventory_index < inventory_length - 1:
+                        const.inventory_index += 1
+                if use_button_rect.collidepoint(mouse_pos) and inventory_length > 0:
+                    if product.type == "car":
+                        draw_functions.draw_message_box("Used car", f"You went for a nice drive in your {product.item_type} car")
+            
+        if draw_inventory and inventory_length > 0:
+           next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen, product)
+        elif draw_inventory and inventory_length <= 0:
+            next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen)
+            
         file_utils.update_value_in_file("save_files\\information.txt", "day_counter")        
         file_utils.update_value_in_file("save_files\\information.txt", "month_counter")
         file_utils.update_value_in_file("save_files\\information.txt", "year_counter")

@@ -57,27 +57,28 @@ pygame.display.set_caption('Gambling addiction')
 button_width = 300
 button_height = 80
 button_center_x = const.screen.get_width()/2-const.button_width/2
+import const
 
 #door icon
 door_icon_path = "icons\\door_icon.webp"
 door_icon_width = 75
 door_icon_height = 75
-door_icon_position_x = screen.get_width()-100
-door_icon_position_y = screen.get_height()-80
+door_icon_position_x = const.screen.get_width()-100
+door_icon_position_y = const.screen.get_height()-80
 
 #shopping icon
 shopping_icon_path = "icons\\shopping_icon.svg"
 shopping_icon_width = 70
 shopping_icon_height = 70
-shopping_icon_position_x = screen.get_width()/47
-shopping_icon_position_y = screen.get_height()-80
+shopping_icon_position_x = const.screen.get_width()/47
+shopping_icon_position_y = const.screen.get_height()-80
 
 #work icon
 work_icon_path = "icons\\work_icon.webp"
 work_icon_width = 70
 work_icon_height = 70
-work_icon_position_x = screen.get_width()/47
-work_icon_position_y = screen.get_height()-80
+work_icon_position_x = const.screen.get_width()/47
+work_icon_position_y = const.screen.get_height()-80
 
 #Often used UI elements
 bet_button = pygame.Rect(screen.get_width()/60, screen.get_height()//50, button_width-250, button_height-50)
@@ -119,6 +120,8 @@ spin_the_barrell_button = pygame.Rect(screen.get_width()-510, screen.get_height(
 
 info = pygame.Rect(0, screen.get_height()-button_height+30, screen.get_width()-200, button_height-30)
 apply_button = pygame.Rect(screen.get_width()/2-button_width/2, screen.get_height()-(screen.get_height()/3), button_width, button_height) 
+
+inventory_button = pygame.Rect(screen.get_width()-180, screen.get_height()//50, button_width-150, button_height-50)
 
 save_path = file_utils.extract_default_save()
 balance = file_utils.load_save_game_info("save_files\\information.txt", "balance")
@@ -204,7 +207,7 @@ STATE_HAND_TOOLS = hand_tools_section_screen.hand_tools_section_screen
 STATE_POWER_TOOLS = power_tools_section_screen.power_tools_section_screen
 STATE_SAFETY_GEAR = safety_gear_section_screen.safety_gear_section_screen
 STATE_TOOLS_ACCESSORIES = tools_accessories_section_screen.tools_accessories_section_screen
-STATE_BUY_PRODUCT = buy_product
+STATE_BUY_PRODUCT = buy_product_and_add_to_the_inventory
 
 #list with all state names and all functions connected to them (its filled in automatically, no need to touch)
 screen_and_buy_functions = {}
@@ -249,3 +252,6 @@ index = file_utils.load_save_game_info(save_path, "index") #0
 buttons_list = []
 tes = False
 job_apply = False 
+
+inventory_list = file_utils.load_list_from_file(save_path, "inventory_list") 
+inventory_index = 0

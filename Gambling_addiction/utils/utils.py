@@ -71,8 +71,8 @@ def grab_all_variables(file_path = "const.py", starts_with="STATE"):
                         value = eval(ast.unparse(node.value))
                         key = target.id
                         const.screen_and_buy_functions.update({key:value})  
-
-def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, type, buy = False, price  = 0):
+ 
+def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, type):
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
     for event in events:
         if event.type == pygame.QUIT:
@@ -80,12 +80,19 @@ def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, i
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
             if type in const.screen_and_buy_functions.values():
-                if buy == False:
-                    type()
-                    return
-                else:
-                    type(price)
-                    return
+                type()
+                return
+                
+def buy(events, position_x, position_y, icon_width, icon_height, type, price, product):
+    icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
+    for event in events:
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
+            if type in const.screen_and_buy_functions.values():
+                type(price, product)
+                return
 
 def handle_quit(running):
     for i in pygame.event.get():
@@ -391,5 +398,13 @@ def restart_game():
     import start_screen  
     start_screen.main_screen() 
 
-def buy_product(price):
-    draw_functions.draw_message_box("Work in progress", f"Coming soon: {price}")
+def buy_product_and_add_to_the_inventory(price, product):
+    save_path = file_utils.extract_default_save()
+    if price > const.balance:
+        draw_functions.draw_message_box("Work in progress", f"You don't have enough money! balance: {const.balance} price: {price}")
+    else:
+        const.balance = const.balance - price
+        file_utils.update_value_in_file(save_path, "balance")
+        const.inventory_list.append(product)
+        file_utils.update_list_in_file(save_path, "inventory", const.inventory)
+    const.inventory_list.append(product)

@@ -156,3 +156,25 @@ def draw_info_cards(screen):
             y_coordinate += 250
             x_coordinate = 100
         title_counter += 1
+
+def draw_inventory_card(screen, product = None):
+    screen_width = const.screen.get_width()
+    screen_height = const.screen.get_height()
+    card_width = 400
+    card_height = 500
+    x_coordinate = screen_width / 2 - card_width / 2
+    y_coordinate = screen_height / 1.8 - card_height / 2 
+    button_width = 160
+    button_height = 40
+    icon_width = card_width - 40
+    icon_height = 400
+    button_font_size = 30
+    button_font_size = pygame.font.SysFont(None, button_font_size, bold = False)
+    pygame.draw.rect(screen, const.job_box, pygame.Rect(x_coordinate, y_coordinate, card_width, card_height))
+    next_button_rect = pygame.Rect(x_coordinate + card_width / 2 + 20, card_height + 30, button_width, button_height)
+    use_button_rect = pygame.Rect(x_coordinate + 20, card_height + 30, button_width, button_height)
+    draw_button(screen, const.job_button, next_button_rect, "->", button_font_size, const.job_cards_text)
+    draw_button(screen, const.job_button, use_button_rect, "Use", button_font_size, const.job_cards_text)
+    if product != None:
+        load_icons(const.screen, product.image_path, icon_width, icon_height, x_coordinate + 20, y_coordinate + 20)
+    return next_button_rect, use_button_rect
