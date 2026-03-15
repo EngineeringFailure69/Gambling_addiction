@@ -60,6 +60,7 @@ from tkinter import *
 from tkinter.ttk import *
 import os
 import ast
+import classes.items_class as items_class
 
 def grab_all_variables(file_path = "const.py", starts_with="STATE"):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -385,6 +386,8 @@ def restart_game():
     const.return_month_counter = 0
     const.job_positions_list = [['janitor', 0, False, 0, False], ['waiter', 5, False, 0, False], ['slot attendant', 10, False, 0, False], ['dealer', 15, False, 0, False], ['shift leader', 20, False, 0, False], ['pit boss', 25, False, 0, False], ['shift manager', 30, False, 0, False], ['manager', 35, False, 0, False]]
     const.index = 0
+    const.inventory_list_file = []
+    const.inventory_index = 0
     file_utils.update_value_in_file(save_path, "balance")
     file_utils.update_value_in_file(save_path, "salary")
     file_utils.update_value_in_file(save_path, "working")
@@ -395,6 +398,7 @@ def restart_game():
     file_utils.update_value_in_file(save_path, "return_month_counter")
     file_utils.update_value_in_file(save_path, "index")
     file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
+    file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
     import start_screen  
     start_screen.main_screen() 
 
@@ -406,5 +410,40 @@ def buy_product_and_add_to_the_inventory(price, product):
         const.balance = const.balance - price
         file_utils.update_value_in_file(save_path, "balance")
         const.inventory_list.append(product)
-        file_utils.update_list_in_file(save_path, "inventory", const.inventory)
-    const.inventory_list.append(product)
+        update_inventory_file()
+        file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
+
+def load_inventory_objects():
+    inventory_items = []
+    for item in const.inventory_list_file:
+        inventory_item = items_class.shop_item(item[0], item[1], item[2])
+        inventory_items.append(inventory_item)
+    return inventory_items
+
+def update_inventory_file():
+    save_path = file_utils.extract_default_save()
+    inventory = []
+    const.inventory_list_file = []
+    for item in const.inventory_list:
+        inventory.append(item.type)
+        inventory.append(item.image_path)
+        inventory.append(item.item_type)
+        const.inventory_list_file.append(inventory)
+        inventory = []
+    file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
+
+def use_inventory_item(item):
+    if item.type == "car":
+        draw_functions.draw_message_box("Used car", f"You went for a nice drive in your {item.item_type} car") 
+    elif item.type == "clothes":
+        draw_functions.draw_message_box("Used hoodie", f"You had nice time wearing your {item.item_type}") 
+    elif item.type == "electronics":
+        draw_functions.draw_message_box("Used electronic device", f"You had nice time playing with your {item.item_type}") 
+    elif item.type == "furniture":
+        draw_functions.draw_message_box("Used furniture", f"You had nice time using your {item.item_type}") 
+    elif item.type == "groceries":
+        draw_functions.draw_message_box("Used groceries", f"You had nice time eating your {item.item_type}") 
+        const.inventory_list.remove(item)
+        update_inventory_file()
+    elif item.type == "tools":
+        draw_functions.draw_message_box("Used tools", f"You used your {item.item_type}") 

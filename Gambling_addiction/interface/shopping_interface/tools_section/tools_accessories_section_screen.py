@@ -4,6 +4,7 @@ import utils.draw_functions as draw_functions
 import utils.utils as utils
 import sys
 import text_messages
+import classes.items_class as items_class
 
 def tools_accessories_section_screen():
     running = True
@@ -16,6 +17,11 @@ def tools_accessories_section_screen():
     text_rect = pygame.Rect(10, const.screen.get_height() / 17, screen_width, 300)
     info_text = "Balance:" + str(const.balance)
     font = pygame.font.SysFont(None, 30)
+
+    accs_tool_1 = items_class.shop_item("tools", "icons\\accs_tool_icon_1.png", "accs tool")
+    accs_tool_2 = items_class.shop_item("tools", "icons\\accs_tool_icon_2.png", "accs tool")
+    accs_tool_3 = items_class.shop_item("tools", "icons\\accs_tool_icon_3.png", "accs tool")
+    accs_tool_4 = items_class.shop_item("tools", "icons\\accs_tool_icon_4.png", "accs tool")
 
     while running:
         events = pygame.event.get()
@@ -36,17 +42,17 @@ def tools_accessories_section_screen():
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\tools_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TOOLS)
        
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\accs_tool_icon_1.png", icon_width_screen, icon_height_screen, position_x, position_y)
-        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, True, 15)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, accs_tool_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 15, accs_tool_1)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\accs_tool_icon_2.png", icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x, position_y)
-        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, True, 22)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, accs_tool_2.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x, position_y)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 22, accs_tool_2)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\accs_tool_icon_3.png", icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, True, 60)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, accs_tool_3.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 60, accs_tool_3)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\accs_tool_icon_4.png", icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, True, 30)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, accs_tool_4.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 30, accs_tool_4)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)

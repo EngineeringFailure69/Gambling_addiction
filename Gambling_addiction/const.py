@@ -125,10 +125,13 @@ inventory_button = pygame.Rect(screen.get_width()-180, screen.get_height()//50, 
 
 save_path = file_utils.extract_default_save()
 balance = file_utils.load_save_game_info("save_files\\information.txt", "balance")
+balance = float(balance)
 salary = file_utils.load_save_game_info(save_path, "salary")
+salary = int(salary)
 bet = ""
 your_bet = 0
 working = file_utils.load_save_game_info(save_path, "working")
+working = int(working)
 
 # Colours
 white = (255, 255, 255)
@@ -227,11 +230,16 @@ barrel = []
 current_chamber = 0
 
 day_counter = file_utils.load_save_game_info("save_files\\information.txt", "day_counter")
+day_counter = int(day_counter)
 month_counter = file_utils.load_save_game_info("save_files\\information.txt", "month_counter")
+month_counter = int(month_counter)
 year_counter = file_utils.load_save_game_info("save_files\\information.txt", "year_counter")
+year_counter = int(year_counter)
 date_time_ms = 0
 return_day_counter = file_utils.load_save_game_info("save_files\\information.txt", "return_day_counter")
+return_day_counter = int(return_day_counter)
 return_month_counter = file_utils.load_save_game_info("save_files\\information.txt", "return_month_counter")
+return_month_counter = int(return_month_counter)
 leap_year = False
 
 #jobs
@@ -248,10 +256,12 @@ jobs_list = [
 
 job_positions_list = file_utils.load_list_from_file(save_path, "job_positions_list")
 index = file_utils.load_save_game_info(save_path, "index") #0
+index = int(index)
 
 buttons_list = []
 tes = False
 job_apply = False 
 
-inventory_list = file_utils.load_list_from_file(save_path, "inventory_list") 
+inventory_list_file = file_utils.load_list_from_file(save_path, "inventory_list") 
+inventory_list = utils.load_inventory_objects()
 inventory_index = 0

@@ -17,12 +17,12 @@ def apartment_screen():
     month = ""
     year = 0
     draw_inventory = False
-    inventory_length = len(const.inventory_list)
     next_button_rect = pygame.Rect(0, 0, 0, 0)
     use_button_rect = pygame.Rect(0, 0, 0, 0)
     product = None
 
     while running:
+        inventory_length = len(const.inventory_list)
         events = pygame.event.get()
 
         draw_functions.load_background_image(const.screen, "background_photos\\home_background.png")
@@ -51,8 +51,7 @@ def apartment_screen():
                     elif const.inventory_index < inventory_length - 1:
                         const.inventory_index += 1
                 if use_button_rect.collidepoint(mouse_pos) and inventory_length > 0:
-                    if product.type == "car":
-                        draw_functions.draw_message_box("Used car", f"You went for a nice drive in your {product.item_type} car")
+                    utils.use_inventory_item(product)
             
         if draw_inventory and inventory_length > 0:
            next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen, product)
