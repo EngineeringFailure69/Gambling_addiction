@@ -77,10 +77,12 @@ def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, i
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
     for event in events:
         if event.type == pygame.QUIT:
+            #save_game()
             pygame.quit()
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
             if type in const.screen_and_buy_functions.values():
+                #save_game()
                 type()
                 return
                 
@@ -407,7 +409,7 @@ def buy_product_and_add_to_the_inventory(price, product):
     if price > const.balance:
         draw_functions.draw_message_box("Work in progress", f"You don't have enough money! balance: {const.balance} price: {price}")
     else:
-        const.balance = const.balance - price
+        const.balance = round(const.balance - price, 2)
         file_utils.update_value_in_file(save_path, "balance")
         const.inventory_list.append(product)
         update_inventory_file()
@@ -433,17 +435,19 @@ def update_inventory_file():
     file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
 
 def use_inventory_item(item):
-    if item.type == "car":
-        draw_functions.draw_message_box("Used car", f"You went for a nice drive in your {item.item_type} car") 
-    elif item.type == "clothes":
-        draw_functions.draw_message_box("Used hoodie", f"You had nice time wearing your {item.item_type}") 
-    elif item.type == "electronics":
-        draw_functions.draw_message_box("Used electronic device", f"You had nice time playing with your {item.item_type}") 
-    elif item.type == "furniture":
-        draw_functions.draw_message_box("Used furniture", f"You had nice time using your {item.item_type}") 
-    elif item.type == "groceries":
-        draw_functions.draw_message_box("Used groceries", f"You had nice time eating your {item.item_type}") 
+    messages = {
+        "car":  ("Used car", f"You went for a nice drive in your {item.item_type} car"),
+        "clothes": ("Used clothes", f"You had nice time wearing your {item.item_type}"),
+        "electronics": ("Used electronic device", f"You had nice time playing with your {item.item_type}"),
+        "furniture": ("Used furniture", f"You had nice time using your {item.item_type}"),
+        "groceries": ("Used groceries", f"You had nice time eating your {item.item_type}"),
+        "tools": ("Used tools", f"You used your {item.item_type}")
+    }
+    if item.type in messages:
+        title, text = messages[item.type]
+        draw_functions.draw_message_box(title, text)
+    if item.type == "groceries":
         const.inventory_list.remove(item)
         update_inventory_file()
-    elif item.type == "tools":
-        draw_functions.draw_message_box("Used tools", f"You used your {item.item_type}") 
+        if const.inventory_index > len(const.inventory_list) - 1:
+            const.inventory_index = 0 

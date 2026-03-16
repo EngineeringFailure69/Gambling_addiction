@@ -35,7 +35,6 @@ def apartment_screen():
         draw_functions.draw_text(const.screen, f"Date: {day}, {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
 
         mouse_pos = pygame.mouse.get_pos()
-        mouse_click = pygame.mouse.get_pressed()
         draw_functions.draw_button(const.screen, const.blue, const.inventory_button, "Inventory", font, const.black, mouse_pos)
 
         if inventory_length > 0:
@@ -57,7 +56,7 @@ def apartment_screen():
            next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen, product)
         elif draw_inventory and inventory_length <= 0:
             next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen)
-            
+
         file_utils.update_value_in_file("save_files\\information.txt", "day_counter")        
         file_utils.update_value_in_file("save_files\\information.txt", "month_counter")
         file_utils.update_value_in_file("save_files\\information.txt", "year_counter")

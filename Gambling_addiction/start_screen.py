@@ -5,7 +5,6 @@ import interface.apartment_screen as apartment_screen
 import utils.utils as utils
 import utils.file_utils as file_utils
 import sys
-import text_messages
 
 def main_screen():
     running = True
@@ -25,8 +24,6 @@ def main_screen():
 
     draw_functions.load_background_image(const.screen, img_path)
     draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
-
-    draw_functions.draw_text(const.screen, text_messages.start_screen_info, const.black, text_rect, font, line_spacing=5)
 
     while running:
         

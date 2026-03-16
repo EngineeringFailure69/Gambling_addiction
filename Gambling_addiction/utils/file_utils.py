@@ -9,7 +9,7 @@ import ast
 def get_user_save_dir():
     # name of the exe file, example: "Gambling_addiction"
     exe_name = os.path.splitext(os.path.basename(sys.executable))[0]
-    VERSION = "0.41"   # change this before making new .exe
+    VERSION = "0.70"   # change this before making new .exe
     path = user_data_dir(exe_name, "YourName", version=VERSION)
     os.makedirs(path, exist_ok=True)
     return path
@@ -77,7 +77,7 @@ def update_list_in_file(path, key, new_list):
                 lines.append(line)
     if not key_found:
         lines.append(f"{key}: {repr(new_list)}\n")
-    with open(path, 'w', encoding='utf-8') as file:
+    with open(full_path, 'w', encoding='utf-8') as file:
         file.writelines(lines)
 
 def resource_path(relative_path):
