@@ -11,7 +11,6 @@ def main_screen():
     pygame.font.init()
     font = pygame.font.SysFont(None, 30)
     screen_width = const.screen.get_width()
-    text_rect = pygame.Rect(10, 100, screen_width, 300)
     img_path = "background_photos\\start_screen_background.png"
     start_button_y = const.screen.get_height()-300
     quit_button_y = const.screen.get_height()-150

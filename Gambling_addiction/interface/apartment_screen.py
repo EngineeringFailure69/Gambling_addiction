@@ -2,7 +2,6 @@ import pygame
 import const
 import utils.draw_functions as draw_functions
 import utils.utils as utils
-import utils.file_utils as file_utils
 import sys
 import text_messages
 
@@ -56,12 +55,6 @@ def apartment_screen():
            next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen, product)
         elif draw_inventory and inventory_length <= 0:
             next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen)
-
-        file_utils.update_value_in_file("save_files\\information.txt", "day_counter")        
-        file_utils.update_value_in_file("save_files\\information.txt", "month_counter")
-        file_utils.update_value_in_file("save_files\\information.txt", "year_counter")
-        file_utils.update_value_in_file("save_files\\information.txt", "return_day_counter")
-        file_utils.update_value_in_file("save_files\\information.txt", "return_month_counter")
 
         pygame.display.flip()
     pygame.quit()

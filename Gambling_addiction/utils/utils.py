@@ -58,9 +58,9 @@ import utils.file_utils as file_utils
 import sys
 from tkinter import * 
 from tkinter.ttk import *
-import os
 import ast
 import classes.items_class as items_class
+import logic.inventory_items_logic as inventory_items_logic
 
 def grab_all_variables(file_path = "const.py", starts_with="STATE"):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -77,12 +77,12 @@ def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, i
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
     for event in events:
         if event.type == pygame.QUIT:
-            #save_game()
+            save_game()
             pygame.quit()
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
             if type in const.screen_and_buy_functions.values():
-                #save_game()
+                save_game()
                 type()
                 return
                 
@@ -242,20 +242,17 @@ def date_time_timer():
     elif const.day_counter > 28 and const.month_counter == 2 and not const.leap_year: #if its February and not leap year
         const.day_counter = 1
         const.month_counter += 1
-        const.balance += const.salary
-        file_utils.update_value_in_file("save_files\\information.txt", "balance")
+        const.balance = round(const.balance + const.salary, 2)
         const.return_month_counter += 1
     elif const.day_counter > 29 and const.month_counter == 2 and const.leap_year: #if its February and it is leap year
         const.day_counter = 1
         const.month_counter += 1
-        const.balance += const.salary
-        file_utils.update_value_in_file("save_files\\information.txt", "balance")
+        const.balance = round(const.balance + const.salary, 2)
         const.return_month_counter += 1
     elif const.day_counter > 31 and const.month_counter in days31:
         const.day_counter = 1
         const.month_counter += 1
-        const.balance += const.salary
-        file_utils.update_value_in_file("save_files\\information.txt", "balance")
+        const.balance = round(const.balance + const.salary, 2)
         const.return_month_counter += 1
         if const.month_counter > 12 or const.return_month_counter > 11:
             const.month_counter = 1
@@ -264,8 +261,7 @@ def date_time_timer():
     elif const.day_counter > 30 and const.month_counter in days30:
         const.day_counter = 1
         const.month_counter += 1
-        const.balance += const.salary
-        file_utils.update_value_in_file("save_files\\information.txt", "balance")
+        const.balance = round(const.balance + const.salary, 2)
         const.return_month_counter += 1
     
     months = str(const.day_counter) + " of " + month[const.return_month_counter]
@@ -389,6 +385,7 @@ def restart_game():
     const.job_positions_list = [['janitor', 0, False, 0, False], ['waiter', 5, False, 0, False], ['slot attendant', 10, False, 0, False], ['dealer', 15, False, 0, False], ['shift leader', 20, False, 0, False], ['pit boss', 25, False, 0, False], ['shift manager', 30, False, 0, False], ['manager', 35, False, 0, False]]
     const.index = 0
     const.inventory_list_file = []
+    const.inventory_list = []
     const.inventory_index = 0
     file_utils.update_value_in_file(save_path, "balance")
     file_utils.update_value_in_file(save_path, "salary")
@@ -405,15 +402,12 @@ def restart_game():
     start_screen.main_screen() 
 
 def buy_product_and_add_to_the_inventory(price, product):
-    save_path = file_utils.extract_default_save()
     if price > const.balance:
         draw_functions.draw_message_box("Work in progress", f"You don't have enough money! balance: {const.balance} price: {price}")
     else:
         const.balance = round(const.balance - price, 2)
-        file_utils.update_value_in_file(save_path, "balance")
         const.inventory_list.append(product)
         update_inventory_file()
-        file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
 
 def load_inventory_objects():
     inventory_items = []
@@ -423,7 +417,6 @@ def load_inventory_objects():
     return inventory_items
 
 def update_inventory_file():
-    save_path = file_utils.extract_default_save()
     inventory = []
     const.inventory_list_file = []
     for item in const.inventory_list:
@@ -432,7 +425,6 @@ def update_inventory_file():
         inventory.append(item.item_type)
         const.inventory_list_file.append(inventory)
         inventory = []
-    file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
 
 def use_inventory_item(item):
     messages = {
@@ -447,7 +439,34 @@ def use_inventory_item(item):
         title, text = messages[item.type]
         draw_functions.draw_message_box(title, text)
     if item.type == "groceries":
-        const.inventory_list.remove(item)
-        update_inventory_file()
-        if const.inventory_index > len(const.inventory_list) - 1:
-            const.inventory_index = 0 
+        remove_item_from_the_inventory(item)
+    elif item.type != "groceries" and item.type != "car":
+        breaking_chance = inventory_items_logic.chance_for_the_item_to_break()
+        if breaking_chance is True:
+            draw_functions.draw_message_box("Item broke", f"Your {item.item_type} broke down and no longer works")
+            remove_item_from_the_inventory(item)
+    elif item.type == "car":
+        breaking_chance = inventory_items_logic.chance_for_the_item_to_break()
+        if breaking_chance is True:
+            draw_functions.draw_message_box("Item broke", "Your car broke down and no longer works")
+            remove_item_from_the_inventory(item)
+
+def remove_item_from_the_inventory(item):
+    const.inventory_list.remove(item)
+    update_inventory_file()
+    if const.inventory_index > len(const.inventory_list) - 1:
+        const.inventory_index = 0
+
+def save_game():
+    #Save/update date and time every time app closes or screen changes
+    file_utils.update_value_in_file("save_files\\information.txt", "day_counter")        
+    file_utils.update_value_in_file("save_files\\information.txt", "month_counter")
+    file_utils.update_value_in_file("save_files\\information.txt", "year_counter")
+    file_utils.update_value_in_file("save_files\\information.txt", "return_day_counter")
+    file_utils.update_value_in_file("save_files\\information.txt", "return_month_counter")
+
+    #Save/update balance every time app closes or screen changes
+    file_utils.update_value_in_file("save_files\\information.txt", "balance")
+
+    #Save/update inventory every time app closes or screen changes
+    file_utils.update_list_in_file("save_files\\information.txt", "inventory_list", const.inventory_list_file)

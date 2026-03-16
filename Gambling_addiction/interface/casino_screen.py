@@ -3,7 +3,6 @@ import const
 import utils.draw_functions as draw_functions
 import utils.utils as utils
 import logic.casino_roulette_logic as casino_roulette_logic
-import utils.file_utils as file_utils
 import sys
 import text_messages
 
@@ -140,11 +139,9 @@ def casino_screen():
                 spinning = False
                 if won == True and not win_lose_drawn:
                     draw_functions.draw_message_box('You won', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You won {prize} dollars\n Your balance now is: {const.balance}")
-                    file_utils.update_value_in_file("save_files\\information.txt", "balance")
                     win_lose_drawn = True
                 elif won == False and not win_lose_drawn:
                     draw_functions.draw_message_box('You lost', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You lost {const.your_bet} dollars\n Your balance now is: {const.balance}")
-                    file_utils.update_value_in_file("save_files\\information.txt", "balance")
                     win_lose_drawn = True
                 done_spinning = False
 
