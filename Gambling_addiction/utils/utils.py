@@ -2,7 +2,7 @@ import pygame
 import interface.city_screen as city_screen
 import utils.draw_functions as draw_functions
 import interface.apartment_screen as apartment_screen
-import const
+import const 
 import interface.casino_screen as casino_screen
 import interface.job_interface.work_screen as work_screen
 import interface.russian_roulette_screen as russian_roulette_screen
@@ -228,10 +228,11 @@ def date_time_timer():
     days31 = [1, 3, 5, 7, 8, 10, 12]
     days30 = [2, 4, 6, 9, 11]
     now = pygame.time.get_ticks()
-
+    number_of_working_days_on_the_current_job = 3
     if now - const.date_time_ms >= day_duration:
         if const.working == 1:
-            const.job_positions_list[const.index][3] += 1
+            const.job_positions_list[const.index][number_of_working_days_on_the_current_job] += 1
+            const.days_remaining_until_promotion_on_the_work += 1 
         const.day_counter += 1
         const.return_day_counter += 1
         const.date_time_ms = now
@@ -370,7 +371,7 @@ def job_apply(button_rect, salary, working_days_requirements, job):
                 file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
                 return
 
-            draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][0]} position.")
+            draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][0]} position. {working_days_requirements - const.days_remaining_until_promotion_on_the_work} days remaining")
 
 def restart_game():
     save_path = file_utils.extract_default_save()
@@ -387,6 +388,7 @@ def restart_game():
     const.inventory_list_file = []
     const.inventory_list = []
     const.inventory_index = 0
+    const.days_remaining_until_promotion_on_the_work = 0
     file_utils.update_value_in_file(save_path, "balance")
     file_utils.update_value_in_file(save_path, "salary")
     file_utils.update_value_in_file(save_path, "working")
@@ -396,6 +398,7 @@ def restart_game():
     file_utils.update_value_in_file(save_path, "return_day_counter")
     file_utils.update_value_in_file(save_path, "return_month_counter")
     file_utils.update_value_in_file(save_path, "index")
+    file_utils.update_value_in_file(save_path, "days_remaining_until_promotion_on_the_work")
     file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
     file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
     import start_screen  
@@ -470,3 +473,6 @@ def save_game():
 
     #Save/update inventory every time app closes or screen changes
     file_utils.update_list_in_file("save_files\\information.txt", "inventory_list", const.inventory_list_file)
+
+    #Save/update remaining days until promotion
+    file_utils.update_value_in_file("save_files\\information.txt", "days_remaining_until_promotion_on_the_work")

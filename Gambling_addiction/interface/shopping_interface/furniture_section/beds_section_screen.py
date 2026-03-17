@@ -15,7 +15,6 @@ def beds_section_screen():
     icon_height_screen = const.screen.get_height() / 2
     screen_width = const.screen.get_width()
     text_rect = pygame.Rect(10, const.screen.get_height() / 17, screen_width, 300)
-    info_text = "Balance:" + str(const.balance)
     font = pygame.font.SysFont(None, 30)
 
     bed_1 = items_class.shop_item("furniture", "icons\\bed_icon_1.png", "bed")
@@ -25,6 +24,8 @@ def beds_section_screen():
 
     while running:
         events = pygame.event.get()
+
+        info_text = "Balance:" + str(const.balance)
 
         const.screen.fill(const.beds_bckgd)
 

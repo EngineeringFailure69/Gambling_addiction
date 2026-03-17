@@ -16,7 +16,6 @@ def sports_car_section_screen():
     icon_height_screen = const.screen.get_height() / 2
     screen_width = const.screen.get_width()
     text_rect = pygame.Rect(10, const.screen.get_height() / 17, screen_width, 300)
-    info_text = "Balance:" + str(const.balance)
     font = pygame.font.SysFont(None, 30) 
 
     sports_car_1 = items_class.shop_item("car", "icons\\sports_car_icon_1.png", "sports")
@@ -28,6 +27,8 @@ def sports_car_section_screen():
         events = pygame.event.get()
 
         const.screen.fill(const.store_bckgd)
+
+        info_text = "Balance:" + str(const.balance)
 
         draw_functions.draw_title(const.screen, const.black, "SPORTS CAR SECTION")
         draw_functions.draw_text(const.screen, info_text, const.black, text_rect, font,line_spacing=5)

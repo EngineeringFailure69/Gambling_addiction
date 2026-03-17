@@ -10,3 +10,4 @@ working: 0
 job_positions_list: [['janitor', 0, False, 0, False], ['waiter', 5, False, 0, False], ['slot attendant', 10, False, 0, False], ['dealer', 15, False, 0, False], ['shift leader', 20, False, 0, False], ['pit boss', 25, False, 0, False], ['shift manager', 30, False, 0, False], ['manager', 35, False, 0, False]]
 index: 0
 inventory_list: []
+days_remaining_until_promotion_on_the_work: 0

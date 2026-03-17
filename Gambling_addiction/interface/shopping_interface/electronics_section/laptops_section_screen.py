@@ -26,6 +26,8 @@ def laptops_section_screen():
     while running:
         events = pygame.event.get()
 
+        info_text = "Balance:" + str(const.balance)
+
         const.screen.fill(const.laptops_bckgd)
 
         draw_functions.draw_title(const.screen, const.white, "LAPTOPS SECTION")

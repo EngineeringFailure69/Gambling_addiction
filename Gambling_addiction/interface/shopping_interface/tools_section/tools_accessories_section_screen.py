@@ -15,7 +15,6 @@ def tools_accessories_section_screen():
     icon_width_screen = const.screen.get_width() / 4 - position_x - position_x / 4
     icon_height_screen = const.screen.get_height() / 2
     text_rect = pygame.Rect(10, const.screen.get_height() / 17, screen_width, 300)
-    info_text = "Balance:" + str(const.balance)
     font = pygame.font.SysFont(None, 30)
 
     accs_tool_1 = items_class.shop_item("tools", "icons\\accs_tool_icon_1.png", "accs tool")
@@ -25,6 +24,8 @@ def tools_accessories_section_screen():
 
     while running:
         events = pygame.event.get()
+
+        info_text = "Balance:" + str(const.balance)
 
         const.screen.fill(const.store_bckgd)
 
