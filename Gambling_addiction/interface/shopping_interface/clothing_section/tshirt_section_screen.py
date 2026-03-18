@@ -17,10 +17,10 @@ def tshirt_section_screen():
     text_rect = pygame.Rect(10, const.screen.get_height() / 17, screen_width, 300)
     font = pygame.font.SysFont(None, 30)
 
-    t_shirt_1 = items_class.shop_item("clothes", "icons\\t-shirt_icon_1.png", "t-shirt")
-    t_shirt_2 = items_class.shop_item("clothes", "icons\\t-shirt_icon_2.png", "t-shirt")
-    t_shirt_3 = items_class.shop_item("clothes", "icons\\t-shirt_icon_3.png", "t-shirt")
-    t_shirt_4 = items_class.shop_item("clothes", "icons\\t-shirt_icon_4.png", "t-shirt")
+    t_shirt_1 = items_class.shop_item("clothes", "icons\\t-shirt_icon_1.png", "t-shirt", 15)
+    t_shirt_2 = items_class.shop_item("clothes", "icons\\t-shirt_icon_2.png", "t-shirt", 10)
+    t_shirt_3 = items_class.shop_item("clothes", "icons\\t-shirt_icon_3.png", "t-shirt", 18)
+    t_shirt_4 = items_class.shop_item("clothes", "icons\\t-shirt_icon_4.png", "t-shirt", 20)
 
     while running:
         events = pygame.event.get()
@@ -44,16 +44,16 @@ def tshirt_section_screen():
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_CLOTHING)
        
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, t_shirt_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 15, t_shirt_1)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, t_shirt_1.item_price, t_shirt_1)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, t_shirt_2.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 10, t_shirt_2)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, t_shirt_2.item_price, t_shirt_2)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, t_shirt_3.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 18, t_shirt_3)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, t_shirt_3.item_price, t_shirt_3)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, t_shirt_4.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 20, t_shirt_4)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, t_shirt_4.item_price, t_shirt_4)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)

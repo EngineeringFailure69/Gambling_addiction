@@ -117,6 +117,7 @@ def casino_screen():
                 elif choice == 11 and const.your_bet > const.balance * 0.2 + 1:
                     draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 20% of your budget, which is {int(const.balance * 0.2)+1}")
                 else:    
+                    prize, table, return_colour = casino_roulette_logic.to_win_function(choice, const.your_bet, selected_colour, your_numbers)
                     spinning = True
                     spin_start_ms = now
                     win_lose_drawn = False
@@ -140,8 +141,16 @@ def casino_screen():
                 if won == True and not win_lose_drawn:
                     draw_functions.draw_message_box('You won', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You won {prize} dollars\n Your balance now is: {const.balance}")
                     win_lose_drawn = True
+                    table = 0
+                    prize = 0
+                    text = "Your bet: "
+                    const.your_bet = 0
                 elif won == False and not win_lose_drawn:
                     draw_functions.draw_message_box('You lost', f"Your numbers were: {str(your_numbers)}\n Your colour was: {return_colour}\n It landed on number: {str(spin)}\n It landed on colour: {spin_colour}\n You lost {const.your_bet} dollars\n Your balance now is: {const.balance}")
+                    table = 0
+                    prize = 0
+                    text = "Your bet: "
+                    const.your_bet = 0
                     win_lose_drawn = True
                 done_spinning = False
 

@@ -18,10 +18,10 @@ def hatchback_car_section_screen():
     text_rect = pygame.Rect(10, const.screen.get_height() / 17, screen_width, 300)
     font = pygame.font.SysFont(None, 30)
 
-    hatchback_car_1 = items_class.shop_item("car", "icons\\hatchback_car_icon_1.png", "hatchback")
-    hatchback_car_2 = items_class.shop_item("car", "icons\\hatchback_car_icon_2.png", "hatchback")
-    hatchback_car_3 = items_class.shop_item("car", "icons\\hatchback_car_icon_3.png", "hatchback")
-    hatchback_car_4 = items_class.shop_item("car", "icons\\hatchback_car_icon_4.png", "hatchback")
+    hatchback_car_1 = items_class.shop_item("car", "icons\\hatchback_car_icon_1.png", "hatchback", 34500)
+    hatchback_car_2 = items_class.shop_item("car", "icons\\hatchback_car_icon_2.png", "hatchback", 19200)
+    hatchback_car_3 = items_class.shop_item("car", "icons\\hatchback_car_icon_3.png", "hatchback", 26700)
+    hatchback_car_4 = items_class.shop_item("car", "icons\\hatchback_car_icon_4.png", "hatchback", 23900)
 
     while running:
         events = pygame.event.get()
@@ -45,16 +45,16 @@ def hatchback_car_section_screen():
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_CARS)
        
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, hatchback_car_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 34500, hatchback_car_1)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, hatchback_car_1.item_price, hatchback_car_1)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, hatchback_car_2.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 19200, hatchback_car_2)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, hatchback_car_2.item_price, hatchback_car_2)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, hatchback_car_3.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 26700, hatchback_car_3)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, hatchback_car_3.item_price, hatchback_car_3)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, hatchback_car_4.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 23900, hatchback_car_4)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, hatchback_car_4.item_price, hatchback_car_4)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)

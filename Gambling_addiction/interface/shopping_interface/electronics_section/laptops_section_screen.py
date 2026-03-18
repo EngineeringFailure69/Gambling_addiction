@@ -18,10 +18,10 @@ def laptops_section_screen():
     info_text = "Balance:" + str(const.balance)
     font = pygame.font.SysFont(None, 30)
 
-    laptop_1 = items_class.shop_item("electronics", "icons\\laptop_icon_1.png", "laptop")
-    laptop_2 = items_class.shop_item("electronics", "icons\\laptop_icon_2.png", "laptop")
-    laptop_3 = items_class.shop_item("electronics", "icons\\laptop_icon_3.png", "laptop")
-    laptop_4 = items_class.shop_item("electronics", "icons\\laptop_icon_4.png", "laptop")
+    laptop_1 = items_class.shop_item("electronics", "icons\\laptop_icon_1.png", "laptop", 1800)
+    laptop_2 = items_class.shop_item("electronics", "icons\\laptop_icon_2.png", "laptop", 2200)
+    laptop_3 = items_class.shop_item("electronics", "icons\\laptop_icon_3.png", "laptop", 1400)
+    laptop_4 = items_class.shop_item("electronics", "icons\\laptop_icon_4.png", "laptop", 1000)
 
     while running:
         events = pygame.event.get()
@@ -45,16 +45,16 @@ def laptops_section_screen():
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_ELECTRONICS)
        
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, laptop_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 1800, laptop_1)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, laptop_1.item_price, laptop_1)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, laptop_2.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 2200, laptop_2)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, laptop_2.item_price, laptop_2)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, laptop_3.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 1400, laptop_3)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, laptop_3.item_price, laptop_3)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, laptop_4.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 1000, laptop_4)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, laptop_4.item_price, laptop_4)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)

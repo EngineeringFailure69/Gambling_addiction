@@ -232,7 +232,6 @@ def date_time_timer():
     if now - const.date_time_ms >= day_duration:
         if const.working == 1:
             const.job_positions_list[const.index][number_of_working_days_on_the_current_job] += 1
-            const.days_remaining_until_promotion_on_the_work += 1 
         const.day_counter += 1
         const.return_day_counter += 1
         const.date_time_ms = now
@@ -295,83 +294,74 @@ def job_details():
             manager_screen.manager_screen()
 
 def job_apply(button_rect, salary, working_days_requirements, job):
-    save_path = file_utils.extract_default_save()
-    file_utils.update_value_in_file(save_path, "index")
     index = next((i for i, sublist in enumerate(const.job_positions_list) if sublist[0] == job), None)
-    file_utils.update_value_in_file(save_path, "index")
     if index is None and not const.job_apply:
         draw_functions.draw_message_box('Application', "Job does not exist")
         const.job_apply = True
         return
+    
+    already_worked_on_this_position_indicator_index = 2
+    janitor_job_index = 0
+    currently_working_on_this_position_indicator_index = 4
+    job_name_index = 0
+    number_of_days_working_on_this_position_indicator_index = 3
+
     mouse_pos = pygame.mouse.get_pos()
     mouse_click = pygame.mouse.get_pressed()
     if button_rect.collidepoint(mouse_pos):
         if mouse_click[0]:  
-            if index == 0 and const.job_positions_list[0][2] == False:
+            if index == 0 and const.job_positions_list[janitor_job_index][already_worked_on_this_position_indicator_index] == False:
                 const.index = index
-                const.job_positions_list[0][2] = True
-                const.job_positions_list[0][3] = 0
+                const.job_positions_list[janitor_job_index][already_worked_on_this_position_indicator_index] = True
+                const.job_positions_list[janitor_job_index][number_of_days_working_on_this_position_indicator_index] = 0
                 const.working = 1
-                file_utils.update_value_in_file(save_path, "working")
                 draw_functions.draw_message_box('Application', f"You have been accepted on the {job} position")
                 const.salary = salary
-                file_utils.update_value_in_file(save_path, "salary")
                 for job in const.job_positions_list: #reset all other currently working states on other jobs
-                    job[4] = False
-                const.job_positions_list[0][4] = True 
-                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
+                    job[currently_working_on_this_position_indicator_index] = False
+                const.job_positions_list[janitor_job_index][currently_working_on_this_position_indicator_index] = True 
                 return
-            elif index == 0 and const.job_positions_list[0][2] == True and const.job_positions_list[0][4] == False:
+            elif index == 0 and const.job_positions_list[janitor_job_index][already_worked_on_this_position_indicator_index] == True and const.job_positions_list[janitor_job_index][currently_working_on_this_position_indicator_index] == False:
                 draw_functions.draw_message_box('Application', f"You are back at the {job} position")
                 const.index = index
-                file_utils.update_value_in_file(save_path, "index")
                 const.salary = salary
-                file_utils.update_value_in_file(save_path, "salary")
                 for job in const.job_positions_list:
-                    job[4] = False
-                const.job_positions_list[0][4] = True
-                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
+                    job[currently_working_on_this_position_indicator_index] = False
+                const.job_positions_list[janitor_job_index][currently_working_on_this_position_indicator_index] = True
                 return
 
             prev_index = index - 1
-            prev_done = const.job_positions_list[prev_index][2]
-            prev_days = const.job_positions_list[prev_index][3]
+            prev_done = const.job_positions_list[prev_index][already_worked_on_this_position_indicator_index]
+            prev_days = const.job_positions_list[prev_index][number_of_days_working_on_this_position_indicator_index]
 
-            if prev_done and prev_days >= working_days_requirements and const.job_positions_list[index][4] == False:
+            if prev_done and prev_days >= working_days_requirements and const.job_positions_list[index][currently_working_on_this_position_indicator_index] == False:
                 const.index = index
-                file_utils.update_value_in_file(save_path, "index")
-                const.job_positions_list[index][2] = True  
+                const.job_positions_list[index][already_worked_on_this_position_indicator_index] = True  
                 const.working = 1
-                file_utils.update_value_in_file(save_path, "working")
                 const.salary = salary
-                file_utils.update_value_in_file(save_path, "salary")
                 draw_functions.draw_message_box('Application', f"You have been accepted on the {job} position")
                 for job in const.job_positions_list:
-                    job[4] = False
-                const.job_positions_list[index][4] = True
-                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
+                    job[currently_working_on_this_position_indicator_index] = False
+                const.job_positions_list[index][currently_working_on_this_position_indicator_index] = True
                 return
-            elif const.job_positions_list[index][2] == True and const.job_positions_list[index][4] == False:
+            elif const.job_positions_list[index][already_worked_on_this_position_indicator_index] == True and const.job_positions_list[index][currently_working_on_this_position_indicator_index] == False:
                 draw_functions.draw_message_box('Application', f"You are back at the {job} position")
                 const.index = index
-                file_utils.update_value_in_file(save_path, "index")
                 const.salary = salary
-                file_utils.update_value_in_file(save_path, "salary")
                 for job in const.job_positions_list: 
-                    job[4] = False
-                const.job_positions_list[index][4] = True
-                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
+                    job[currently_working_on_this_position_indicator_index] = False
+                const.job_positions_list[index][currently_working_on_this_position_indicator_index] = True
                 return
             
-            if const.job_positions_list[index][4] == True:
+            if const.job_positions_list[index][currently_working_on_this_position_indicator_index] == True:
                 draw_functions.draw_message_box('Application', f"You are already working as {job}")
                 for job in const.job_positions_list: 
-                    job[4] = False
-                const.job_positions_list[index][4] = True
-                file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
+                    job[currently_working_on_this_position_indicator_index] = False
+                const.job_positions_list[index][currently_working_on_this_position_indicator_index] = True
                 return
-
-            draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][0]} position. {working_days_requirements - const.days_remaining_until_promotion_on_the_work} days remaining")
+            
+            days_until_promotion = working_days_requirements - const.job_positions_list[prev_index][number_of_days_working_on_this_position_indicator_index]        
+            draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][job_name_index]} position. {days_until_promotion} days remaining")
 
 def restart_game():
     save_path = file_utils.extract_default_save()
@@ -388,7 +378,6 @@ def restart_game():
     const.inventory_list_file = []
     const.inventory_list = []
     const.inventory_index = 0
-    const.days_remaining_until_promotion_on_the_work = 0
     file_utils.update_value_in_file(save_path, "balance")
     file_utils.update_value_in_file(save_path, "salary")
     file_utils.update_value_in_file(save_path, "working")
@@ -398,7 +387,6 @@ def restart_game():
     file_utils.update_value_in_file(save_path, "return_day_counter")
     file_utils.update_value_in_file(save_path, "return_month_counter")
     file_utils.update_value_in_file(save_path, "index")
-    file_utils.update_value_in_file(save_path, "days_remaining_until_promotion_on_the_work")
     file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
     file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
     import start_screen  
@@ -414,8 +402,12 @@ def buy_product_and_add_to_the_inventory(price, product):
 
 def load_inventory_objects():
     inventory_items = []
+    type = 0
+    image_path = 1
+    item_type = 2
+    item_price = 3
     for item in const.inventory_list_file:
-        inventory_item = items_class.shop_item(item[0], item[1], item[2])
+        inventory_item = items_class.shop_item(item[type], item[image_path], item[item_type], item[item_price])
         inventory_items.append(inventory_item)
     return inventory_items
 
@@ -426,6 +418,7 @@ def update_inventory_file():
         inventory.append(item.type)
         inventory.append(item.image_path)
         inventory.append(item.item_type)
+        inventory.append(item.item_price)
         const.inventory_list_file.append(inventory)
         inventory = []
 
@@ -449,10 +442,12 @@ def use_inventory_item(item):
             draw_functions.draw_message_box("Item broke", f"Your {item.item_type} broke down and no longer works")
             remove_item_from_the_inventory(item)
     elif item.type == "car":
-        breaking_chance = inventory_items_logic.chance_for_the_item_to_break()
-        if breaking_chance is True:
-            draw_functions.draw_message_box("Item broke", "Your car broke down and no longer works")
-            remove_item_from_the_inventory(item)
+        outcome = inventory_items_logic.car_break_crash_death(item)
+        if outcome == "not repaired": 
+           remove_item_from_the_inventory(item)
+        if outcome == "dead":
+            draw_functions.draw_message_box('You are dead', f"You died in a car crash, your balance is now 0 because you lost everything you had, and your game will restart")
+            restart_game()
 
 def remove_item_from_the_inventory(item):
     const.inventory_list.remove(item)
@@ -474,5 +469,8 @@ def save_game():
     #Save/update inventory every time app closes or screen changes
     file_utils.update_list_in_file("save_files\\information.txt", "inventory_list", const.inventory_list_file)
 
-    #Save/update remaining days until promotion
-    file_utils.update_value_in_file("save_files\\information.txt", "days_remaining_until_promotion_on_the_work")
+    #Save/update job info
+    file_utils.update_list_in_file("save_files\\information.txt", "job_positions_list", const.job_positions_list)
+    file_utils.update_value_in_file("save_files\\information.txt", "index")
+    file_utils.update_value_in_file("save_files\\information.txt", "salary")
+    file_utils.update_value_in_file("save_files\\information.txt", "working")

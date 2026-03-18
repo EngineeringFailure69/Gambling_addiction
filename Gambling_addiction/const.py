@@ -257,8 +257,6 @@ jobs_list = [
 job_positions_list = file_utils.load_list_from_file(save_path, "job_positions_list")
 index = file_utils.load_save_game_info(save_path, "index") #0
 index = int(index)
-days_remaining_until_promotion_on_the_work = file_utils.load_save_game_info("save_files\\information.txt", "days_remaining_until_promotion_on_the_work")
-days_remaining_until_promotion_on_the_work = int(days_remaining_until_promotion_on_the_work)
 
 buttons_list = []
 tes = False

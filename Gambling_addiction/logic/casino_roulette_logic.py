@@ -42,21 +42,16 @@ def to_win_function(choice, your_bet, your_colour, your_numbers = []):
         your_colour = "none"
         to_win = your_bet * 2
     elif(choice==11): 
-        your_colour = "none"
+        your_colour = "none" 
         to_win = your_bet + (your_bet*2)
 
-    return to_win, others_bet, table, your_colour
+    return to_win, table, your_colour
 
 def casino_roulette(balance, your_bet, choice, your_colour, your_numbers = []):
-    to_win,  others_bet, table, your_colour = to_win_function(choice, your_bet, your_colour, your_numbers)
-    
-    print(f"Your balance: {balance}", "\t", f"Your bet: {your_bet}", "\t", f"Your number: {your_numbers}", "\t", f"Your colour: {your_colour}") 
-    print(f"Others bet: {others_bet}", "\t", f"Sum on the table: {table}", "\t", f"Amount that you can win: {to_win}", "\n")
-    print("Spinning the wheel...")
+    to_win, table, your_colour = to_win_function(choice, your_bet, your_colour, your_numbers)
     won = True
     spin = random.randint(0, 36)
     spin_colour = random.choice(["red", "black"])
-    print(f"Number that it fell on: {spin}\nColour that it fell on: {spin_colour}")
     if(your_colour == "none" and spin in your_numbers):
         balance = balance + to_win
     elif(your_colour == spin_colour and spin in your_numbers):
@@ -64,7 +59,6 @@ def casino_roulette(balance, your_bet, choice, your_colour, your_numbers = []):
     elif(your_colour == spin_colour and spin not in your_numbers):
         balance += to_win
     else:
-        print(f"You lost: {your_bet} dollars")
         won = False
         balance -= your_bet
     return balance, to_win, table, won, your_colour, spin, spin_colour

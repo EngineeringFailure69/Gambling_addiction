@@ -22,6 +22,7 @@ def main_screen():
     quit_button_rect = pygame.Rect(const.button_center_x, quit_button_y, const.button_width, const.button_height)
 
     draw_functions.load_background_image(const.screen, img_path)
+
     draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
 
     while running:

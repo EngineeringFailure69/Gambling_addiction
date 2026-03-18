@@ -18,10 +18,10 @@ def suv_car_section_screen():
     text_rect = pygame.Rect(10, const.screen.get_height() / 17, screen_width, 300)
     font = pygame.font.SysFont(None, 30) 
 
-    suv_car_1 = items_class.shop_item("car", "icons\\suv_car_icon_1.png", "suv")
-    suv_car_2 = items_class.shop_item("car", "icons\\suv_car_icon_2.png", "suv")
-    suv_car_3 = items_class.shop_item("car", "icons\\suv_car_icon_3.png", "suv")
-    suv_car_4 = items_class.shop_item("car", "icons\\suv_car_icon_4.png", "suv")
+    suv_car_1 = items_class.shop_item("car", "icons\\suv_car_icon_1.png", "suv", 28500)
+    suv_car_2 = items_class.shop_item("car", "icons\\suv_car_icon_2.png", "suv", 36800)
+    suv_car_3 = items_class.shop_item("car", "icons\\suv_car_icon_3.png", "suv", 35000)
+    suv_car_4 = items_class.shop_item("car", "icons\\suv_car_icon_4.png", "suv", 29500)
 
     while running:
         events = pygame.event.get()
@@ -45,16 +45,16 @@ def suv_car_section_screen():
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_CARS)
        
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, suv_car_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 28500, suv_car_1)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, suv_car_1.item_price, suv_car_1)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, suv_car_2.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 36800, suv_car_2)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, suv_car_2.item_price, suv_car_2)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, suv_car_3.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 35000, suv_car_3)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, suv_car_3.item_price, suv_car_3)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, suv_car_4.image_path, icon_width_screen, icon_height_screen, position_x + icon_width_screen + position_x + icon_width_screen + position_x + icon_width_screen + position_x, position_y)
-        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, 29500, suv_car_4)
+        utils.buy(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_BUY_PRODUCT, suv_car_4.item_price, suv_car_4)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
