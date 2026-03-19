@@ -10,6 +10,7 @@ def casino_screen():
     running = True
     pygame.font.init()
     font = pygame.font.SysFont(None, 30)
+    img_path = "background_photos\\start_screen_background.png"
     drawn = False
     win_lose_drawn = False
     right_choice_clicked_up = False
@@ -51,10 +52,24 @@ def casino_screen():
     MESSAGE_GAP = 500
     spin_end_ms = 0
 
+    icon_center_x = 450
+    icon_center_y = 290
+    icon_path = "icons\\start_screen_roulette_wheel.png"
+    icon_width_animation = 700
+    icon_height_animation = 470
+    angle = 0
+    rotated_rect = 0
+    angle_increment = 0
+    COUNTER_CLOCK_WISE = True
+
+    draw_functions.load_background_image(const.screen, img_path)
+    
+    clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
         const.screen.fill(const.white)
-        draw_functions.load_background_image(const.screen, "background_photos\\casino_roulette.png")
+        draw_functions.load_background_image(const.screen, img_path)
+        angle, rotated_rect = draw_functions.load_spin_animation(const.screen, icon_center_x, icon_center_y, angle, icon_path, icon_width_animation, icon_height_animation, rotated_rect, angle_increment, COUNTER_CLOCK_WISE)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
@@ -123,11 +138,14 @@ def casino_screen():
                     win_lose_drawn = False
                 
         if spinning:
+            #start spinning animation
+            angle_increment = 2
+            angle, rotated_rect = draw_functions.load_spin_animation(const.screen, icon_center_x, icon_center_y, angle, icon_path, icon_width_animation, icon_height_animation, rotated_rect, angle_increment, COUNTER_CLOCK_WISE)
             # draw custom box
             draw_functions.draw_custom_message_box(const.screen, "Spinning the wheel...", font)
-    
             # check if the spinning is over
             if now - spin_start_ms >= MESSAGE_DURATION_MS:
+                angle_increment = 0
                 spinning = False
                 done_spinning = True
                 spin_end_ms = now
@@ -331,6 +349,10 @@ def casino_screen():
             choice_text = choice11_text
         # end of draw choices
 
+        fps = clock.get_fps()
+        draw_functions.draw_text(const.screen, f"FPS: {round(fps, 2)}", const.black, pygame.Rect(10, 570, 130, 20), font, 5)
+
         pygame.display.flip()
+        clock.tick(160) #first this
     pygame.quit()
     sys.exit(0)

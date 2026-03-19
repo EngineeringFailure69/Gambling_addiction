@@ -20,6 +20,7 @@ def apartment_screen():
     use_button_rect = pygame.Rect(0, 0, 0, 0)
     product = None
 
+    clock = pygame.time.Clock()
     while running:
         inventory_length = len(const.inventory_list)
         events = pygame.event.get()
@@ -56,6 +57,10 @@ def apartment_screen():
         elif draw_inventory and inventory_length <= 0:
             next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen)
 
+        fps = clock.get_fps()
+        draw_functions.draw_text(const.screen, f"FPS: {round(fps, 2)}", const.black, pygame.Rect(10, 570, 130, 20), font, 5)
+
         pygame.display.flip()
+        clock.tick(160)
     pygame.quit()
     sys.exit(0)

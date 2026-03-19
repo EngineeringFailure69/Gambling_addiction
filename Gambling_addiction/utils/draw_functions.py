@@ -178,3 +178,16 @@ def draw_inventory_card(screen, product = None):
     if product != None:
         load_icons(const.screen, product.image_path, icon_width, icon_height, x_coordinate + 20, y_coordinate + 20)
     return next_button_rect, use_button_rect
+
+def load_spin_animation(screen, icon_center_x, icon_center_y, angle, icon_path, icon_width, icon_height, rotated_rect, angle_increment, COUNTER_CLOCK_WISE = True):
+    size = (icon_width, icon_height)
+    original_icon = cache_and_get_images_and_icons(icon_path, size)
+    icon_center = (icon_center_x, icon_center_y)  
+    if COUNTER_CLOCK_WISE:
+        angle += angle_increment
+    elif not COUNTER_CLOCK_WISE:
+         angle -= angle_increment
+    rotated_icon = pygame.transform.rotate(original_icon, angle)
+    rotated_rect = rotated_icon.get_rect(center=icon_center)
+    screen.blit(rotated_icon, rotated_rect)
+    return angle, rotated_rect
