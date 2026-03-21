@@ -61,6 +61,7 @@ from tkinter.ttk import *
 import ast
 import classes.items_class as items_class
 import logic.inventory_items_logic as inventory_items_logic
+import settings_screen as settings_screen
 
 def grab_all_variables(file_path = "const.py", starts_with="STATE"):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -96,12 +97,6 @@ def buy(events, position_x, position_y, icon_width, icon_height, type, price, pr
             if type in const.screen_and_buy_functions.values():
                 type(price, product)
                 return
-
-def handle_quit(running):
-    for i in pygame.event.get():
-            if i.type == pygame.QUIT:
-                running = False
-    return running
 
 def process_bet_text_box_events(events, input_box, text, active):
     for event in events:
@@ -156,13 +151,6 @@ def handle_choice_buttons(events, button, boolChoice, counter, condition, rightB
             if event.button == 1:
                 boolChoice = False
     return counter, boolChoice
-
-def handle_mouse_button_up_event(events, boolChoice):
-    for event in events:
-        if event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                boolChoice = False
-    return boolChoice
 
 def make_bet(choice, your_numbers, counter, counter2, counter3, counter4, counter5, counter6, choice_text = ""):
     your_numbers = []

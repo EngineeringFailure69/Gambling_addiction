@@ -91,7 +91,7 @@ def casino_screen():
                 draw_functions.draw_message_box('Choice info', text_messages.choice_info_text)
 
         text, active = utils.process_bet_text_box_events(events, const.your_bet_box, text, active)
-        draw_functions.draw_text_box(const.screen, const.blue, const.your_bet_box, text, font, const.black)
+        draw_functions.draw_text_box(const.screen, const.blue, const.your_bet_box, text, font, const.white)
 
         draw_functions.draw_button(const.screen, const.blue, const.pick_colour_button, selected_colour, font, const.black)
 
@@ -349,10 +349,9 @@ def casino_screen():
             choice_text = choice11_text
         # end of draw choices
 
-        fps = clock.get_fps()
-        draw_functions.draw_text(const.screen, f"FPS: {round(fps, 2)}", const.black, pygame.Rect(10, 570, 130, 20), font, 5)
+        if const.fps_show:
+            draw_functions.show_fps_counter(const.screen, clock, const.black, pygame.Rect(10, 570, 130, 20), font, 60, 5)
 
         pygame.display.flip()
-        clock.tick(160) #first this
     pygame.quit()
     sys.exit(0)

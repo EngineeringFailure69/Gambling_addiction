@@ -191,3 +191,8 @@ def load_spin_animation(screen, icon_center_x, icon_center_y, angle, icon_path, 
     rotated_rect = rotated_icon.get_rect(center=icon_center)
     screen.blit(rotated_icon, rotated_rect)
     return angle, rotated_rect
+
+def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):
+    fps = clock.get_fps()
+    draw_text(screen, f"FPS: {round(fps, 2)}", text_colour, text_rect, font, line_spacing)
+    clock.tick(clock_value) 

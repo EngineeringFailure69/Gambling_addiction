@@ -47,6 +47,7 @@ import interface.shopping_interface.furniture_section.armchairs_section_screen a
 import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
 import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
 import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
+import settings_screen as settings_screen
 
 pygame.init()
 screen = pygame.display.set_mode((1400, 600))
@@ -79,6 +80,13 @@ work_icon_width = 70
 work_icon_height = 70
 work_icon_position_x = const.screen.get_width()/47
 work_icon_position_y = const.screen.get_height()-80
+
+#settings icon
+settings_icon_path = "icons\\settings_icon.png"
+settings_icon_width = 100
+settings_icon_height = 70
+settings_icon_position_x = 1300
+settings_icon_position_y = 10
 
 #Often used UI elements
 bet_button = pygame.Rect(screen.get_width()/60, screen.get_height()//50, button_width-250, button_height-50)
@@ -121,7 +129,7 @@ spin_the_barrell_button = pygame.Rect(screen.get_width()-510, screen.get_height(
 info = pygame.Rect(0, screen.get_height()-button_height+30, screen.get_width()-200, button_height-30)
 apply_button = pygame.Rect(screen.get_width()/2-button_width/2, screen.get_height()-(screen.get_height()/3), button_width, button_height) 
 
-inventory_button = pygame.Rect(screen.get_width()-180, screen.get_height()//50, button_width-150, button_height-50)
+inventory_button = pygame.Rect(screen.get_width()-240, screen.get_height()//50, button_width-150, button_height-50)
 
 save_path = file_utils.extract_default_save()
 balance = file_utils.load_save_game_info("save_files\\information.txt", "balance")
@@ -171,7 +179,7 @@ bread_bckgd = (59, 120, 173)
 fruit_bckg = (100, 160, 185)
 vegetables_bckgd = (251, 231, 198)
 milk_bckgd = (255, 207, 134)
-
+ 
 #States
 STATE_APARTMENT = apartment_screen.apartment_screen
 STATE_CASINO = casino_screen.casino_screen
@@ -211,6 +219,7 @@ STATE_POWER_TOOLS = power_tools_section_screen.power_tools_section_screen
 STATE_SAFETY_GEAR = safety_gear_section_screen.safety_gear_section_screen
 STATE_TOOLS_ACCESSORIES = tools_accessories_section_screen.tools_accessories_section_screen
 STATE_BUY_PRODUCT = buy_product_and_add_to_the_inventory
+STATE_SETTINGS = settings_screen.settings_screen
 
 #list with all state names and all functions connected to them (its filled in automatically, no need to touch)
 screen_and_buy_functions = {}
@@ -265,3 +274,5 @@ job_apply = False
 inventory_list_file = file_utils.load_list_from_file(save_path, "inventory_list") 
 inventory_list = utils.load_inventory_objects()
 inventory_index = 0
+
+fps_show = True

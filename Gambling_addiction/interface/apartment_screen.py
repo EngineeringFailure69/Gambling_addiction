@@ -21,6 +21,7 @@ def apartment_screen():
     product = None
 
     clock = pygame.time.Clock()
+    
     while running:
         inventory_length = len(const.inventory_list)
         events = pygame.event.get()
@@ -36,6 +37,9 @@ def apartment_screen():
 
         mouse_pos = pygame.mouse.get_pos()
         draw_functions.draw_button(const.screen, const.blue, const.inventory_button, "Inventory", font, const.black, mouse_pos)
+
+        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y - 10)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
 
         if inventory_length > 0:
             product = const.inventory_list[const.inventory_index]
@@ -57,10 +61,9 @@ def apartment_screen():
         elif draw_inventory and inventory_length <= 0:
             next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen)
 
-        fps = clock.get_fps()
-        draw_functions.draw_text(const.screen, f"FPS: {round(fps, 2)}", const.black, pygame.Rect(10, 570, 130, 20), font, 5)
+        if const.fps_show:
+            draw_functions.show_fps_counter(const.screen, clock, const.black, pygame.Rect(10, 570, 130, 20), font, 60, 5)
 
         pygame.display.flip()
-        clock.tick(160)
     pygame.quit()
     sys.exit(0)
