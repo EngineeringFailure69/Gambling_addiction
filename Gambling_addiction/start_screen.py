@@ -6,7 +6,6 @@ import settings_screen as settings_screen
 import utils.utils as utils
 import utils.file_utils as file_utils
 import sys
-import settings_screen as settings_screen
 
 def main_screen():
     running = True
@@ -35,10 +34,12 @@ def main_screen():
     fps_rect = pygame.Rect(10, 10, 120, 20)
     fps = 60
     line_spacing = 5
-
     clock = pygame.time.Clock()
+
+    utils.play_current_song()
     while running:
         events = pygame.event.get()
+        utils.play_music(events)
 
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed() 
@@ -64,6 +65,11 @@ def main_screen():
         elif start_button_rect.collidepoint(mouse_pos):
             if mouse_click[0]:
                 apartment_screen.apartment_screen()
+
+        # for event in events:
+        #     if event.type == const.MUSIC_END:
+        #         const.current_song_index = (const.current_song_index + 1) % len(const.playlist)
+        #         utils.play_current_song()
 
         pygame.display.flip()
     pygame.quit()

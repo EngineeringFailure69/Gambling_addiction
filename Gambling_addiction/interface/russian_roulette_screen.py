@@ -30,8 +30,14 @@ def russian_roulette_screen():
 
     bckgd_img_path = "background_photos\\game_russian_roulette_background.png"
 
+    fps_rect = pygame.Rect(10, 570, 130, 20)
+    fps = 60
+    line_spacing = 5
+    clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
+        utils.play_music(events)
+
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, bckgd_img_path)
 
@@ -52,6 +58,9 @@ def russian_roulette_screen():
         draw_functions.draw_button(const.screen, const.blue, const.bet_button, "Bet", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, const.pull_the_trigger_button, "Pull the trigger", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, const.spin_the_barrell_button, "Spin the barrell/roll the dice", font, const.black, mouse_pos)
+
+        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y - 15)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
 
         info_text = 'Balance:' + str(const.balance) + ' ' + 'Your bet: ' + str(const.your_bet) + " " + 'Prize: ' + str(prize)
 
@@ -122,6 +131,9 @@ def russian_roulette_screen():
                 spinning = False
 
         draw_functions.draw_button(const.screen, const.table_brown, const.info, info_text, font, const.white)
+
+        if const.fps_show:
+            draw_functions.show_fps_counter(const.screen, clock, const.white, fps_rect, font, fps, line_spacing)
     
         pygame.display.flip()
     pygame.quit()

@@ -64,9 +64,14 @@ def casino_screen():
 
     draw_functions.load_background_image(const.screen, img_path)
     
+    fps_rect = pygame.Rect(10, 570, 130, 20)
+    fps = 60
+    line_spacing = 5
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
+        utils.play_music(events)
+
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, img_path)
         angle, rotated_rect = draw_functions.load_spin_animation(const.screen, icon_center_x, icon_center_y, angle, icon_path, icon_width_animation, icon_height_animation, rotated_rect, angle_increment, COUNTER_CLOCK_WISE)
@@ -102,6 +107,9 @@ def casino_screen():
 
         draw_functions.draw_button(const.screen, const.blue, const.right_choice_button, "->", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, const.left_choice_button, "<-", font, const.black, mouse_pos)
+        
+        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x + 10, const.settings_icon_position_y - 15)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
 
         if const.red_colour_button.collidepoint(mouse_pos):
             if mouse_click[0]:
@@ -117,25 +125,27 @@ def casino_screen():
         # end of functionalities elements drawings
 
         info_text = 'Balance:' + str(const.balance) + ' ' + 'Your bet: ' + str(const.your_bet) + ' ' + 'Table: ' + str(table) + " " + 'Prize: ' + str(prize)
-        if const.bet_button.collidepoint(mouse_pos):
-            if mouse_click[0] and not spinning:
-                if const.balance < const.your_bet:
-                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, because your current balance is {const.balance}")
-                elif const.your_bet <= 0:
-                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars")
-                elif choice == 3 and const.your_bet > const.balance * 0.1 + 1:
-                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 10% of your budget, which is {int(const.balance * 0.1)+1}")
-                elif choice == 9 and const.your_bet > const.balance * 0.1 + 1:
-                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 10% of your budget, which is {int(const.balance * 0.1)+1}")
-                elif choice == 10 and const.your_bet > const.balance * 0.1 + 1:
-                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 10% of your budget, which is {int(const.balance * 0.1)+1}")
-                elif choice == 11 and const.your_bet > const.balance * 0.2 + 1:
-                    draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 20% of your budget, which is {int(const.balance * 0.2)+1}")
-                else:    
-                    prize, table, return_colour = casino_roulette_logic.to_win_function(choice, const.your_bet, selected_colour, your_numbers)
-                    spinning = True
-                    spin_start_ms = now
-                    win_lose_drawn = False
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if const.bet_button.collidepoint(mouse_pos):
+                    if not spinning:
+                        if const.balance < const.your_bet:
+                            draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, because your current balance is {const.balance}")
+                        elif const.your_bet <= 0:
+                            draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars")
+                        elif choice == 3 and const.your_bet > const.balance * 0.1 + 1:
+                            draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 10% of your budget, which is {int(const.balance * 0.1)+1}")
+                        elif choice == 9 and const.your_bet > const.balance * 0.1 + 1:
+                            draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 10% of your budget, which is {int(const.balance * 0.1)+1}")
+                        elif choice == 10 and const.your_bet > const.balance * 0.1 + 1:
+                            draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 10% of your budget, which is {int(const.balance * 0.1)+1}")
+                        elif choice == 11 and const.your_bet > const.balance * 0.2 + 1:
+                            draw_functions.draw_message_box('Bet error', f"You can not bet {const.your_bet} dollars, for this choice you can only bet up to 20% of your budget, which is {int(const.balance * 0.2)+1}")
+                        else:    
+                            prize, table, return_colour = casino_roulette_logic.to_win_function(choice, const.your_bet, selected_colour, your_numbers)
+                            spinning = True
+                            spin_start_ms = now
+                            win_lose_drawn = False
                 
         if spinning:
             #start spinning animation
@@ -350,7 +360,7 @@ def casino_screen():
         # end of draw choices
 
         if const.fps_show:
-            draw_functions.show_fps_counter(const.screen, clock, const.black, pygame.Rect(10, 570, 130, 20), font, 60, 5)
+            draw_functions.show_fps_counter(const.screen, clock, const.black, fps_rect, font, fps, line_spacing)
 
         pygame.display.flip()
     pygame.quit()

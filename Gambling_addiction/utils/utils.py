@@ -462,3 +462,15 @@ def save_game():
     file_utils.update_value_in_file("save_files\\information.txt", "index")
     file_utils.update_value_in_file("save_files\\information.txt", "salary")
     file_utils.update_value_in_file("save_files\\information.txt", "working")
+
+def play_current_song():
+    song = const.playlist[const.current_song_index]
+    pygame.mixer.music.load(song)
+    pygame.mixer.music.play()
+    pygame.mixer.music.set_endevent(const.MUSIC_END)
+
+def play_music(events):
+    for event in events:
+        if event.type == const.MUSIC_END:
+            const.current_song_index = (const.current_song_index + 1) % len(const.playlist)
+            play_current_song()

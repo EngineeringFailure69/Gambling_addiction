@@ -88,16 +88,22 @@ settings_icon_height = 70
 settings_icon_position_x = 1300
 settings_icon_position_y = 10
 
+#shop_fps_show 
+fps_rect = pygame.Rect(10, 10, 120, 20)
+fps = 60
+line_spacing = 5
+ 
 #Often used UI elements
 bet_button = pygame.Rect(screen.get_width()/60, screen.get_height()//50, button_width-250, button_height-50)
 your_bet_box = pygame.Rect(screen.get_width()/60 + bet_button.width + 20, screen.get_height()//50, button_width, button_height-50)
 pick_colour_button = pygame.Rect(screen.get_width()-710, screen.get_height()//50, button_width-200, button_height-50)
 red_colour_button = pygame.Rect(screen.get_width()-600, screen.get_height()//50, button_width-250, button_height-50)
 black_colour_button = pygame.Rect(screen.get_width()-770, screen.get_height()//50, button_width-250, button_height-50)
-choice_Info_button = pygame.Rect(screen.get_width()-180, screen.get_height()//50, button_width-150, button_height-50)
+choice_Info_button = pygame.Rect(screen.get_width()-230, screen.get_height()//50, button_width-150, button_height-50)
 right_choice_button = pygame.Rect(screen.get_width()-300, screen.get_height()//50, button_width-250, button_height-50)
 left_choice_button = pygame.Rect(screen.get_width()-520, screen.get_height()//50, button_width-250, button_height-50)
 choice_button = pygame.Rect(screen.get_width()-460, screen.get_height()//50, button_width-150, button_height-50)
+buy_Info_button = pygame.Rect(screen.get_width()-210, screen.get_height()//50, button_width-150, button_height-50)
 
 right_choice1_button = pygame.Rect(screen.get_width()-300, screen.get_height()//10, button_width-250, button_height-50)
 left_choice1_button = pygame.Rect(screen.get_width()-520, screen.get_height()//10, button_width-250, button_height-50)
@@ -123,13 +129,15 @@ right_choice6_button = pygame.Rect(screen.get_width()-300, screen.get_height()//
 left_choice6_button = pygame.Rect(screen.get_width()-520, screen.get_height()//2, button_width-250, button_height-50)
 choice6_button = pygame.Rect(screen.get_width()-460, screen.get_height()//2, button_width-150, button_height-50)
 
-pull_the_trigger_button = pygame.Rect(screen.get_width()-180, screen.get_height()//50, button_width-150, button_height-50)
-spin_the_barrell_button = pygame.Rect(screen.get_width()-510, screen.get_height()//50, button_width, button_height-50)
+pull_the_trigger_button = pygame.Rect(screen.get_width()-250, screen.get_height()//50, button_width-150, button_height-50)
+spin_the_barrell_button = pygame.Rect(screen.get_width()-570, screen.get_height()//50, button_width, button_height-50)
 
 info = pygame.Rect(0, screen.get_height()-button_height+30, screen.get_width()-200, button_height-30)
 apply_button = pygame.Rect(screen.get_width()/2-button_width/2, screen.get_height()-(screen.get_height()/3), button_width, button_height) 
 
 inventory_button = pygame.Rect(screen.get_width()-240, screen.get_height()//50, button_width-150, button_height-50)
+
+text_rect = pygame.Rect(10, const.screen.get_height() / 13, screen.get_width(), 300)
 
 save_path = file_utils.extract_default_save()
 balance = file_utils.load_save_game_info("save_files\\information.txt", "balance")
@@ -275,4 +283,10 @@ inventory_list_file = file_utils.load_list_from_file(save_path, "inventory_list"
 inventory_list = utils.load_inventory_objects()
 inventory_index = 0
 
+#settings data
 fps_show = True
+fps_apply = True
+pygame.mixer.init()
+playlist = [] #all paths to the songs
+current_song_index = 0 
+MUSIC_END = pygame.USEREVENT + 1

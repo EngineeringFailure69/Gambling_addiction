@@ -20,11 +20,14 @@ def apartment_screen():
     use_button_rect = pygame.Rect(0, 0, 0, 0)
     product = None
 
-    clock = pygame.time.Clock()
-    
+    fps = 60
+    line_spacing = 5
+    fps_rect = pygame.Rect(10, 570, 130, 20)
+    clock = pygame.time.Clock() 
     while running:
         inventory_length = len(const.inventory_list)
         events = pygame.event.get()
+        utils.play_music(events)
 
         draw_functions.load_background_image(const.screen, "background_photos\\home_background.png")
         draw_functions.draw_text(const.screen, text_messages.game_screen1_text + f"{const.balance} dollars, and your salary is {const.salary}", const.black, text_rect, font, line_spacing=5)
@@ -62,7 +65,7 @@ def apartment_screen():
             next_button_rect, use_button_rect = draw_functions.draw_inventory_card(const.screen)
 
         if const.fps_show:
-            draw_functions.show_fps_counter(const.screen, clock, const.black, pygame.Rect(10, 570, 130, 20), font, 60, 5)
+            draw_functions.show_fps_counter(const.screen, clock, const.black, fps_rect, font, fps, line_spacing)
 
         pygame.display.flip()
     pygame.quit()
