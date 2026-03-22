@@ -62,6 +62,8 @@ import ast
 import classes.items_class as items_class
 import logic.inventory_items_logic as inventory_items_logic
 import settings_screen as settings_screen
+import tkinter as tk
+from tkinter import filedialog
 
 def grab_all_variables(file_path = "const.py", starts_with="STATE"):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -463,11 +465,28 @@ def save_game():
     file_utils.update_value_in_file("save_files\\information.txt", "salary")
     file_utils.update_value_in_file("save_files\\information.txt", "working")
 
+def load_playlist():
+    const.playlist = []
+    songs = []
+    root = tk.Tk()
+    root.withdraw()
+    songs = filedialog.askopenfilenames()
+    root.destroy()
+    if songs:
+        const.playlist = list(songs)
+        const.current_song_index = 0
+        return True
+    else:
+        return False
+
 def play_current_song():
-    song = const.playlist[const.current_song_index]
-    pygame.mixer.music.load(song)
-    pygame.mixer.music.play()
-    pygame.mixer.music.set_endevent(const.MUSIC_END)
+    if const.playlist:
+        pygame.mixer.music.stop()
+        const.current_song_index %= len(const.playlist)
+        song = const.playlist[const.current_song_index]
+        pygame.mixer.music.load(song)
+        pygame.mixer.music.play()
+        pygame.mixer.music.set_endevent(const.MUSIC_END)
 
 def play_music(events):
     for event in events:

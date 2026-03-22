@@ -287,6 +287,6 @@ inventory_index = 0
 fps_show = True
 fps_apply = True
 pygame.mixer.init()
-playlist = [] #all paths to the songs
+playlist = []
 current_song_index = 0 
 MUSIC_END = pygame.USEREVENT + 1

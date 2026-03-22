@@ -3,13 +3,9 @@ import const
 import sys
 import utils.utils as utils
 import utils.draw_functions as draw_functions
-import tkinter as tk
-from tkinter import filedialog
 
 def settings_screen():
     running = True
-
-    files = []
 
     back_icon_path = "icons\\go_back_icon.png"
     back_icon_position_x = 0
@@ -49,10 +45,11 @@ def settings_screen():
     else:
         show_fps_button_text = "No"
 
+    play_once = False
+
     while running:
         const.screen.fill(const.green)
         events = pygame.event.get()
-        utils.play_music(events)
 
         mouse_pos = pygame.mouse.get_pos()
 
@@ -79,11 +76,16 @@ def settings_screen():
                     return
                 if apply_button_rect.collidepoint(mouse_pos):
                     const.fps_show = const.fps_apply 
+                    if const.playlist:
+                        const.current_song_index %= len(const.playlist)
+                        utils.play_current_song()
                 if open_file_dialog_button_rect.collidepoint(mouse_pos):
-                    root = tk.Tk()
-                    root.withdraw()
-                    files = filedialog.askopenfiles()
-                    print(files)
+                    custom_playlist = utils.load_playlist()
+                    pygame.event.clear()
+                    if not custom_playlist:
+                        const.playlist = []
+        
+        utils.play_music(events)
 
         pygame.display.flip()
     pygame.quit()

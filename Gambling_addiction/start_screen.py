@@ -31,11 +31,7 @@ def main_screen():
     angle_increment = 2
     COUNTER_CLOCK_WISE = True
 
-    fps_rect = pygame.Rect(10, 10, 120, 20)
-    fps = 60
-    line_spacing = 5
     clock = pygame.time.Clock()
-
     utils.play_current_song()
     while running:
         events = pygame.event.get()
@@ -50,7 +46,7 @@ def main_screen():
         angle, rotated_rect = draw_functions.load_spin_animation(const.screen, icon_center_x, icon_center_y, angle, animation_icon_path, icon_width_animation, icon_height_animation, rotated_rect, angle_increment, COUNTER_CLOCK_WISE)
 
         if const.fps_show:
-            draw_functions.show_fps_counter(const.screen, clock, const.white, fps_rect, font, fps, line_spacing)
+            draw_functions.show_fps_counter(const.screen, clock, const.white, const.fps_rect, font, const.fps, const.line_spacing)
 
         draw_functions.draw_button(const.screen, const.blue, start_button_rect, "Start", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, quit_button_rect, "Quit", font, const.black, mouse_pos)
@@ -65,11 +61,6 @@ def main_screen():
         elif start_button_rect.collidepoint(mouse_pos):
             if mouse_click[0]:
                 apartment_screen.apartment_screen()
-
-        # for event in events:
-        #     if event.type == const.MUSIC_END:
-        #         const.current_song_index = (const.current_song_index + 1) % len(const.playlist)
-        #         utils.play_current_song()
 
         pygame.display.flip()
     pygame.quit()
