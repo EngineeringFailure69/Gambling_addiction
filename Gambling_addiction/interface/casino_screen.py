@@ -68,6 +68,7 @@ def casino_screen():
     fps = 60
     line_spacing = 5
     clock = pygame.time.Clock()
+
     while running:
         events = pygame.event.get()
         utils.play_music(events)

@@ -64,6 +64,7 @@ import logic.inventory_items_logic as inventory_items_logic
 import settings_screen as settings_screen
 import tkinter as tk
 from tkinter import filedialog
+import glob, os
 
 def grab_all_variables(file_path = "const.py", starts_with="STATE"):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -466,18 +467,17 @@ def save_game():
     file_utils.update_value_in_file("save_files\\information.txt", "working")
 
 def load_playlist():
-    const.playlist = []
+    playlist_loaded = True
+    cancel_loading_process = False
     songs = []
     root = tk.Tk()
     root.withdraw()
     songs = filedialog.askopenfilenames()
     root.destroy()
     if songs:
-        const.playlist = list(songs)
-        const.current_song_index = 0
-        return True
+        return playlist_loaded, songs
     else:
-        return False
+        return cancel_loading_process, songs
 
 def play_current_song():
     if const.playlist:
@@ -491,5 +491,15 @@ def play_current_song():
 def play_music(events):
     for event in events:
         if event.type == const.MUSIC_END:
-            const.current_song_index = (const.current_song_index + 1) % len(const.playlist)
-            play_current_song()
+            if const.playlist:
+                const.current_song_index = (const.current_song_index + 1) % len(const.playlist)
+                play_current_song()
+
+def grab_all_sounds_from_the_music_drectory():
+    playlist = []
+    path = file_utils.resource_path("music_files")
+    for file in os.listdir(path):
+        if file.endswith(".wav"):
+            file_path = os.path.join(path, file)
+            playlist.append(file_path)
+    return playlist

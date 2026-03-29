@@ -31,7 +31,7 @@ def settings_screen():
 
     open_file_dialog_button_height = 30
     open_file_dialog_button_position_x = 150
-    open_file_dialog_button_width = 100
+    open_file_dialog_button_width = 200
     open_file_dialog_button_position_y = 150
     
     show_fps_button_rect = pygame.Rect(show_fps_button_position_x, show_fps_button_position_y, show_fps_button_width, show_fps_button_height)
@@ -45,7 +45,7 @@ def settings_screen():
     else:
         show_fps_button_text = "No"
 
-    play_once = False
+    apply_button_clicked = False
 
     while running:
         const.screen.fill(const.green)
@@ -57,8 +57,11 @@ def settings_screen():
         back_icon_position_x, back_icon_position_y, back_icon_width, back_icon_height = draw_functions.load_icons(const.screen, back_icon_path, back_icon_width, back_icon_height, back_icon_position_x, back_icon_position_y)
         back_icon_rect = pygame.Rect(back_icon_position_x, back_icon_position_y, back_icon_width, back_icon_height)
         draw_functions.draw_button(const.screen, const.blue, apply_button_rect, "Apply", font, const.black, mouse_pos)
-        draw_functions.draw_button(const.screen, const.blue, open_file_dialog_button_rect, "Open folder", font, const.black, mouse_pos)
+        draw_functions.draw_button(const.screen, const.blue, open_file_dialog_button_rect, "Load new playlist", font, const.black, mouse_pos)
         draw_functions.draw_text(const.screen, "Show FPS counter:", const.black, fps_text_rect, font, line_spacing = 5)
+
+        if apply_button_clicked:
+            utils.play_music(events)
 
         for event in events:
             if event.type == pygame.QUIT:
@@ -68,24 +71,40 @@ def settings_screen():
                 if show_fps_button_rect.collidepoint(mouse_pos):
                     if const.fps_apply == False:
                         show_fps_button_text = "Yes"
-                        const.fps_apply = not const.fps_apply
+                        const.fps_apply = True
                     elif const.fps_apply == True:
                         show_fps_button_text = "No"
-                    const.fps_apply = not const.fps_apply
+                        const.fps_apply = False
                 if  back_icon_rect.collidepoint(mouse_pos):
+                    running = False
                     return
                 if apply_button_rect.collidepoint(mouse_pos):
                     const.fps_show = const.fps_apply 
-                    if const.playlist:
+                    if const.playlist and not apply_button_clicked:
+                        print(const.playlist)
+                        #pygame.mixer.music.stop()
                         const.current_song_index %= len(const.playlist)
                         utils.play_current_song()
+                        apply_button_clicked = True
+                    print(apply_button_clicked)
                 if open_file_dialog_button_rect.collidepoint(mouse_pos):
-                    custom_playlist = utils.load_playlist()
+                    custom_playlist, songs = utils.load_playlist()
                     pygame.event.clear()
-                    if not custom_playlist:
-                        const.playlist = []
-        
-        utils.play_music(events)
+                    print(custom_playlist)
+                    print(songs)
+                    # apply_button_clicked = False
+                    if custom_playlist and apply_button_clicked:
+                        #const.playlist = []
+                    #else:
+                        apply_button_clicked = False
+                        pygame.mixer.music.stop()
+                        const.playlist = list(songs)
+                        print(const.playlist)
+                    elif not custom_playlist and not apply_button_clicked:
+                        apply_button_clicked = True
+                        pygame.mixer.music.stop()
+                        #utils.play_music(events)
+                        utils.play_current_song()
 
         pygame.display.flip()
     pygame.quit()

@@ -1,6 +1,4 @@
 # -*- mode: python ; coding: utf-8 -*-
-
-
 a = Analysis(
     ['start_screen.py'],
     pathex=[],
@@ -9,7 +7,8 @@ a = Analysis(
         ('icons/*', 'icons'),
         ('background_photos/*', 'background_photos'),
         ('save_files/information.txt', 'save_files'),
-        ('const.py', '.')
+        ('const.py', '.'),
+        ('music_files/*', 'music_files')
     ],
     hiddenimports=[],
     hookspath=[],

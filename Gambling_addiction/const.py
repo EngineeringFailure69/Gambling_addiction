@@ -287,6 +287,7 @@ inventory_index = 0
 fps_show = True
 fps_apply = True
 pygame.mixer.init()
-playlist = []
+playlist = utils.grab_all_sounds_from_the_music_drectory()#[]#["C:\\Users\\Windows\\Desktop\\mixkit-game-level-music-689.wav"]
+
 current_song_index = 0 
 MUSIC_END = pygame.USEREVENT + 1

@@ -179,7 +179,7 @@ def draw_inventory_card(screen, product = None):
         load_icons(const.screen, product.image_path, icon_width, icon_height, x_coordinate + 20, y_coordinate + 20)
     return next_button_rect, use_button_rect
 
-def load_spin_animation(screen, icon_center_x, icon_center_y, angle, icon_path, icon_width, icon_height, rotated_rect, angle_increment, COUNTER_CLOCK_WISE = True):
+def load_spin_animation(screen, icon_center_x, icon_center_y, angle, icon_path, icon_width, icon_height, rotated_rect, angle_increment, COUNTER_CLOCK_WISE = True): #Slower animation option
     size = (icon_width, icon_height)
     original_icon = cache_and_get_images_and_icons(icon_path, size)
     icon_center = (icon_center_x, icon_center_y)  

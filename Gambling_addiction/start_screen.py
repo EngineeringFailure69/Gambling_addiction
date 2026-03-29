@@ -26,13 +26,14 @@ def main_screen():
     animation_icon_path = "icons\\start_screen_roulette_wheel.png"
     icon_width_animation = 700
     icon_height_animation = 470
-    angle = 0
-    rotated_rect = 0
-    angle_increment = 2
     COUNTER_CLOCK_WISE = True
+    angle = 0
+    angle_increment = 2
+    rotated_rect = 0
 
     clock = pygame.time.Clock()
     utils.play_current_song()
+
     while running:
         events = pygame.event.get()
         utils.play_music(events)
@@ -60,6 +61,7 @@ def main_screen():
                 sys.exit(0)
         elif start_button_rect.collidepoint(mouse_pos):
             if mouse_click[0]:
+                running = False
                 apartment_screen.apartment_screen()
 
         pygame.display.flip()
