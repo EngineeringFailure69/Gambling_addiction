@@ -27,12 +27,13 @@ def main_screen():
     icon_width_animation = 700
     icon_height_animation = 470
     COUNTER_CLOCK_WISE = True
-    angle = 0
     angle_increment = 2
-    rotated_rect = 0
+    frame_index = 0
 
     clock = pygame.time.Clock()
     utils.play_current_song()
+
+    const.spin_animations = draw_functions.gather_animated_spin_animations(animation_icon_path, icon_width_animation, icon_height_animation, angle_increment, COUNTER_CLOCK_WISE)
 
     while running:
         events = pygame.event.get()
@@ -44,7 +45,7 @@ def main_screen():
         draw_functions.load_background_image(const.screen, img_path)
         draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
 
-        angle, rotated_rect = draw_functions.load_spin_animation(const.screen, icon_center_x, icon_center_y, angle, animation_icon_path, icon_width_animation, icon_height_animation, rotated_rect, angle_increment, COUNTER_CLOCK_WISE)
+        frame_index = draw_functions.load_animated_spin_animations(const.screen, icon_center_x, icon_center_y, frame_index, const.spin_animations, 1)
 
         if const.fps_show:
             draw_functions.show_fps_counter(const.screen, clock, const.white, const.fps_rect, font, const.fps, const.line_spacing)
@@ -61,6 +62,7 @@ def main_screen():
                 sys.exit(0)
         elif start_button_rect.collidepoint(mouse_pos):
             if mouse_click[0]:
+                const.spin_animations.clear()
                 running = False
                 apartment_screen.apartment_screen()
 

@@ -81,23 +81,23 @@ def draw_title(screen, color, text = "GAMBLING ADDICTION"):
     
     screen.blit(title_surface, title_rect)
 
-def cache_and_get_images_and_icons(imagePath, size=None):
+def cache_and_get_images_and_icons(imagePath, images_cache, size=None):
     key = (imagePath, size)
-    if key not in const.images_cache:
+    if key not in images_cache:
         loaded_image = pygame.image.load(file_utils.resource_path(imagePath)).convert_alpha()
         if size:
             loaded_image = pygame.transform.scale(loaded_image, size)
-        const.images_cache[key] = loaded_image
-    return const.images_cache[key]
+        images_cache[key] = loaded_image
+    return images_cache[key]
 
 def load_background_image(screen, imagePath):
     size = (const.screen.get_width(), const.screen.get_height())
-    image = cache_and_get_images_and_icons(imagePath, size)
+    image = cache_and_get_images_and_icons(imagePath, const.images_cache, size)
     screen.blit(image, (0, 0))
 
 def load_icons(screen, iconPath, icon_width, icon_height, icon_position_x, icon_position_y):
     size = (icon_width, icon_height)
-    icon = cache_and_get_images_and_icons(iconPath, size)
+    icon = cache_and_get_images_and_icons(iconPath, const.images_cache, size)
     screen.blit(icon, (icon_position_x, icon_position_y))
     return icon_position_x, icon_position_y, icon_width, icon_height
 
@@ -179,20 +179,28 @@ def draw_inventory_card(screen, product = None):
         load_icons(const.screen, product.image_path, icon_width, icon_height, x_coordinate + 20, y_coordinate + 20)
     return next_button_rect, use_button_rect
 
-def load_spin_animation(screen, icon_center_x, icon_center_y, angle, icon_path, icon_width, icon_height, rotated_rect, angle_increment, COUNTER_CLOCK_WISE = True): #Slower animation option
-    size = (icon_width, icon_height)
-    original_icon = cache_and_get_images_and_icons(icon_path, size)
-    icon_center = (icon_center_x, icon_center_y)  
-    if COUNTER_CLOCK_WISE:
-        angle += angle_increment
-    elif not COUNTER_CLOCK_WISE:
-         angle -= angle_increment
-    rotated_icon = pygame.transform.rotate(original_icon, angle)
-    rotated_rect = rotated_icon.get_rect(center=icon_center)
-    screen.blit(rotated_icon, rotated_rect)
-    return angle, rotated_rect
-
 def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):
     fps = clock.get_fps()
     draw_text(screen, f"FPS: {round(fps, 2)}", text_colour, text_rect, font, line_spacing)
     clock.tick(clock_value) 
+
+def gather_animated_spin_animations(icon_path, icon_width, icon_height, angle, COUNTER_CLOCK_WISE = True):
+    rotated_image = []
+    size = (icon_width, icon_height)
+    original_icon = cache_and_get_images_and_icons(icon_path, const.wheel_spin_cache, size)
+    if COUNTER_CLOCK_WISE:
+        for i in range(0, 360, angle):
+            rotated_image.append(pygame.transform.rotate(original_icon, i))
+        return rotated_image
+    elif not COUNTER_CLOCK_WISE:
+        for i in range(360, 0, -angle):
+            rotated_image.append(pygame.transform.rotate(original_icon, i))
+        return rotated_image
+
+def load_animated_spin_animations(screen, icon_center_x, icon_center_y, frame_index, rotated_roulette_wheel, animation_speed):
+    frame_index += animation_speed
+    frame_index %= len(rotated_roulette_wheel)
+    image = rotated_roulette_wheel[int(frame_index)]
+    rect = image.get_rect(center=(icon_center_x, icon_center_y))
+    screen.blit(image, rect)
+    return frame_index

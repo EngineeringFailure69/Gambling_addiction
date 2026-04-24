@@ -234,7 +234,8 @@ screen_and_buy_functions = {}
 
 #Image/icons caching dictionary
 images_cache = {}
-
+wheel_spin_cache = {}
+spin_animations = []
 #Check list
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 digit_counter = 0

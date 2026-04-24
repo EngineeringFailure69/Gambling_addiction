@@ -86,6 +86,8 @@ def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, i
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
             if type in const.screen_and_buy_functions.values():
+                if type is not const.STATE_SETTINGS:
+                    const.spin_animations.clear()
                 save_game()
                 type()
                 return
