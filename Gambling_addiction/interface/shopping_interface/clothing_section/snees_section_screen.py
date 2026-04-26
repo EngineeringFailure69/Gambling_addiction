@@ -23,6 +23,7 @@ def snees_section_screen():
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
+        utils.play_music()
 
         info_text = "Balance:" + str(const.balance)
 

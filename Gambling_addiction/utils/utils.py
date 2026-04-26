@@ -490,18 +490,17 @@ def play_current_song():
         pygame.mixer.music.play()
         pygame.mixer.music.set_endevent(const.MUSIC_END)
 
-def play_music(events):
-    for event in events:
-        if event.type == const.MUSIC_END:
-            if const.playlist:
-                const.current_song_index = (const.current_song_index + 1) % len(const.playlist)
-                play_current_song()
+def play_music():
+    if const.playlist:
+        if not pygame.mixer.music.get_busy():
+            const.current_song_index = (const.current_song_index + 1) % len(const.playlist)
+            play_current_song()
 
 def grab_all_sounds_from_the_music_drectory():
     playlist = []
     path = file_utils.resource_path("music_files")
     for file in os.listdir(path):
-        if file.endswith(".wav"):
+        if file.endswith((".wav", ".mp3", ".midi")):
             file_path = os.path.join(path, file)
             playlist.append(file_path)
     return playlist

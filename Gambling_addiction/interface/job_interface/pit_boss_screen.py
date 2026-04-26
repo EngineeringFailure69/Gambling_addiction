@@ -14,7 +14,7 @@ def pit_boss_screen():
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
-        utils.play_music(events)
+        utils.play_music()
 
         mouse_pos = pygame.mouse.get_pos()
 

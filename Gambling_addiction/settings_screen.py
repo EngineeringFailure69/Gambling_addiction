@@ -3,6 +3,7 @@ import const
 import sys
 import utils.utils as utils
 import utils.draw_functions as draw_functions
+import os
 
 def settings_screen():
     running = True
@@ -30,8 +31,8 @@ def settings_screen():
     show_fps_button_text = ""
 
     open_file_dialog_button_height = 30
-    open_file_dialog_button_position_x = 150
     open_file_dialog_button_width = 200
+    open_file_dialog_button_position_x = const.screen.get_width() / 2 - 1.5 * open_file_dialog_button_width
     open_file_dialog_button_position_y = 150
     
     show_fps_button_rect = pygame.Rect(show_fps_button_position_x, show_fps_button_position_y, show_fps_button_width, show_fps_button_height)
@@ -45,8 +46,7 @@ def settings_screen():
     else:
         show_fps_button_text = "No"
 
-    apply_button_clicked = False
-
+    new_playlist = None
     while running:
         const.screen.fill(const.green)
         events = pygame.event.get()
@@ -59,9 +59,11 @@ def settings_screen():
         draw_functions.draw_button(const.screen, const.blue, apply_button_rect, "Apply", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, open_file_dialog_button_rect, "Load new playlist", font, const.black, mouse_pos)
         draw_functions.draw_text(const.screen, "Show FPS counter:", const.black, fps_text_rect, font, line_spacing = 5)
+        song_path = const.playlist[const.current_song_index]
+        song_name = os.path.basename(song_path)
+        draw_functions.draw_centered_text_with_other_element_as_reference_point(const.screen, song_name, font, const.black, open_file_dialog_button_rect, x_offset=20)
 
-        if apply_button_clicked:
-            utils.play_music(events)
+        utils.play_music()
 
         for event in events:
             if event.type == pygame.QUIT:
@@ -80,31 +82,16 @@ def settings_screen():
                     return
                 if apply_button_rect.collidepoint(mouse_pos):
                     const.fps_show = const.fps_apply 
-                    if const.playlist and not apply_button_clicked:
-                        print(const.playlist)
-                        #pygame.mixer.music.stop()
-                        const.current_song_index %= len(const.playlist)
+                    if new_playlist:
+                        pygame.mixer.music.stop()
+                        const.playlist = new_playlist
+                        const.current_song_index = 0
                         utils.play_current_song()
-                        apply_button_clicked = True
-                    print(apply_button_clicked)
                 if open_file_dialog_button_rect.collidepoint(mouse_pos):
                     custom_playlist, songs = utils.load_playlist()
-                    pygame.event.clear()
-                    print(custom_playlist)
-                    print(songs)
-                    # apply_button_clicked = False
-                    if custom_playlist and apply_button_clicked:
-                        #const.playlist = []
-                    #else:
-                        apply_button_clicked = False
-                        pygame.mixer.music.stop()
-                        const.playlist = list(songs)
-                        print(const.playlist)
-                    elif not custom_playlist and not apply_button_clicked:
-                        apply_button_clicked = True
-                        pygame.mixer.music.stop()
-                        #utils.play_music(events)
-                        utils.play_current_song()
+
+                    if custom_playlist:
+                        new_playlist = list(songs)
 
         pygame.display.flip()
     pygame.quit()

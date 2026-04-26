@@ -17,6 +17,7 @@ def clothing_screen():
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
+        utils.play_music()
 
         const.screen.fill(const.clothing_bckgd)
 

@@ -14,7 +14,7 @@ def janitor_screen():
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
-        utils.play_music(events)
+        utils.play_music()
 
         draw_functions.load_background_image(const.screen, "background_photos\\janitor_screen_background.png")
         draw_functions.draw_title(const.screen, const.white, "JANITOR POSITION")

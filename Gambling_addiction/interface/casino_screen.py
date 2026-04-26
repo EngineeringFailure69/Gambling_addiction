@@ -74,7 +74,7 @@ def casino_screen():
 
     while running:
         events = pygame.event.get()
-        utils.play_music(events)
+        utils.play_music()
 
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, img_path)

@@ -7,6 +7,12 @@ import utils.file_utils as file_utils
 def draw_message_box(title, text):
     messagebox.showinfo(title, text)
 
+def draw_centered_text_with_other_element_as_reference_point(screen, text, font, colour, reference_rect, x_offset):
+    surface = font.render(text, True, colour)
+    rect = surface.get_rect()
+    rect.midleft = (reference_rect.right + x_offset, reference_rect.centery)
+    screen.blit(surface, rect)
+
 def draw_text(surface, text, color, rect, font, line_spacing=0, antialias=True):
     x, y = rect.topleft
     max_width = rect.width
