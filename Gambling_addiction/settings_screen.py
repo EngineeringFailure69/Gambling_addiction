@@ -4,9 +4,13 @@ import sys
 import utils.utils as utils
 import utils.draw_functions as draw_functions
 import os
+import text_messages 
 
 def settings_screen():
     running = True
+
+    screen_width = const.screen.get_width()
+    screen_height = const.screen.get_height()
 
     back_icon_path = "icons\\go_back_icon.png"
     back_icon_position_x = 0
@@ -16,12 +20,12 @@ def settings_screen():
 
     apply_button_height = 50
     apply_button_width = 200
-    apply_button_position_x = const.screen.get_width() / 2 - apply_button_width / 2
-    apply_button_position_y = const.screen.get_height()-100
+    apply_button_position_x = screen_width / 2 - apply_button_width / 2
+    apply_button_position_y = screen_height - 100
 
     fps_text_width = 200
-    fps_text_position_x = const.screen.get_width() / 2 - fps_text_width
-    fps_text_position_y = const.screen.get_height() - 550
+    fps_text_position_x = screen_width / 2 - fps_text_width
+    fps_text_position_y = screen_height / 12
     fps_text_height = 30
 
     show_fps_button_height = 30
@@ -32,13 +36,35 @@ def settings_screen():
 
     open_file_dialog_button_height = 30
     open_file_dialog_button_width = 200
-    open_file_dialog_button_position_x = const.screen.get_width() / 2 - 1.5 * open_file_dialog_button_width
-    open_file_dialog_button_position_y = 150
+    open_file_dialog_button_position_x = screen_width / 2 - 1.5 * open_file_dialog_button_width
+    open_file_dialog_button_position_y = screen_height / 5
+
+    volume_button_height = 30
+    volume_button_width = 200
+    volume_button_position_x = screen_width / 2 - volume_button_width / 2 - 10
+    volume_button_position_y = screen_height / 3
+
+    increase_volume_button_height = 30
+    increase_volume_button_width = 50
+    increase_volume_button_position_x = volume_button_position_x + volume_button_width + 20
+    increase_volume_button_position_y = volume_button_position_y
+
+    decrease_volume_button_height = 30
+    decrease_volume_button_width = 50
+    decrease_volume_button_position_x = volume_button_position_x - decrease_volume_button_width - 20
+    decrease_volume_button_position_y = volume_button_position_y
+
+
     
     show_fps_button_rect = pygame.Rect(show_fps_button_position_x, show_fps_button_position_y, show_fps_button_width, show_fps_button_height)
     apply_button_rect = pygame.Rect(apply_button_position_x, apply_button_position_y, apply_button_width, apply_button_height)
     fps_text_rect = pygame.Rect(fps_text_position_x, fps_text_position_y, fps_text_width, fps_text_height)
     open_file_dialog_button_rect = pygame.Rect(open_file_dialog_button_position_x, open_file_dialog_button_position_y, open_file_dialog_button_width, open_file_dialog_button_height)
+    volume_button_rect = pygame.Rect(volume_button_position_x, volume_button_position_y, volume_button_width, volume_button_height)
+    increase_volume_button_rect = pygame.Rect(increase_volume_button_position_x, increase_volume_button_position_y, increase_volume_button_width, increase_volume_button_height)
+    decrease_volume_button_rect = pygame.Rect(decrease_volume_button_position_x, decrease_volume_button_position_y, decrease_volume_button_width, decrease_volume_button_height)
+    how_to_button_rect = const.choice_Info_button.move(screen_width//28, 0)
+
     font = pygame.font.SysFont(None, 30)
 
     if const.fps_show:
@@ -47,10 +73,11 @@ def settings_screen():
         show_fps_button_text = "No"
 
     new_playlist = None
+    volume = const.music_volume
     while running:
         const.screen.fill(const.green)
         events = pygame.event.get()
-
+        utils.change_music_volume()
         mouse_pos = pygame.mouse.get_pos()
 
         draw_functions.draw_button(const.screen, const.blue, show_fps_button_rect, show_fps_button_text, font, const.black, mouse_pos)
@@ -62,7 +89,10 @@ def settings_screen():
         song_path = const.playlist[const.current_song_index]
         song_name = os.path.basename(song_path)
         draw_functions.draw_centered_text_with_other_element_as_reference_point(const.screen, song_name, font, const.black, open_file_dialog_button_rect, x_offset=20)
-
+        draw_functions.draw_button(const.screen, const.blue, volume_button_rect, f"{int(volume * 100)}%", font, const.black, mouse_pos)
+        draw_functions.draw_button(const.screen, const.blue, increase_volume_button_rect, "+", font, const.black, mouse_pos)
+        draw_functions.draw_button(const.screen, const.blue, decrease_volume_button_rect, "-", font, const.black, mouse_pos)
+        draw_functions.draw_button(const.screen, const.blue, how_to_button_rect, "How to?", font, const.black, mouse_pos)
         utils.play_music()
 
         for event in events:
@@ -87,11 +117,23 @@ def settings_screen():
                         const.playlist = new_playlist
                         const.current_song_index = 0
                         utils.play_current_song()
+                    const.music_volume = volume
                 if open_file_dialog_button_rect.collidepoint(mouse_pos):
                     custom_playlist, songs = utils.load_playlist()
-
                     if custom_playlist:
                         new_playlist = list(songs)
+                if increase_volume_button_rect.collidepoint(mouse_pos):
+                    if volume < 1.0:
+                        volume += 0.05
+                    else:
+                        volume = 1.0
+                if decrease_volume_button_rect.collidepoint(mouse_pos):
+                    if volume > 0.0:
+                        volume -= 0.05
+                    else:
+                        volume = 0.0
+                if how_to_button_rect.collidepoint(mouse_pos):
+                    draw_functions.draw_message_box("How to use settings", text_messages.how_to_text)
 
         pygame.display.flip()
     pygame.quit()

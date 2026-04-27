@@ -504,3 +504,6 @@ def grab_all_sounds_from_the_music_drectory():
             file_path = os.path.join(path, file)
             playlist.append(file_path)
     return playlist
+
+def change_music_volume():
+    pygame.mixer.music.set_volume(const.music_volume)

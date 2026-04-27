@@ -37,6 +37,7 @@ def main_screen():
 
     while running:
         events = pygame.event.get()
+        utils.change_music_volume()
         utils.play_music()
 
         mouse_pos = pygame.mouse.get_pos()
