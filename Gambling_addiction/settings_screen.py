@@ -54,8 +54,6 @@ def settings_screen():
     decrease_volume_button_position_x = volume_button_position_x - decrease_volume_button_width - 20
     decrease_volume_button_position_y = volume_button_position_y
 
-
-    
     show_fps_button_rect = pygame.Rect(show_fps_button_position_x, show_fps_button_position_y, show_fps_button_width, show_fps_button_height)
     apply_button_rect = pygame.Rect(apply_button_position_x, apply_button_position_y, apply_button_width, apply_button_height)
     fps_text_rect = pygame.Rect(fps_text_position_x, fps_text_position_y, fps_text_width, fps_text_height)
@@ -73,7 +71,6 @@ def settings_screen():
         show_fps_button_text = "No"
 
     new_playlist = None
-    volume = const.music_volume
     while running:
         const.screen.fill(const.green)
         events = pygame.event.get()
@@ -86,10 +83,13 @@ def settings_screen():
         draw_functions.draw_button(const.screen, const.blue, apply_button_rect, "Apply", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, open_file_dialog_button_rect, "Load new playlist", font, const.black, mouse_pos)
         draw_functions.draw_text(const.screen, "Show FPS counter:", const.black, fps_text_rect, font, line_spacing = 5)
-        song_path = const.playlist[const.current_song_index]
-        song_name = os.path.basename(song_path)
-        draw_functions.draw_centered_text_with_other_element_as_reference_point(const.screen, song_name, font, const.black, open_file_dialog_button_rect, x_offset=20)
-        draw_functions.draw_button(const.screen, const.blue, volume_button_rect, f"{int(volume * 100)}%", font, const.black, mouse_pos)
+        if const.playlist:
+            song_path = const.playlist[const.current_song_index]
+            song_name = os.path.basename(song_path)
+        else:
+            song_name = " "
+        draw_functions.draw_centered_text_with_other_element_as_reference_point(const.screen, f"Current song: {song_name}", font, const.black, open_file_dialog_button_rect, x_offset=20)
+        draw_functions.draw_button(const.screen, const.blue, volume_button_rect, f"{int(const.music_volume * 100)}%", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, increase_volume_button_rect, "+", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, decrease_volume_button_rect, "-", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, how_to_button_rect, "How to?", font, const.black, mouse_pos)
@@ -107,31 +107,30 @@ def settings_screen():
                     elif const.fps_apply == True:
                         show_fps_button_text = "No"
                         const.fps_apply = False
+                    const.fps_show = const.fps_apply 
                 if  back_icon_rect.collidepoint(mouse_pos):
                     running = False
                     return
-                if apply_button_rect.collidepoint(mouse_pos):
-                    const.fps_show = const.fps_apply 
+                if apply_button_rect.collidepoint(mouse_pos): 
                     if new_playlist:
                         pygame.mixer.music.stop()
                         const.playlist = new_playlist
                         const.current_song_index = 0
                         utils.play_current_song()
-                    const.music_volume = volume
                 if open_file_dialog_button_rect.collidepoint(mouse_pos):
                     custom_playlist, songs = utils.load_playlist()
                     if custom_playlist:
                         new_playlist = list(songs)
                 if increase_volume_button_rect.collidepoint(mouse_pos):
-                    if volume < 1.0:
-                        volume += 0.05
+                    if const.music_volume < 1.0:
+                        const.music_volume += 0.05
                     else:
-                        volume = 1.0
+                        const.music_volume = 1.0
                 if decrease_volume_button_rect.collidepoint(mouse_pos):
-                    if volume > 0.0:
-                        volume -= 0.05
+                    if const.music_volume > 0.0:
+                        const.music_volume -= 0.05
                     else:
-                        volume = 0.0
+                        const.music_volume = 0.0
                 if how_to_button_rect.collidepoint(mouse_pos):
                     draw_functions.draw_message_box("How to use settings", text_messages.how_to_text)
 
