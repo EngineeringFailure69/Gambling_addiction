@@ -54,6 +54,11 @@ def settings_screen():
     decrease_volume_button_position_x = volume_button_position_x - decrease_volume_button_width - 20
     decrease_volume_button_position_y = volume_button_position_y
 
+    directory_playlist_button_width = 200
+    directory_playlist_button_height = 30
+    directory_playlist_button_position_x = screen_width / 2 - directory_playlist_button_width / 2
+    directory_playlist_button_position_y = screen_height / 2
+
     show_fps_button_rect = pygame.Rect(show_fps_button_position_x, show_fps_button_position_y, show_fps_button_width, show_fps_button_height)
     apply_button_rect = pygame.Rect(apply_button_position_x, apply_button_position_y, apply_button_width, apply_button_height)
     fps_text_rect = pygame.Rect(fps_text_position_x, fps_text_position_y, fps_text_width, fps_text_height)
@@ -62,6 +67,7 @@ def settings_screen():
     increase_volume_button_rect = pygame.Rect(increase_volume_button_position_x, increase_volume_button_position_y, increase_volume_button_width, increase_volume_button_height)
     decrease_volume_button_rect = pygame.Rect(decrease_volume_button_position_x, decrease_volume_button_position_y, decrease_volume_button_width, decrease_volume_button_height)
     how_to_button_rect = const.choice_Info_button.move(screen_width//28, 0)
+    directory_playlist_button_rect = pygame.Rect(directory_playlist_button_position_x, directory_playlist_button_position_y, directory_playlist_button_width, directory_playlist_button_height)
 
     font = pygame.font.SysFont(None, 30)
 
@@ -93,6 +99,7 @@ def settings_screen():
         draw_functions.draw_button(const.screen, const.blue, increase_volume_button_rect, "+", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, decrease_volume_button_rect, "-", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, how_to_button_rect, "How to?", font, const.black, mouse_pos)
+        draw_functions.draw_button(const.screen, const.blue, directory_playlist_button_rect, "Directory playlist", font, const.black, mouse_pos)
         utils.play_music()
 
         for event in events:
@@ -133,6 +140,11 @@ def settings_screen():
                         const.music_volume = 0.0
                 if how_to_button_rect.collidepoint(mouse_pos):
                     draw_functions.draw_message_box("How to use settings", text_messages.how_to_text)
+                if directory_playlist_button_rect.collidepoint(mouse_pos):
+                    custom_playlist, songs = utils.load_playlist()
+                    if custom_playlist:
+                        new_playlist = list(songs)
+                        utils.copy_songs_to_directory(new_playlist)
 
         pygame.display.flip()
     pygame.quit()

@@ -64,7 +64,7 @@ import logic.inventory_items_logic as inventory_items_logic
 import settings_screen as settings_screen
 import tkinter as tk
 from tkinter import filedialog
-import glob, os
+import glob, os, shutil
 
 def grab_all_variables(file_path = "const.py", starts_with="STATE"):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -507,3 +507,7 @@ def grab_all_sounds_from_the_music_drectory():
 
 def change_music_volume():
     pygame.mixer.music.set_volume(const.music_volume)
+
+def copy_songs_to_directory(playlist):
+    for song in playlist:
+        shutil.copy2(song, file_utils.resource_path("music_files"))

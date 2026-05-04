@@ -109,4 +109,6 @@ buy_text = "You buy product by clicking on the photo of it, price is written on 
 how_to_text = "(1) FPS counter - when blue button is set to yes, fps counter will appear, if its set to no, it won't appear\n" \
 "(2) Load new playlist - this button opens file dialog, you can select your own songs, and after you click apply button, your playlist will be queued. Text next to the button shows the name of the current song/sound\n" \
 "(3) Volume increase/decrease - clicking on + button will increase volume, clicking on - will decrease it\n" \
-"(4) music_files directory - before starting the game, you can go to the music_files directory and place your songs and sounds there, they will be automatically loaded once you start game\n" 
+"(4) music_files directory - before starting the game, you can go to the music_files directory and place your songs and sounds there, they will be automatically loaded once you start game\n" \
+"(5) Directory playlist - this button opens file dialog and you can select your own songs, and after you click apply button your playlist will be queued, but also your selected songs will be moved into music_files directory " \
+"and will be used as your playlist every time you start the game" 
