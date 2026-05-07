@@ -20,5 +20,7 @@ Groceries icon: https://www.reshot.com/free-svg-icons/groceries/
 Tools icon: https://www.reshot.com/free-svg-icons/tool/
 Casino, home and work icon i can not remember where did i take them from :(
 
-All images were ChatGPT generated, because am not good enough to make them myself
+All images were ChatGPT generated, because am not good enough to make them myself.
+
+Since Reshot is now retired these links are not valid anymore, but i will leave them there
 
