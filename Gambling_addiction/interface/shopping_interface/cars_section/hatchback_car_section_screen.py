@@ -31,14 +31,14 @@ def hatchback_car_section_screen():
         const.screen.fill(const.hatchback_bckgd)
 
         draw_functions.draw_title(const.screen, const.black, "HATCHBACK SECTION")
-        draw_functions.draw_text(const.screen, info_text, const.black, const.text_rect, font,line_spacing=5)
+        draw_functions.draw_text(const.screen, info_text, const.black, const.text_rect, font, line_spacing=5)
  
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
 
         draw_functions.draw_button(const.screen, const.hatchback_bckgd, const.buy_Info_button, "Buy Info", font, const.black)
 
-        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y - 15)
+        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
         
         if const.buy_Info_button.collidepoint(mouse_pos):

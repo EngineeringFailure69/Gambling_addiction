@@ -186,6 +186,8 @@ def draw_inventory_card(screen, product = None):
     return next_button_rect, use_button_rect
 
 def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):
+    pygame.font.init()
+    font = pygame.font.SysFont(None, 30, False, True)
     fps = clock.get_fps()
     draw_text(screen, f"FPS: {round(fps, 2)}", text_colour, text_rect, font, line_spacing)
     clock.tick(clock_value) 

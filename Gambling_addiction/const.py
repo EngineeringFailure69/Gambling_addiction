@@ -83,13 +83,24 @@ work_icon_position_y = const.screen.get_height()-80
 
 #settings icon
 settings_icon_path = "icons\\settings_icon.png"
-settings_icon_width = 100
-settings_icon_height = 70
-settings_icon_position_x = 1300
-settings_icon_position_y = 10
+settings_icon_width = screen.get_width() / 40.666666666666667
+settings_icon_height = screen.get_height() / 18
+settings_icon_position_x = screen.get_width() / 1.037
+settings_icon_position_y = screen.get_height() / 60
+
+#fps icon top left
+fps_icon_path = "icons\\fps_icon.png"
+fps_icon_width = screen.get_width() / 8.4848484848484848484848484848485 #165
+fps_icon_height = screen.get_height() / 17.142857142857142857142857142857 #35
+fps_icon_position_x = screen.get_width() / 140 #10
+fps_icon_position_y = screen.get_height() / 60 #10 
 
 #shop_fps_show 
-fps_rect = pygame.Rect(10, 10, 120, 20)
+fps_rect_position_x = screen.get_width() / 25.454545454545454545454545454545
+fps_rect_position_y = screen.get_height() / 30
+fps_rect_width = screen.get_width() / 11.67
+fps_rect_height = screen.get_height() / 30
+fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height) # 55, 20, 120, 20 #10 10 120 20
 fps = 60
 line_spacing = 5
  

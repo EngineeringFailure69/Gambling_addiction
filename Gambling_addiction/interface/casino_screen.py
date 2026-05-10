@@ -55,8 +55,8 @@ def casino_screen():
     icon_center_x = 450
     icon_center_y = 290
     icon_path = "icons\\start_screen_roulette_wheel.png"
-    icon_width_animation = 700
-    icon_height_animation = 470
+    icon_width_animation = 420 #700
+    icon_height_animation = 430 #470
     angle_increment = 2
     COUNTER_CLOCK_WISE = True
     frame_index = 0
@@ -112,7 +112,7 @@ def casino_screen():
         draw_functions.draw_button(const.screen, const.blue, const.right_choice_button, "->", font, const.black, mouse_pos)
         draw_functions.draw_button(const.screen, const.blue, const.left_choice_button, "<-", font, const.black, mouse_pos)
         
-        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x + 10, const.settings_icon_position_y - 15)
+        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
 
         if const.red_colour_button.collidepoint(mouse_pos):
