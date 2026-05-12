@@ -15,10 +15,10 @@ def consoles_section_screen():
     icon_height_screen = const.screen.get_height() / 2
     font = pygame.font.SysFont(None, 30)
 
-    console_1 = items_class.shop_item("electronics", "icons\\console_icon_1.png", "console", 499)
-    console_2 = items_class.shop_item("electronics", "icons\\console_icon_2.png", "console", 399)
-    console_3 = items_class.shop_item("electronics", "icons\\console_icon_3.png", "console", 299)
-    console_4 = items_class.shop_item("electronics", "icons\\console_icon_4.png", "console", 349)
+    console_1 = items_class.shop_item("electronics", "icons\\shopping_icons\\console_icon_1.png", "console", 499)
+    console_2 = items_class.shop_item("electronics", "icons\\shopping_icons\\console_icon_2.png", "console", 399)
+    console_3 = items_class.shop_item("electronics", "icons\\shopping_icons\\console_icon_3.png", "console", 299)
+    console_4 = items_class.shop_item("electronics", "icons\\shopping_icons\\console_icon_4.png", "console", 349)
 
     clock = pygame.time.Clock()
     while running:
@@ -40,7 +40,7 @@ def consoles_section_screen():
             if mouse_click[0]: 
                 draw_functions.draw_message_box('Buy info', text_messages.buy_text)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\electronics_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\shopping_icons\\electronics_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_ELECTRONICS)
        
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, console_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)

@@ -15,10 +15,10 @@ def safety_gear_section_screen():
     icon_height_screen = const.screen.get_height() / 2
     font = pygame.font.SysFont(None, 30)
 
-    safety_gear_1 = items_class.shop_item("tools", "icons\\safety_gear_icon_1.png", "safety gear", 25)
-    safety_gear_2 = items_class.shop_item("tools", "icons\\safety_gear_icon_2.png", "safety gear", 60)
-    safety_gear_3 = items_class.shop_item("tools", "icons\\safety_gear_icon_3.png", "safety gear", 15)
-    safety_gear_4 = items_class.shop_item("tools", "icons\\safety_gear_icon_4.png", "safety gear", 40)
+    safety_gear_1 = items_class.shop_item("tools", "icons\\shopping_icons\\safety_gear_icon_1.png", "safety gear", 25)
+    safety_gear_2 = items_class.shop_item("tools", "icons\\shopping_icons\\safety_gear_icon_2.png", "safety gear", 60)
+    safety_gear_3 = items_class.shop_item("tools", "icons\\shopping_icons\\safety_gear_icon_3.png", "safety gear", 15)
+    safety_gear_4 = items_class.shop_item("tools", "icons\\shopping_icons\\safety_gear_icon_4.png", "safety gear", 40)
        
     clock = pygame.time.Clock()
     while running:
@@ -40,7 +40,7 @@ def safety_gear_section_screen():
             if mouse_click[0]: 
                 draw_functions.draw_message_box('Buy info', text_messages.buy_text)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\tools_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\shopping_icons\\tools_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TOOLS)
        
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, safety_gear_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)

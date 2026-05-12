@@ -297,6 +297,7 @@ job_apply = False
 inventory_list_file = file_utils.load_list_from_file(save_path, "inventory_list") 
 inventory_list = utils.load_inventory_objects()
 inventory_index = 0
+real_estate_index = 0
 
 #settings data
 fps_show = True

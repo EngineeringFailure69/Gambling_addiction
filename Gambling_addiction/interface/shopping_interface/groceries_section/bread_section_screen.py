@@ -15,10 +15,10 @@ def bread_section_screen():
     icon_height_screen = const.screen.get_height() / 2
     font = pygame.font.SysFont(None, 30)
 
-    bread_1 = items_class.shop_item("groceries", "icons\\bread_icon_1.png", "bread", 2.49)
-    bread_2 = items_class.shop_item("groceries", "icons\\bread_icon_2.png", "bread", 1.99)
-    bread_3 = items_class.shop_item("groceries", "icons\\bread_icon_3.png", "bread", 1.29)
-    bread_4 = items_class.shop_item("groceries", "icons\\bread_icon_4.png", "bread", 2.99)
+    bread_1 = items_class.shop_item("groceries", "icons\\shopping_icons\\bread_icon_1.png", "bread", 2.49)
+    bread_2 = items_class.shop_item("groceries", "icons\\shopping_icons\\bread_icon_2.png", "bread", 1.99)
+    bread_3 = items_class.shop_item("groceries", "icons\\shopping_icons\\bread_icon_3.png", "bread", 1.29)
+    bread_4 = items_class.shop_item("groceries", "icons\\shopping_icons\\bread_icon_4.png", "bread", 2.99)
        
     clock = pygame.time.Clock()
     while running:
@@ -40,7 +40,7 @@ def bread_section_screen():
             if mouse_click[0]: 
                 draw_functions.draw_message_box('Buy info', text_messages.buy_text)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\groceries_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\shopping_icons\\groceries_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_GROCERIES)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, bread_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)

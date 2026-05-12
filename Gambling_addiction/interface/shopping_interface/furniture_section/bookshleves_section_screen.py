@@ -15,10 +15,10 @@ def bookshelves_section_screen():
     icon_height_screen = const.screen.get_height() / 2
     font = pygame.font.SysFont(None, 30)
 
-    shelf_1 = items_class.shop_item("furniture", "icons\\shelf_icon_1.png", "shelf", 849)
-    shelf_2 = items_class.shop_item("furniture", "icons\\shelf_icon_2.png", "shelf", 659)
-    shelf_3 = items_class.shop_item("furniture", "icons\\shelf_icon_3.png", "shelf", 659)
-    shelf_4 = items_class.shop_item("furniture", "icons\\shelf_icon_4.png", "shelf", 849)
+    shelf_1 = items_class.shop_item("furniture", "icons\\shopping_icons\\shelf_icon_1.png", "shelf", 849)
+    shelf_2 = items_class.shop_item("furniture", "icons\\shopping_icons\\shelf_icon_2.png", "shelf", 659)
+    shelf_3 = items_class.shop_item("furniture", "icons\\shopping_icons\\shelf_icon_3.png", "shelf", 659)
+    shelf_4 = items_class.shop_item("furniture", "icons\\shopping_icons\\shelf_icon_4.png", "shelf", 849)
        
     clock = pygame.time.Clock()
     while running:
@@ -40,7 +40,7 @@ def bookshelves_section_screen():
             if mouse_click[0]: 
                 draw_functions.draw_message_box('Buy info', text_messages.buy_text)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\furniture_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\shopping_icons\\furniture_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_FURNITURE)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, shelf_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)

@@ -163,27 +163,43 @@ def draw_info_cards(screen):
             x_coordinate = 100
         title_counter += 1
 
-def draw_inventory_card(screen, product = None):
+def draw_card(screen, button_colour = None, button_text_colour = None, num_of_buttons = 0, button_text_list = [], icons = None):
     screen_width = const.screen.get_width()
     screen_height = const.screen.get_height()
-    card_width = 400
-    card_height = 500
+    rect_list = []
+    short = False
+    current_text = ""
+    card_width = screen_width / 3.5 
+    card_height = screen_height / 1.2 
     x_coordinate = screen_width / 2 - card_width / 2
     y_coordinate = screen_height / 1.8 - card_height / 2 
-    button_width = 160
-    button_height = 40
-    icon_width = card_width - 40
-    icon_height = 400
-    button_font_size = 30
-    button_font_size = pygame.font.SysFont(None, button_font_size, bold = False)
+    button_width = card_width / (num_of_buttons + 1)
+    button_height = card_height / 12.5
+    icon_width = card_width - card_width / 10
+    icon_height = card_height - card_height / 5
     pygame.draw.rect(screen, const.job_box, pygame.Rect(x_coordinate, y_coordinate, card_width, card_height))
-    next_button_rect = pygame.Rect(x_coordinate + card_width / 2 + 20, card_height + 30, button_width, button_height)
-    use_button_rect = pygame.Rect(x_coordinate + 20, card_height + 30, button_width, button_height)
-    draw_button(screen, const.job_button, next_button_rect, "->", button_font_size, const.job_cards_text)
-    draw_button(screen, const.job_button, use_button_rect, "Use", button_font_size, const.job_cards_text)
-    if product != None:
-        load_icons(const.screen, product.image_path, icon_width, icon_height, x_coordinate + 20, y_coordinate + 20)
-    return next_button_rect, use_button_rect
+    displacement = button_width / (num_of_buttons + 1) 
+    button_position_x = x_coordinate + displacement 
+    button_position_y = card_height + card_height / 16.666666667
+    button_font_size = int(button_width / 2)
+    button_font_size = pygame.font.SysFont(None, button_font_size, bold = False)
+    if len(button_text_list) < num_of_buttons:
+        short = True
+    for i in range(num_of_buttons):
+        button_rect = pygame.Rect(button_position_x, button_position_y, button_width, button_height)
+        rect_list.append(button_rect)
+        if short and i < len(button_text_list):
+            current_text = button_text_list[i]
+            draw_button(screen, button_colour, button_rect, current_text, button_font_size, button_text_colour)
+        elif short and i >= len(button_text_list):
+            draw_button(screen, button_colour, button_rect, current_text, button_font_size, button_text_colour)
+        elif not short:
+            draw_button(screen, button_colour, button_rect, button_text_list[i], button_font_size, button_text_colour)
+        button_position_x = button_position_x + displacement + button_width
+    if icons != None:
+        load_icons(const.screen, icons.image_path, icon_width, icon_height, x_coordinate + card_width / 20, y_coordinate + card_height / 25)
+    return rect_list
+
 
 def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):
     pygame.font.init()

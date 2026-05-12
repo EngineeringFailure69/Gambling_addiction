@@ -15,10 +15,10 @@ def snees_section_screen():
     icon_height_screen = const.screen.get_height() / 2
     font = pygame.font.SysFont(None, 30)
 
-    shoe_1 = items_class.shop_item("clothes", "icons\\shoe_icon_1.png", "snees", 120)
-    shoe_2 = items_class.shop_item("clothes", "icons\\shoe_icon_2.png", "snees", 95)
-    shoe_3 = items_class.shop_item("clothes", "icons\\shoe_icon_3.png", "snees", 80)
-    shoe_4 = items_class.shop_item("clothes", "icons\\shoe_icon_4.png", "snees", 110)
+    shoe_1 = items_class.shop_item("clothes", "icons\\shopping_icons\\shoe_icon_1.png", "snees", 120)
+    shoe_2 = items_class.shop_item("clothes", "icons\\shopping_icons\\shoe_icon_2.png", "snees", 95)
+    shoe_3 = items_class.shop_item("clothes", "icons\\shopping_icons\\shoe_icon_3.png", "snees", 80)
+    shoe_4 = items_class.shop_item("clothes", "icons\\shopping_icons\\shoe_icon_4.png", "snees", 110)
         
     clock = pygame.time.Clock()
     while running:
@@ -40,7 +40,7 @@ def snees_section_screen():
             if mouse_click[0]: 
                 draw_functions.draw_message_box('Buy info', text_messages.buy_text)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\clothing_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\shopping_icons\\clothing_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_CLOTHING)
        
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, shoe_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)

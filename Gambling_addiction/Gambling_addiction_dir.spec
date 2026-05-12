@@ -5,6 +5,7 @@ a = Analysis(
     binaries=[],
     datas=[
         ('icons/*', 'icons'),
+        ('icons/shopping_icons/*', 'icons/shopping_icons'),
         ('background_photos/*', 'background_photos'),
         ('save_files/information.txt', 'save_files'),
         ('const.py', '.'),
