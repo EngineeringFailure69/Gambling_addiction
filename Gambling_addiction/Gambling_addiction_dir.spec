@@ -4,12 +4,13 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[
-        ('icons/*', 'icons'),
-        ('icons/shopping_icons/*', 'icons/shopping_icons'),
-        ('background_photos/*', 'background_photos'),
-        ('save_files/information.txt', 'save_files'),
+        ('assets/icons/*', 'assets/icons'),
+        ('assets/icons/shopping_icons/*', 'assets/icons/shopping_icons'),
+        ('assets/icons/apartment_icons/*', 'assets/icons/apartment_icons'),
+        ('assets/background_photos/*', 'assets/background_photos'),
+        ('assets/save_files/information.txt', 'assets/save_files'),
         ('const.py', '.'),
-        ('music_files/*', 'music_files')
+        ('assets/music_files/*', 'assets/music_files')
     ],
     hiddenimports=[],
     hookspath=[],

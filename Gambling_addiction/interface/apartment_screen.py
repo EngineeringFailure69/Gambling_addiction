@@ -4,6 +4,7 @@ import utils.draw_functions as draw_functions
 import utils.utils as utils
 import sys
 import text_messages
+import settings.sound_settings as sound_settings
 
 def apartment_screen():
     running = True
@@ -42,9 +43,9 @@ def apartment_screen():
     while running:
         inventory_length = len(const.inventory_list)
         events = pygame.event.get()
-        utils.play_music()
+        sound_settings.play_music()
 
-        draw_functions.load_background_image(const.screen, "background_photos\\home_background_1.png")
+        draw_functions.load_background_image(const.screen, "assets\\background_photos\\home_background_1.png")
         draw_functions.draw_text(const.screen, text_messages.game_screen1_text + f"{const.balance} dollars, and your salary is {const.salary}", const.black, text_rect, font, line_spacing=5)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)

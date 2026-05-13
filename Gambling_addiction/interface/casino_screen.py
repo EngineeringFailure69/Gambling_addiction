@@ -5,12 +5,13 @@ import utils.utils as utils
 import logic.casino_roulette_logic as casino_roulette_logic
 import sys
 import text_messages
+import settings.sound_settings as sound_settings
 
 def casino_screen():
     running = True
     pygame.font.init()
     font = pygame.font.SysFont(None, 30)
-    img_path = "background_photos\\start_screen_background.png"
+    img_path = "assets\\background_photos\\start_screen_background.png"
     drawn = False
     win_lose_drawn = False
     right_choice_clicked_up = False
@@ -54,7 +55,7 @@ def casino_screen():
 
     icon_center_x = 450
     icon_center_y = 290
-    icon_path = "icons\\start_screen_roulette_wheel.png"
+    icon_path = "assets\\icons\\start_screen_roulette_wheel.png"
     icon_width_animation = 420 #700
     icon_height_animation = 430 #470
     angle_increment = 2
@@ -74,7 +75,7 @@ def casino_screen():
 
     while running:
         events = pygame.event.get()
-        utils.play_music()
+        sound_settings.play_music()
 
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, img_path)

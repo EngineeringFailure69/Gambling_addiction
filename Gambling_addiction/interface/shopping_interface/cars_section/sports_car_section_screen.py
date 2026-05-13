@@ -5,6 +5,7 @@ import utils.utils as utils
 import sys
 import text_messages
 import classes.items_class as items_class
+import settings.sound_settings as sound_settings
 
 def sports_car_section_screen():
     running = True
@@ -16,15 +17,15 @@ def sports_car_section_screen():
     icon_height_screen = const.screen.get_height() / 2
     font = pygame.font.SysFont(None, 30) 
 
-    sports_car_1 = items_class.shop_item("car", "icons\\shopping_icons\\sports_car_icon_1.png", "sports", 45000)
-    sports_car_2 = items_class.shop_item("car", "icons\\shopping_icons\\sports_car_icon_2.png", "sports", 60000)
-    sports_car_3 = items_class.shop_item("car", "icons\\shopping_icons\\sports_car_icon_3.png", "sports", 110000)
-    sports_car_4 = items_class.shop_item("car", "icons\\shopping_icons\\sports_car_icon_4.png", "sports", 160000)
+    sports_car_1 = items_class.shop_item("car", "assets\\icons\\shopping_icons\\sports_car_icon_1.png", "sports", 45000)
+    sports_car_2 = items_class.shop_item("car", "assets\\icons\\shopping_icons\\sports_car_icon_2.png", "sports", 60000)
+    sports_car_3 = items_class.shop_item("car", "assets\\icons\\shopping_icons\\sports_car_icon_3.png", "sports", 110000)
+    sports_car_4 = items_class.shop_item("car", "assets\\icons\\shopping_icons\\sports_car_icon_4.png", "sports", 160000)
 
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
-        utils.play_music()
+        sound_settings.play_music()
 
         const.screen.fill(const.store_bckgd)
 
@@ -41,7 +42,7 @@ def sports_car_section_screen():
             if mouse_click[0]:
                 draw_functions.draw_message_box('Buy info', text_messages.buy_text)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\shopping_icons\\car_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "assets\\icons\\shopping_icons\\car_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_CARS)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, sports_car_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)

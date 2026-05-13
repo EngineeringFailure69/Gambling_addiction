@@ -1,6 +1,7 @@
 import pygame
 import interface.city_screen as city_screen
 import utils.draw_functions as draw_functions
+import utils.save_utils as save_utils
 import interface.apartment_screen as apartment_screen
 import const 
 import interface.casino_screen as casino_screen
@@ -61,10 +62,8 @@ from tkinter.ttk import *
 import ast
 import classes.items_class as items_class
 import logic.inventory_items_logic as inventory_items_logic
-import settings_screen as settings_screen
-import tkinter as tk
-from tkinter import filedialog
-import glob, os, shutil
+import settings.settings_screen as settings_screen
+import settings.sound_settings as sound_settings
 
 def grab_all_variables(file_path = "const.py", starts_with="STATE"):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -357,7 +356,7 @@ def job_apply(button_rect, salary, working_days_requirements, job):
             draw_functions.draw_message_box('Application', f"Your application has been denied. You need {working_days_requirements} days on the {const.job_positions_list[prev_index][job_name_index]} position. {days_until_promotion} days remaining")
 
 def restart_game():
-    save_path = file_utils.extract_default_save()
+    save_path = save_utils.extract_default_save()
     const.balance = 500
     const.salary = 0
     const.working = 0
@@ -371,17 +370,17 @@ def restart_game():
     const.inventory_list_file = []
     const.inventory_list = []
     const.inventory_index = 0
-    file_utils.update_value_in_file(save_path, "balance")
-    file_utils.update_value_in_file(save_path, "salary")
-    file_utils.update_value_in_file(save_path, "working")
-    file_utils.update_value_in_file(save_path, "day_counter")
-    file_utils.update_value_in_file(save_path, "month_counter")
-    file_utils.update_value_in_file(save_path, "year_counter")
-    file_utils.update_value_in_file(save_path, "return_day_counter")
-    file_utils.update_value_in_file(save_path, "return_month_counter")
-    file_utils.update_value_in_file(save_path, "index")
-    file_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
-    file_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
+    save_utils.update_value_in_file(save_path, "balance")
+    save_utils.update_value_in_file(save_path, "salary")
+    save_utils.update_value_in_file(save_path, "working")
+    save_utils.update_value_in_file(save_path, "day_counter")
+    save_utils.update_value_in_file(save_path, "month_counter")
+    save_utils.update_value_in_file(save_path, "year_counter")
+    save_utils.update_value_in_file(save_path, "return_day_counter")
+    save_utils.update_value_in_file(save_path, "return_month_counter")
+    save_utils.update_value_in_file(save_path, "index")
+    save_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
+    save_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
     import start_screen  
     start_screen.main_screen() 
 
@@ -450,64 +449,20 @@ def remove_item_from_the_inventory(item):
 
 def save_game():
     #Save/update date and time every time app closes or screen changes
-    file_utils.update_value_in_file("save_files\\information.txt", "day_counter")        
-    file_utils.update_value_in_file("save_files\\information.txt", "month_counter")
-    file_utils.update_value_in_file("save_files\\information.txt", "year_counter")
-    file_utils.update_value_in_file("save_files\\information.txt", "return_day_counter")
-    file_utils.update_value_in_file("save_files\\information.txt", "return_month_counter")
+    save_utils.update_value_in_file("save_files\\information.txt", "day_counter")        
+    save_utils.update_value_in_file("save_files\\information.txt", "month_counter")
+    save_utils.update_value_in_file("save_files\\information.txt", "year_counter")
+    save_utils.update_value_in_file("save_files\\information.txt", "return_day_counter")
+    save_utils.update_value_in_file("save_files\\information.txt", "return_month_counter")
 
     #Save/update balance every time app closes or screen changes
-    file_utils.update_value_in_file("save_files\\information.txt", "balance")
+    save_utils.update_value_in_file("save_files\\information.txt", "balance")
 
     #Save/update inventory every time app closes or screen changes
-    file_utils.update_list_in_file("save_files\\information.txt", "inventory_list", const.inventory_list_file)
+    save_utils.update_list_in_file("save_files\\information.txt", "inventory_list", const.inventory_list_file)
 
     #Save/update job info
-    file_utils.update_list_in_file("save_files\\information.txt", "job_positions_list", const.job_positions_list)
-    file_utils.update_value_in_file("save_files\\information.txt", "index")
-    file_utils.update_value_in_file("save_files\\information.txt", "salary")
-    file_utils.update_value_in_file("save_files\\information.txt", "working")
-
-def load_playlist():
-    playlist_loaded = True
-    cancel_loading_process = False
-    songs = []
-    root = tk.Tk()
-    root.withdraw()
-    songs = filedialog.askopenfilenames()
-    root.destroy()
-    if songs:
-        return playlist_loaded, songs
-    else:
-        return cancel_loading_process, songs
-
-def play_current_song():
-    if const.playlist:
-        pygame.mixer.music.stop()
-        const.current_song_index %= len(const.playlist)
-        song = const.playlist[const.current_song_index]
-        pygame.mixer.music.load(song)
-        pygame.mixer.music.play()
-        pygame.mixer.music.set_endevent(const.MUSIC_END)
-
-def play_music():
-    if const.playlist:
-        if not pygame.mixer.music.get_busy():
-            const.current_song_index = (const.current_song_index + 1) % len(const.playlist)
-            play_current_song()
-
-def grab_all_sounds_from_the_music_drectory():
-    playlist = []
-    path = file_utils.resource_path("music_files")
-    for file in os.listdir(path):
-        if file.endswith((".wav", ".mp3", ".midi")):
-            file_path = os.path.join(path, file)
-            playlist.append(file_path)
-    return playlist
-
-def change_music_volume():
-    pygame.mixer.music.set_volume(const.music_volume)
-
-def copy_songs_to_directory(playlist):
-    for song in playlist:
-        shutil.copy2(song, file_utils.resource_path("music_files"))
+    save_utils.update_list_in_file("save_files\\information.txt", "job_positions_list", const.job_positions_list)
+    save_utils.update_value_in_file("save_files\\information.txt", "index")
+    save_utils.update_value_in_file("save_files\\information.txt", "salary")
+    save_utils.update_value_in_file("save_files\\information.txt", "working")

@@ -5,6 +5,7 @@ import utils.utils as utils
 import sys
 import text_messages
 import classes.items_class as items_class
+import settings.sound_settings as sound_settings
 
 def laptops_section_screen():
     running = True
@@ -16,15 +17,15 @@ def laptops_section_screen():
     info_text = "Balance:" + str(const.balance)
     font = pygame.font.SysFont(None, 30)
 
-    laptop_1 = items_class.shop_item("electronics", "icons\\shopping_icons\\laptop_icon_1.png", "laptop", 1800)
-    laptop_2 = items_class.shop_item("electronics", "icons\\shopping_icons\\laptop_icon_2.png", "laptop", 2200)
-    laptop_3 = items_class.shop_item("electronics", "icons\\shopping_icons\\laptop_icon_3.png", "laptop", 1400)
-    laptop_4 = items_class.shop_item("electronics", "icons\\shopping_icons\\laptop_icon_4.png", "laptop", 1000)
+    laptop_1 = items_class.shop_item("electronics", "assets\\icons\\shopping_icons\\laptop_icon_1.png", "laptop", 1800)
+    laptop_2 = items_class.shop_item("electronics", "assets\\icons\\shopping_icons\\laptop_icon_2.png", "laptop", 2200)
+    laptop_3 = items_class.shop_item("electronics", "assets\\icons\\shopping_icons\\laptop_icon_3.png", "laptop", 1400)
+    laptop_4 = items_class.shop_item("electronics", "assets\\icons\\shopping_icons\\laptop_icon_4.png", "laptop", 1000)
            
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
-        utils.play_music()
+        sound_settings.play_music()
 
         info_text = "Balance:" + str(const.balance)
 
@@ -41,7 +42,7 @@ def laptops_section_screen():
             if mouse_click[0]: 
                 draw_functions.draw_message_box('Buy info', text_messages.buy_text)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "icons\\shopping_icons\\electronics_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
+        icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, "assets\\icons\\shopping_icons\\electronics_section_icon.svg", 70, 70, const.screen.get_width()/47, const.screen.get_height()-80)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_ELECTRONICS)
        
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, laptop_1.image_path, icon_width_screen, icon_height_screen, position_x, position_y)

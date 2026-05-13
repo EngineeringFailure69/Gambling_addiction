@@ -5,6 +5,7 @@ import utils.utils as utils
 import logic.russian_roulette_logic as russian_roulette_logic
 import sys
 import text_messages
+import settings.sound_settings as sound_settings
 
 def russian_roulette_screen():
     running = True
@@ -28,7 +29,7 @@ def russian_roulette_screen():
     spin_start_ms = 0
     MESSAGE_DURATION_MS = 2000
 
-    bckgd_img_path = "background_photos\\game_russian_roulette_background.png"
+    bckgd_img_path = "assets\\background_photos\\game_russian_roulette_background.png"
 
     fps_rect = pygame.Rect(10, 570, 130, 20)
     fps = 60
@@ -36,7 +37,7 @@ def russian_roulette_screen():
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
-        utils.play_music()
+        sound_settings.play_music()
 
         const.screen.fill(const.white)
         draw_functions.load_background_image(const.screen, bckgd_img_path)

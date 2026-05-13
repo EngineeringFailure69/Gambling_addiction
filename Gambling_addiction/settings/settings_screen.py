@@ -5,6 +5,7 @@ import utils.utils as utils
 import utils.draw_functions as draw_functions
 import os
 import text_messages 
+import settings.sound_settings as sound_settings
 
 def settings_screen():
     running = True
@@ -12,7 +13,7 @@ def settings_screen():
     screen_width = const.screen.get_width()
     screen_height = const.screen.get_height()
 
-    back_icon_path = "icons\\go_back_icon2.png"
+    back_icon_path = "assets\\icons\\go_back_icon2.png"
     back_icon_position_x = screen_width / 25
     back_icon_position_y = screen_height / 29 
     back_icon_width = 40
@@ -28,7 +29,7 @@ def settings_screen():
     settings_screen_bckgd_icon_height = screen_height 
     settings_screen_bckgd_icon_position_x = screen_width / 14 
     settings_screen_bckgd_icon_position_y = screen_height / 60 
-    settings_screen_bckgd_icon_path = "icons\\settings_screen_bckgd_icon.png"
+    settings_screen_bckgd_icon_path = "assets\\icons\\settings_screen_bckgd_icon.png"
 
     style_button_width = screen_width * 0.6
     style_button_height = screen_height / 10
@@ -51,7 +52,7 @@ def settings_screen():
     fps_speed_icon_height = style_button_height 
     fps_speed_icon_position_x = style_button_position_x + style_button_width / 180
     fps_speed_icon_position_y = style_button_position_y + style_button_height / 20
-    fps_speed_icon_path = "icons\\fps_speed_icon.png"
+    fps_speed_icon_path = "assets\\icons\\fps_speed_icon.png"
 
     open_file_dialog_button_height = style_button_height / 2 
     open_file_dialog_button_width = style_button_width / 4.2 
@@ -63,7 +64,7 @@ def settings_screen():
     open_file_dialog_icon_height = fps_speed_icon_height - style_button_height / 12
     open_file_dialog_icon_position_x = fps_speed_icon_position_x
     open_file_dialog_icon_position_y = style_button_position_y + style_button_height + screen_height // 12 + style_button_height / 24
-    open_file_dialog_icon_path = "icons\\load_playlist_icon.png"
+    open_file_dialog_icon_path = "assets\\icons\\load_playlist_icon.png"
 
     volume_button_height = style_button_height / 2 
     volume_button_width = style_button_width / 4.2 
@@ -88,7 +89,7 @@ def settings_screen():
     volume_text_position_y = volume_button_position_y + style_button_height / 12
     volume_text = "Volume"
 
-    volume_icon_path = "icons\\volume_settings_icon.png"
+    volume_icon_path = "assets\\icons\\volume_settings_icon.png"
     volume_icon_width =  open_file_dialog_icon_width
     volume_icon_height = open_file_dialog_icon_height
     volume_icon_position_x = fps_speed_icon_position_x
@@ -104,7 +105,7 @@ def settings_screen():
     directory_playlist_icon_height = volume_icon_height
     directory_playlist_icon_position_x = volume_icon_position_x
     directory_playlist_icon_position_y = volume_icon_position_y + screen_height / 9.23
-    directory_playlist_icon_path = "icons\\directory_playlist_settings_icon.png"
+    directory_playlist_icon_path = "assets\\icons\\directory_playlist_settings_icon.png"
 
     apply_button_height = screen_height / 12 
     apply_button_width = screen_width / 7  
@@ -132,11 +133,11 @@ def settings_screen():
         show_fps_button_text = "No"
 
     new_playlist = None
-    background_image_path = "background_photos\\settings_screen_background.png"
+    background_image_path = "assets\\background_photos\\settings_screen_background.png"
     while running:
         const.screen.fill(const.green)
         events = pygame.event.get()
-        utils.change_music_volume()
+        sound_settings.change_music_volume()
         mouse_pos = pygame.mouse.get_pos()
 
         draw_functions.load_background_image(const.screen, background_image_path)
@@ -168,7 +169,7 @@ def settings_screen():
         draw_functions.draw_button(const.screen, const.lighter_green_settings_button, decrease_volume_button_rect, decrease_volume_button_text, font, const.golden_settings_button, mouse_pos)
         draw_functions.draw_button(const.screen, const.green_settings_button, how_to_button_rect, how_to_button_text, font, const.golden_settings_button, mouse_pos)
         draw_functions.draw_button(const.screen, const.lighter_green_settings_button, directory_playlist_button_rect, directory_playlist_button_text, font, const.golden_settings_button, mouse_pos)
-        utils.play_music()
+        sound_settings.play_music()
 
         for event in events:
             if event.type == pygame.QUIT:
@@ -191,9 +192,9 @@ def settings_screen():
                         pygame.mixer.music.stop()
                         const.playlist = new_playlist
                         const.current_song_index = 0
-                        utils.play_current_song()
+                        sound_settings.play_current_song()
                 if open_file_dialog_button_rect.collidepoint(mouse_pos):
-                    custom_playlist, songs = utils.load_playlist()
+                    custom_playlist, songs = sound_settings.load_playlist()
                     if custom_playlist:
                         new_playlist = list(songs)
                 if increase_volume_button_rect.collidepoint(mouse_pos):
@@ -209,10 +210,10 @@ def settings_screen():
                 if how_to_button_rect.collidepoint(mouse_pos):
                     draw_functions.draw_message_box("How to use settings", text_messages.how_to_text)
                 if directory_playlist_button_rect.collidepoint(mouse_pos):
-                    custom_playlist, songs = utils.load_playlist()
+                    custom_playlist, songs = sound_settings.load_playlist()
                     if custom_playlist:
                         new_playlist = list(songs)
-                        utils.copy_songs_to_directory(new_playlist)
+                        sound_settings.copy_songs_to_directory(new_playlist)
 
         pygame.display.flip()
     pygame.quit()

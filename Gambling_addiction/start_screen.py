@@ -2,16 +2,17 @@ import pygame
 import utils.draw_functions as draw_functions
 import const
 import interface.apartment_screen as apartment_screen
-import settings_screen as settings_screen
+import settings.settings_screen as settings_screen
 import utils.utils as utils
 import utils.file_utils as file_utils
 import sys
+import settings.sound_settings as sound_settings
 
 def main_screen():
     running = True
     pygame.font.init()
     font = pygame.font.SysFont(None, 60, False, True)
-    img_path = "background_photos\\start_screen_background.png"
+    img_path = "assets\\background_photos\\start_screen_background.png"
 
     screen_width = const.screen.get_width()
     screen_height = const.screen.get_height()
@@ -30,13 +31,13 @@ def main_screen():
     play_button_icon_height = start_button_height / 1.2
     play_button_icon_position_x = start_button_position_x + start_button_width / 28#10
     play_button_icon_position_y = start_button_position_y + (start_button_height - play_button_icon_height)/2
-    play_button_icon_path = "icons\\play_button_icon.png"
+    play_button_icon_path = "assets\\icons\\play_button_icon.png"
 
     quit_button_icon_width = quit_button_width / 4.3333333333
     quit_button_icon_height = quit_button_height / 1.2
     quit_button_icon_position_x = quit_button_position_x + quit_button_width / 28#10
     quit_button_icon_position_y = quit_button_position_y + (quit_button_height - quit_button_icon_height)/2
-    quit_button_icon_path = "icons\\quit_button_icon.png"   
+    quit_button_icon_path = "assets\\icons\\quit_button_icon.png"   
 
     const_path = file_utils.resource_path("const.py")
     utils.grab_all_variables(const_path, "STATE")
@@ -46,28 +47,28 @@ def main_screen():
 
     icon_center_x = screen_width / 3.4146341463 #410#450
     icon_center_y = screen_height / 1.935483871 #310#290
-    animation_icon_path = "icons\\start_screen_roulette_wheel.png"
+    animation_icon_path = "assets\\icons\\start_screen_roulette_wheel.png"
     icon_width_animation = screen_width / 3.3333333333 #420 #700
     icon_height_animation = screen_height / 1.3953488372 #430 #470
     COUNTER_CLOCK_WISE = True
     angle_increment = 2
     frame_index = 0
 
-    title_icon_path = "icons\\start_screen_title_icon.png"
+    title_icon_path = "assets\\icons\\start_screen_title_icon.png"
     title_icon_width = screen_width * 0.6
     title_icon_height = screen_height / 12
     title_icon_position_x = screen_width / 2 - title_icon_width / 2
     title_icon_position_y = screen_height / 17
 
     clock = pygame.time.Clock()
-    utils.play_current_song()
+    sound_settings.play_current_song()
 
     const.spin_animations = draw_functions.gather_animated_spin_animations(animation_icon_path, icon_width_animation, icon_height_animation, angle_increment, COUNTER_CLOCK_WISE)
 
     while running:
         events = pygame.event.get()
-        utils.change_music_volume()
-        utils.play_music()
+        sound_settings.change_music_volume()
+        sound_settings.play_music()
 
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed() 

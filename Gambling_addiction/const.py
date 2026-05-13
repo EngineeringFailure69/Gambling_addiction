@@ -1,6 +1,7 @@
 import pygame
 import utils.file_utils as file_utils
 import utils.utils as utils
+import utils.save_utils as save_utils
 from utils.utils import* #buy_product
 import interface.city_screen as city_screen
 import interface.apartment_screen as apartment_screen
@@ -47,7 +48,8 @@ import interface.shopping_interface.furniture_section.armchairs_section_screen a
 import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
 import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
 import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
-import settings_screen as settings_screen
+import settings.settings_screen as settings_screen
+import settings.sound_settings as sound_settings
 
 pygame.init()
 screen = pygame.display.set_mode((1400, 600))
@@ -61,35 +63,35 @@ button_center_x = const.screen.get_width()/2-const.button_width/2
 import const
 
 #door icon
-door_icon_path = "icons\\door_icon.webp"
+door_icon_path = "assets\\icons\\door_icon.webp"
 door_icon_width = 75
 door_icon_height = 75
 door_icon_position_x = const.screen.get_width()-100
 door_icon_position_y = const.screen.get_height()-80
 
 #shopping icon
-shopping_icon_path = "icons\\shopping_icon.svg"
+shopping_icon_path = "assets\\icons\\shopping_icon.svg"
 shopping_icon_width = 70
 shopping_icon_height = 70
 shopping_icon_position_x = const.screen.get_width()/47
 shopping_icon_position_y = const.screen.get_height()-80
 
 #work icon
-work_icon_path = "icons\\work_icon.webp"
+work_icon_path = "assets\\icons\\work_icon.webp"
 work_icon_width = 70
 work_icon_height = 70
 work_icon_position_x = const.screen.get_width()/47
 work_icon_position_y = const.screen.get_height()-80
 
 #settings icon
-settings_icon_path = "icons\\settings_icon.png"
+settings_icon_path = "assets\\icons\\settings_icon.png"
 settings_icon_width = screen.get_width() / 40.666666666666667
 settings_icon_height = screen.get_height() / 18
 settings_icon_position_x = screen.get_width() / 1.037
 settings_icon_position_y = screen.get_height() / 60
 
 #fps icon top left
-fps_icon_path = "icons\\fps_icon.png"
+fps_icon_path = "assets\\icons\\fps_icon.png"
 fps_icon_width = screen.get_width() / 8.4848484848484848484848484848485 #165
 fps_icon_height = screen.get_height() / 17.142857142857142857142857142857 #35
 fps_icon_position_x = screen.get_width() / 140 #10
@@ -150,14 +152,14 @@ inventory_button = pygame.Rect(screen.get_width()-240, screen.get_height()//50, 
 
 text_rect = pygame.Rect(10, const.screen.get_height() / 13, screen.get_width(), 300)
 
-save_path = file_utils.extract_default_save()
-balance = file_utils.load_save_game_info("save_files\\information.txt", "balance")
+save_path = save_utils.extract_default_save()
+balance = save_utils.load_save_game_info("save_files\\information.txt", "balance")
 balance = float(balance)
-salary = file_utils.load_save_game_info(save_path, "salary")
+salary = save_utils.load_save_game_info(save_path, "salary")
 salary = int(salary)
 bet = ""
 your_bet = 0
-working = file_utils.load_save_game_info(save_path, "working")
+working = save_utils.load_save_game_info(save_path, "working")
 working = int(working)
 
 # Colours
@@ -261,16 +263,16 @@ round_counter = 0
 barrel = []
 current_chamber = 0
 
-day_counter = file_utils.load_save_game_info("save_files\\information.txt", "day_counter")
+day_counter = save_utils.load_save_game_info("save_files\\information.txt", "day_counter")
 day_counter = int(day_counter)
-month_counter = file_utils.load_save_game_info("save_files\\information.txt", "month_counter")
+month_counter = save_utils.load_save_game_info("save_files\\information.txt", "month_counter")
 month_counter = int(month_counter)
-year_counter = file_utils.load_save_game_info("save_files\\information.txt", "year_counter")
+year_counter = save_utils.load_save_game_info("save_files\\information.txt", "year_counter")
 year_counter = int(year_counter)
 date_time_ms = 0
-return_day_counter = file_utils.load_save_game_info("save_files\\information.txt", "return_day_counter")
+return_day_counter = save_utils.load_save_game_info("save_files\\information.txt", "return_day_counter")
 return_day_counter = int(return_day_counter)
-return_month_counter = file_utils.load_save_game_info("save_files\\information.txt", "return_month_counter")
+return_month_counter = save_utils.load_save_game_info("save_files\\information.txt", "return_month_counter")
 return_month_counter = int(return_month_counter)
 leap_year = False
 
@@ -286,15 +288,15 @@ jobs_list = [
     ["Manager", 10000, "You control everything in the casino"],
 ]
 
-job_positions_list = file_utils.load_list_from_file(save_path, "job_positions_list")
-index = file_utils.load_save_game_info(save_path, "index") #0
+job_positions_list = save_utils.load_list_from_file(save_path, "job_positions_list")
+index = save_utils.load_save_game_info(save_path, "index") #0
 index = int(index)
 
 buttons_list = []
 tes = False
 job_apply = False 
 
-inventory_list_file = file_utils.load_list_from_file(save_path, "inventory_list") 
+inventory_list_file = save_utils.load_list_from_file(save_path, "inventory_list") 
 inventory_list = utils.load_inventory_objects()
 inventory_index = 0
 real_estate_index = 0
@@ -303,7 +305,7 @@ real_estate_index = 0
 fps_show = True
 fps_apply = True
 pygame.mixer.init()
-playlist = utils.grab_all_sounds_from_the_music_drectory()
+playlist = sound_settings.grab_all_sounds_from_the_music_drectory()
 
 current_song_index = 0 
 MUSIC_END = pygame.USEREVENT + 1

@@ -4,6 +4,7 @@ import utils.draw_functions as draw_functions
 import utils.utils as utils
 import sys
 import text_messages
+import settings.sound_settings as sound_settings
 
 def dealer_screen():
     running = True
@@ -14,11 +15,11 @@ def dealer_screen():
     clock = pygame.time.Clock()
     while running:
         events = pygame.event.get()
-        utils.play_music()
+        sound_settings.play_music()
 
         mouse_pos = pygame.mouse.get_pos()
 
-        draw_functions.load_background_image(const.screen, "background_photos\\dealer_screen_background.png")
+        draw_functions.load_background_image(const.screen, "assets\\background_photos\\dealer_screen_background.png")
         draw_functions.draw_title(const.screen, const.white, "DEALER POSITION")
         draw_functions.draw_text(const.screen, text_messages.dealer_job_description, const.white, text_rect, font, line_spacing=5)
 

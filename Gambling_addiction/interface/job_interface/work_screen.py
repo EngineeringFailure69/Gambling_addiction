@@ -3,6 +3,7 @@ import const
 import utils.draw_functions as draw_functions
 import utils.utils as utils
 import sys
+import settings.sound_settings as sound_settings
 
 def work_screen():
     running = True
@@ -17,9 +18,9 @@ def work_screen():
     clock = pygame.time.Clock() 
     while running:
         events = pygame.event.get()
-        utils.play_music()
+        sound_settings.play_music()
 
-        draw_functions.load_background_image(const.screen, "background_photos\\work_screen_background.png")
+        draw_functions.load_background_image(const.screen, "assets\\background_photos\\work_screen_background.png")
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
