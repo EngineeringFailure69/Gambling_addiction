@@ -3,6 +3,9 @@ import const
 from tkinter import *
 from tkinter import messagebox
 import utils.file_utils as file_utils
+import text_messages
+import utils.utils as utils
+import classes.items_class as item_class
 
 def draw_message_box(title, text):
     messagebox.showinfo(title, text)
@@ -162,7 +165,7 @@ def draw_info_cards(screen):
             y_coordinate += 250
             x_coordinate = 100
         title_counter += 1
-
+ 
 def draw_card(screen, button_colour = None, button_text_colour = None, num_of_buttons = 0, button_text_list = [], icons = None):
     screen_width = const.screen.get_width()
     screen_height = const.screen.get_height()
@@ -175,8 +178,12 @@ def draw_card(screen, button_colour = None, button_text_colour = None, num_of_bu
     y_coordinate = screen_height / 1.8 - card_height / 2 
     button_width = card_width / (num_of_buttons + 1)
     button_height = card_height / 12.5
-    icon_width = card_width - card_width / 10
-    icon_height = card_height - card_height / 5
+    if not isinstance(icons, item_class.apartment):
+        icon_width = card_width - card_width / 10
+        icon_height = card_height - card_height / 5
+    if isinstance(icons, item_class.apartment):
+        icon_width = card_width - card_width / 10
+        icon_height = card_height - card_height / 4
     pygame.draw.rect(screen, const.job_box, pygame.Rect(x_coordinate, y_coordinate, card_width, card_height))
     displacement = button_width / (num_of_buttons + 1) 
     button_position_x = x_coordinate + displacement 
@@ -196,8 +203,15 @@ def draw_card(screen, button_colour = None, button_text_colour = None, num_of_bu
         elif not short:
             draw_button(screen, button_colour, button_rect, button_text_list[i], button_font_size, button_text_colour)
         button_position_x = button_position_x + displacement + button_width
-    if icons != None:
-        load_icons(const.screen, icons.image_path, icon_width, icon_height, x_coordinate + card_width / 20, y_coordinate + card_height / 25)
+    if icons != None and not isinstance(icons, item_class.apartment):
+        load_icons(screen, icons.image_path, icon_width, icon_height, x_coordinate + card_width / 20, y_coordinate + card_height / 25)
+    if icons != None and isinstance(icons, item_class.apartment):
+        font = pygame.font.SysFont(None, 30)
+        load_icons(screen, icons.image_path, icon_width, icon_height, x_coordinate + card_width / 20, y_coordinate + card_height / 25)
+        price_text_rect  = pygame.Rect(x_coordinate + card_width / 20, y_coordinate + card_height / 15 + icon_height, card_width / 2, card_height / 5)
+        draw_text(screen, f"Buy price: {icons.price}", const.black, price_text_rect, font, line_spacing = 5)
+        price_text_rect  = pygame.Rect(x_coordinate + card_width / 20 + card_width / 2, y_coordinate + card_height / 15 + icon_height, card_width / 2, card_height / 5)
+        draw_text(screen, f"Rent price: {icons.rent_price}", const.black, price_text_rect, font, line_spacing = 5)
     return rect_list
 
 
@@ -228,3 +242,215 @@ def load_animated_spin_animations(screen, icon_center_x, icon_center_y, frame_in
     rect = image.get_rect(center=(icon_center_x, icon_center_y))
     screen.blit(image, rect)
     return frame_index
+
+def draw_apatment(screen, mouse_pos, screen_width, screen_height, font, clock, events, apartment_index = 0):
+    day, month, year = utils.date_time_timer()
+    fps = 60
+    line_spacing = 5
+
+    fps_rect_width = screen_width / 11.67
+    fps_rect_height = screen_height / 30
+    fps_rect_position_x = screen_width / 140
+    fps_rect_position_y = screen_height / 1.05
+
+    exit_door_icon_path = "assets\\icons\\door_icon.webp"
+    exit_door_icon_width = screen_width / 23
+    exit_door_icon_height = screen_height / 9
+    exit_door_icon_position_x = screen_width / 1.05
+    exit_door_icon_position_y = screen_height / 1.12
+
+    inventory_icon_width = screen_width / 8
+    inventory_icon_height = screen_height / 15
+    inventory_icon_position_x = screen_width / 1.2173913043 
+    inventory_icon_position_y = screen_height / 60 
+
+    real_estate_button_rect = None 
+    inventory_icon_rect = None
+
+    if apartment_index == 0:
+        real_estate_button_width = screen_width / 7
+        real_estate_button_height = screen_height / 20
+        real_estate_button_position_x = screen_width / 1.2068965517 - real_estate_button_width - screen_width / 70
+        real_estate_button_position_y = screen_height / 50
+
+        fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
+
+        calendar_rect = pygame.Rect(20, 10, screen_width, 50)
+
+        text_rect = pygame.Rect(100, 50, screen_width, 300)
+        real_estate_button_rect = pygame.Rect(real_estate_button_position_x, real_estate_button_position_y, real_estate_button_width, real_estate_button_height)
+        inventory_icon_rect = const.inventory_button 
+
+        load_background_image(screen, "assets\\background_photos\\home_background_1.png")
+        draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, and your salary is {const.salary}", const.black, text_rect, font, line_spacing=5)
+        draw_text(screen, f"Date: {day}, {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
+
+        icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, "assets\\icons\\settings_icon_2.png", const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
+
+        icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
+
+        draw_button(screen, const.blue, const.inventory_button, "Inventory", font, const.black, mouse_pos)
+        draw_button(screen, const.blue, real_estate_button_rect, "Real estate", font, const.black, mouse_pos)
+
+        if const.fps_show: 
+            show_fps_counter(screen, clock, const.black, fps_rect, font, fps, line_spacing)
+    
+    if apartment_index == 1 or apartment_index == 2:
+
+        real_estate_icon_path = "assets\\icons\\apartment_icons\\real_estate_icon_2.png"
+        real_estate_icon_width = screen_width / 7
+        real_estate_icon_height = screen_height / 15
+        real_estate_icon_position_x = screen_width / 1.8181818182 
+        real_estate_icon_position_y = screen_height / 1.0909090909 
+
+        inventory_icon_path = "assets\\icons\\apartment_icons\\inventory_icon_2.png"
+
+        fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
+
+        calendar_rect = pygame.Rect(20, 10, screen_width, 50)
+
+        text_rect = pygame.Rect(100, 50, screen_width, 300)
+
+        if apartment_index == 2:
+            load_background_image(screen, "assets\\background_photos\\home_background_3.png")
+            icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, "assets\\icons\\settings_icon.png", const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+        if apartment_index == 1:
+            load_background_image(screen, "assets\\background_photos\\home_background_2.png")
+            icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, "assets\\icons\\settings_icon_2.png", const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+        
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
+        draw_text(const.screen, text_messages.game_screen1_text + f"{const.balance} dollars, and your salary is {const.salary}", const.white, text_rect, font, line_spacing=5)
+        draw_text(const.screen, f"Date: {day}, {month}, {year}", const.white, calendar_rect, font, line_spacing=5)
+
+        icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
+
+        load_icons(screen, real_estate_icon_path, real_estate_icon_width, real_estate_icon_height, real_estate_icon_position_x, real_estate_icon_position_y)
+        load_icons(screen, inventory_icon_path, inventory_icon_width, inventory_icon_height, inventory_icon_position_x, inventory_icon_position_y)
+
+        if const.fps_show: 
+            show_fps_counter(const.screen, clock, const.black, fps_rect, font, fps, line_spacing)
+
+        real_estate_button_rect = pygame.Rect(real_estate_icon_position_x, real_estate_icon_position_y, real_estate_icon_width, real_estate_icon_height)
+        inventory_icon_rect = pygame.Rect(inventory_icon_position_x, inventory_icon_position_y, inventory_icon_width, inventory_icon_height)
+
+    if apartment_index == 3:
+        fps_icon_path = "assets\\icons\\fps_icon.png"
+        fps_icon_width = screen_width / 8.4848484848484848484848484848485
+        fps_icon_height = screen_height / 17.142857142857142857142857142857 
+        fps_icon_position_x = screen_width / 140 
+        fps_icon_position_y = screen_height / 1.07 
+
+        fps_rect_width = screen_width / 11.67
+        fps_rect_height = screen_height / 30
+        fps_rect_position_x = fps_icon_position_x + fps_icon_width / 3.6666666667
+        fps_rect_position_y = fps_icon_position_y + fps_icon_height / 3.5
+
+        relaxing_at_home_icon_path = "assets\\icons\\apartment_icons\\relaxing_at_home_apartment_icon.png"
+        relaxing_at_home_icon_width = screen_width / 5
+        relaxing_at_home_icon_height = screen_height / 9
+        relaxing_at_home_icon_position_x = screen_width / 2 - relaxing_at_home_icon_width / 2
+        relaxing_at_home_icon_position_y = screen_height / 30
+
+        exit_door_icon_path = "assets\\icons\\apartment_icons\\exit_door_icon.png"
+        exit_door_icon_width = screen_width / 28
+        exit_door_icon_height = screen_height / 10
+        exit_door_icon_position_x = screen_width / 1.05
+        exit_door_icon_position_y = screen_height / 1.12
+
+        real_estate_icon_path = "assets\\icons\\apartment_icons\\real_estate_icon.png"
+        real_estate_icon_width = screen_width / 7
+        real_estate_icon_height = screen_height / 15
+        real_estate_icon_position_x = screen_width / 2.1538461538 
+        real_estate_icon_position_y = screen_height / 1.0909090909 
+
+        watch_tv_icon_path = "assets\\icons\\apartment_icons\\watch_tv_icon.png" 
+        watch_tv_icon_width = screen_width / 7.5
+        watch_tv_icon_height = screen_height / 15
+        watch_tv_icon_position_x = screen_width / 2.1538461538
+        watch_tv_icon_position_y = screen_height / 1.8181818182
+
+        sleep_icon_path = "assets\\icons\\apartment_icons\\sleep_icon.png"
+        sleep_icon_width = screen_width / 8
+        sleep_icon_height = screen_height / 15
+        sleep_icon_position_x = screen_width / 1.3861386139
+        sleep_icon_position_y = screen_height / 1.8181818182
+
+        relax_icon_path = "assets\\icons\\apartment_icons\\relax_icon.png"
+        relax_icon_width = screen_width / 8
+        relax_icon_height = screen_height / 15
+        relax_icon_position_x = screen_width / 5.6
+        relax_icon_position_y = screen_height / 1.3333333333
+
+        info_bckgd_icon_path = "assets\\icons\\apartment_icons\\info_background_icon.png"
+        info_bckgd_icon_width = screen_width / 4.6666666667
+        info_bckgd_icon_height = screen_height / 4
+        info_bckgd_icon_position_x = 2
+        info_bckgd_icon_position_y = 2
+
+        calendar_icon_path = "assets\\icons\\apartment_icons\\calendar_icon.png"
+        calendar_icon_width = info_bckgd_icon_width / 15
+        calendar_icon_height = info_bckgd_icon_height / 8.5
+        calendar_icon_position_x = info_bckgd_icon_position_x + info_bckgd_icon_width / 10
+        calendar_icon_position_y = info_bckgd_icon_position_y + info_bckgd_icon_height / 6.5
+
+        balance_icon_path = "assets\\icons\\apartment_icons\\balance_icon.png"
+        balance_icon_width = info_bckgd_icon_width / 15
+        balance_icon_height = info_bckgd_icon_height / 7.5
+        balance_icon_position_x = calendar_icon_position_x
+        balance_icon_position_y = calendar_icon_position_y + calendar_icon_height + info_bckgd_icon_height / 15
+
+        salary_icon_path = "assets\\icons\\apartment_icons\\salary_icon.png"
+        salary_icon_width = info_bckgd_icon_width / 15
+        salary_icon_height = info_bckgd_icon_height / 7.5
+        salary_icon_position_x = calendar_icon_position_x
+        salary_icon_position_y = balance_icon_position_y + balance_icon_height + info_bckgd_icon_height / 15
+
+        rent_icon_path = "assets\\icons\\apartment_icons\\rent_icon.png"
+        rent_icon_width = info_bckgd_icon_width / 15
+        rent_icon_height = info_bckgd_icon_height / 7.5
+        rent_icon_position_x = calendar_icon_position_x
+        rent_icon_position_y = salary_icon_position_y + salary_icon_height + info_bckgd_icon_height / 15
+
+        inventory_icon_path = "assets\\icons\\apartment_icons\\inventory_icon.png"
+
+        load_background_image(screen, "assets\\background_photos\\home_background_4.png")
+        icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
+        icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
+
+        load_icons(const.screen, fps_icon_path, fps_icon_width, fps_icon_height, fps_icon_position_x, fps_icon_position_y)
+        load_icons(const.screen, relaxing_at_home_icon_path, relaxing_at_home_icon_width, relaxing_at_home_icon_height, relaxing_at_home_icon_position_x, relaxing_at_home_icon_position_y)
+        load_icons(const.screen, real_estate_icon_path, real_estate_icon_width, real_estate_icon_height, real_estate_icon_position_x, real_estate_icon_position_y)
+        load_icons(const.screen, watch_tv_icon_path, watch_tv_icon_width, watch_tv_icon_height, watch_tv_icon_position_x, watch_tv_icon_position_y)
+        load_icons(const.screen, sleep_icon_path, sleep_icon_width, sleep_icon_height, sleep_icon_position_x, sleep_icon_position_y)
+        load_icons(const.screen, relax_icon_path, relax_icon_width, relax_icon_height, relax_icon_position_x, relax_icon_position_y)
+        load_icons(const.screen, info_bckgd_icon_path, info_bckgd_icon_width, info_bckgd_icon_height, info_bckgd_icon_position_x, info_bckgd_icon_position_y)
+        load_icons(const.screen, calendar_icon_path, calendar_icon_width, calendar_icon_height, calendar_icon_position_x, calendar_icon_position_y)
+        load_icons(const.screen, balance_icon_path, balance_icon_width, balance_icon_height, balance_icon_position_x, balance_icon_position_y)
+        load_icons(const.screen, salary_icon_path, salary_icon_width, salary_icon_height, salary_icon_position_x, salary_icon_position_y)
+        load_icons(const.screen, rent_icon_path, rent_icon_width, rent_icon_height, rent_icon_position_x, rent_icon_position_y)
+        load_icons(const.screen, inventory_icon_path, inventory_icon_width, inventory_icon_height, inventory_icon_position_x, inventory_icon_position_y)
+
+        font = pygame.font.SysFont(None, 20)
+        calendar_text_rect = pygame.Rect(calendar_icon_position_x + calendar_icon_width + calendar_icon_width / 5, calendar_icon_position_y + (calendar_icon_height - font.get_height()) / 2, info_bckgd_icon_width, calendar_icon_height)
+        draw_text(screen, f"Date: {day}, {month}, {year}", const.golden_settings_button, calendar_text_rect, font, line_spacing=5)
+        balance_text_rect = pygame.Rect(balance_icon_position_x + balance_icon_width + balance_icon_width / 5, balance_icon_position_y + (balance_icon_height - font.get_height()) / 2, info_bckgd_icon_width, balance_icon_height)
+        draw_text(screen, f"Balance: {const.balance}$", const.golden_settings_button, balance_text_rect, font, line_spacing=5)
+        salary_text_rect = pygame.Rect(salary_icon_position_x + salary_icon_width + salary_icon_width / 5, salary_icon_position_y + (salary_icon_height - font.get_height()) / 2, info_bckgd_icon_width, salary_icon_height)
+        draw_text(screen, f"Salary: {const.salary}", const.golden_settings_button, salary_text_rect, font, line_spacing=5)
+        rent_text_rect = pygame.Rect(rent_icon_position_x + rent_icon_width + rent_icon_width / 5, rent_icon_position_y + (rent_icon_height - font.get_height()) / 2, info_bckgd_icon_width, rent_icon_height)
+        draw_text(screen, f"Rent price: ", const.golden_settings_button, rent_text_rect, font, line_spacing=5)
+
+        fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
+
+        if const.fps_show: 
+            show_fps_counter(const.screen, clock, const.golden_settings_button, fps_rect, font, fps, line_spacing)
+
+        real_estate_button_rect = pygame.Rect(real_estate_icon_position_x, real_estate_icon_position_y, real_estate_icon_width, real_estate_icon_height)
+        inventory_icon_rect = pygame.Rect(inventory_icon_position_x, inventory_icon_position_y, inventory_icon_width, inventory_icon_height)
+
+    return real_estate_button_rect, inventory_icon_rect

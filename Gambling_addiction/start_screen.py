@@ -45,11 +45,11 @@ def main_screen():
     start_button_rect = pygame.Rect(start_button_position_x, start_button_position_y, start_button_width, start_button_height)
     quit_button_rect = pygame.Rect(quit_button_position_x, quit_button_position_y, quit_button_width, quit_button_height)
 
-    icon_center_x = screen_width / 3.4146341463 #410#450
-    icon_center_y = screen_height / 1.935483871 #310#290
+    icon_center_x = screen_width / 3.4146341463
+    icon_center_y = screen_height / 1.935483871 
     animation_icon_path = "assets\\icons\\start_screen_roulette_wheel.png"
-    icon_width_animation = screen_width / 3.3333333333 #420 #700
-    icon_height_animation = screen_height / 1.3953488372 #430 #470
+    icon_width_animation = screen_width / 3.3333333333 
+    icon_height_animation = screen_height / 1.3953488372
     COUNTER_CLOCK_WISE = True
     angle_increment = 2
     frame_index = 0

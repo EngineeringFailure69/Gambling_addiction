@@ -344,7 +344,7 @@ def job_apply(button_rect, salary, working_days_requirements, job):
                     job[currently_working_on_this_position_indicator_index] = False
                 const.job_positions_list[index][currently_working_on_this_position_indicator_index] = True
                 return
-            
+             
             if const.job_positions_list[index][currently_working_on_this_position_indicator_index] == True:
                 draw_functions.draw_message_box('Application', f"You are already working as {job}")
                 for job in const.job_positions_list: 
