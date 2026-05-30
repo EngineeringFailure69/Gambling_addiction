@@ -11,3 +11,6 @@ job_positions_list: [['janitor', 0, False, 0, False], ['waiter', 5, False, 0, Fa
 index: 0
 inventory_list: []
 days_remaining_until_promotion_on_the_work: 0
+renting_apartment_index: 0
+bought_apartment_index: []
+current_rent_price: 300

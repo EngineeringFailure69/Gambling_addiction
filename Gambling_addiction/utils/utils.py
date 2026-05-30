@@ -256,7 +256,7 @@ def date_time_timer():
         const.balance = round(const.balance + const.salary, 2)
         const.return_month_counter += 1
     
-    months = str(const.day_counter) + " of " + month[const.return_month_counter]
+    months = month[const.return_month_counter]
     return days[const.return_day_counter], months, const.year_counter
 
 def job_details():
@@ -370,6 +370,11 @@ def restart_game():
     const.inventory_list_file = []
     const.inventory_list = []
     const.inventory_index = 0
+    const.real_estate_list = []
+    const.real_estate_index = 0 
+    const.renting_apartment_index = 0
+    const.current_rent_price = 300
+    save_utils.update_value_in_file(save_path, "renting_apartment_index")
     save_utils.update_value_in_file(save_path, "balance")
     save_utils.update_value_in_file(save_path, "salary")
     save_utils.update_value_in_file(save_path, "working")
@@ -379,6 +384,7 @@ def restart_game():
     save_utils.update_value_in_file(save_path, "return_day_counter")
     save_utils.update_value_in_file(save_path, "return_month_counter")
     save_utils.update_value_in_file(save_path, "index")
+    save_utils.update_value_in_file(save_path, "current_rent_price")
     save_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
     save_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
     import start_screen  
@@ -466,3 +472,7 @@ def save_game():
     save_utils.update_value_in_file("save_files\\information.txt", "index")
     save_utils.update_value_in_file("save_files\\information.txt", "salary")
     save_utils.update_value_in_file("save_files\\information.txt", "working")
+
+    #Apartment info
+    save_utils.update_value_in_file("save_files\\information.txt", "renting_apartment_index")
+    save_utils.update_value_in_file("save_files\\information.txt", "current_rent_price")

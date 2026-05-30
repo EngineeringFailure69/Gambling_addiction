@@ -214,7 +214,6 @@ def draw_card(screen, button_colour = None, button_text_colour = None, num_of_bu
         draw_text(screen, f"Rent price: {icons.rent_price}", const.black, price_text_rect, font, line_spacing = 5)
     return rect_list
 
-
 def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):
     pygame.font.init()
     font = pygame.font.SysFont(None, 30, False, True)
@@ -243,7 +242,7 @@ def load_animated_spin_animations(screen, icon_center_x, icon_center_y, frame_in
     screen.blit(image, rect)
     return frame_index
 
-def draw_apatment(screen, mouse_pos, screen_width, screen_height, font, clock, events, apartment_index = 0):
+def draw_apatment(screen, mouse_pos, screen_width, screen_height, font, clock, events, apartment, current_rent_price, apartment_index = 0):
     day, month, year = utils.date_time_timer()
     fps = 60
     line_spacing = 5
@@ -277,13 +276,13 @@ def draw_apatment(screen, mouse_pos, screen_width, screen_height, font, clock, e
 
         calendar_rect = pygame.Rect(20, 10, screen_width, 50)
 
-        text_rect = pygame.Rect(100, 50, screen_width, 300)
+        text_rect = pygame.Rect(10, 50, screen_width, 300)
         real_estate_button_rect = pygame.Rect(real_estate_button_position_x, real_estate_button_position_y, real_estate_button_width, real_estate_button_height)
         inventory_icon_rect = const.inventory_button 
 
         load_background_image(screen, "assets\\background_photos\\home_background_1.png")
-        draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, and your salary is {const.salary}", const.black, text_rect, font, line_spacing=5)
-        draw_text(screen, f"Date: {day}, {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
+        draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, and your rent price is {current_rent_price}", const.black, text_rect, font, line_spacing=5)
+        draw_text(screen, f"Date: {day}, {str(const.day_counter)} of {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
 
         icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, "assets\\icons\\settings_icon_2.png", const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
@@ -311,7 +310,7 @@ def draw_apatment(screen, mouse_pos, screen_width, screen_height, font, clock, e
 
         calendar_rect = pygame.Rect(20, 10, screen_width, 50)
 
-        text_rect = pygame.Rect(100, 50, screen_width, 300)
+        text_rect = pygame.Rect(10, 50, screen_width, 300)
 
         if apartment_index == 2:
             load_background_image(screen, "assets\\background_photos\\home_background_3.png")
@@ -321,8 +320,8 @@ def draw_apatment(screen, mouse_pos, screen_width, screen_height, font, clock, e
             icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, "assets\\icons\\settings_icon_2.png", const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
-        draw_text(const.screen, text_messages.game_screen1_text + f"{const.balance} dollars, and your salary is {const.salary}", const.white, text_rect, font, line_spacing=5)
-        draw_text(const.screen, f"Date: {day}, {month}, {year}", const.white, calendar_rect, font, line_spacing=5)
+        draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, and your rent price is {current_rent_price}", const.white, text_rect, font, line_spacing=5)
+        draw_text(screen, f"Date: {day}, {str(const.day_counter)} of {month}, {year}", const.white, calendar_rect, font, line_spacing=5)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
@@ -437,13 +436,13 @@ def draw_apatment(screen, mouse_pos, screen_width, screen_height, font, clock, e
 
         font = pygame.font.SysFont(None, 20)
         calendar_text_rect = pygame.Rect(calendar_icon_position_x + calendar_icon_width + calendar_icon_width / 5, calendar_icon_position_y + (calendar_icon_height - font.get_height()) / 2, info_bckgd_icon_width, calendar_icon_height)
-        draw_text(screen, f"Date: {day}, {month}, {year}", const.golden_settings_button, calendar_text_rect, font, line_spacing=5)
+        draw_text(screen, f"Date: {day}, {str(const.day_counter)} of {month}, {year}", const.golden_settings_button, calendar_text_rect, font, line_spacing=5)
         balance_text_rect = pygame.Rect(balance_icon_position_x + balance_icon_width + balance_icon_width / 5, balance_icon_position_y + (balance_icon_height - font.get_height()) / 2, info_bckgd_icon_width, balance_icon_height)
         draw_text(screen, f"Balance: {const.balance}$", const.golden_settings_button, balance_text_rect, font, line_spacing=5)
         salary_text_rect = pygame.Rect(salary_icon_position_x + salary_icon_width + salary_icon_width / 5, salary_icon_position_y + (salary_icon_height - font.get_height()) / 2, info_bckgd_icon_width, salary_icon_height)
         draw_text(screen, f"Salary: {const.salary}", const.golden_settings_button, salary_text_rect, font, line_spacing=5)
         rent_text_rect = pygame.Rect(rent_icon_position_x + rent_icon_width + rent_icon_width / 5, rent_icon_position_y + (rent_icon_height - font.get_height()) / 2, info_bckgd_icon_width, rent_icon_height)
-        draw_text(screen, f"Rent price: ", const.golden_settings_button, rent_text_rect, font, line_spacing=5)
+        draw_text(screen, f"Rent price: {current_rent_price}", const.golden_settings_button, rent_text_rect, font, line_spacing=5)
 
         fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
 
