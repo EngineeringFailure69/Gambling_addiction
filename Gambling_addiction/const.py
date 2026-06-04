@@ -300,9 +300,10 @@ inventory_list_file = save_utils.load_list_from_file(save_path, "inventory_list"
 inventory_list = utils.load_inventory_objects()
 inventory_index = 0
 real_estate_list = []
-real_estate_index = 0 
-renting_apartment_index = save_utils.load_save_game_info(save_path, "renting_apartment_index")
-current_rent_price = save_utils.load_save_game_info(save_path, "current_rent_price")
+renting_apartment_index = 0
+renting_apartment_file = save_utils.load_list_from_file(save_path, "renting_apartment")
+renting_apartment = utils.load_current_apartment()
+real_estate_index = 0
 
 #settings data
 fps_show = True

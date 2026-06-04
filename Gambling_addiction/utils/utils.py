@@ -372,8 +372,8 @@ def restart_game():
     const.inventory_index = 0
     const.real_estate_list = []
     const.real_estate_index = 0 
-    const.renting_apartment_index = 0
-    const.current_rent_price = 300
+    #const.renting_apartment_index = 0
+    #const.current_rent_price = 300
     save_utils.update_value_in_file(save_path, "renting_apartment_index")
     save_utils.update_value_in_file(save_path, "balance")
     save_utils.update_value_in_file(save_path, "salary")
@@ -453,6 +453,36 @@ def remove_item_from_the_inventory(item):
     if const.inventory_index > len(const.inventory_list) - 1:
         const.inventory_index = 0
 
+def load_current_apartment():
+    apartments = []
+    index = 0
+    price = 1
+    rent_price = 2
+    image_path = 3
+    renting_apartment = 4
+    bought_apartment = 5 
+    renting_expenses = 6
+    bought_expenses = 7
+    for apartment in const.renting_apartment_file:
+        current_apartment = items_class.apartment(apartment[index], apartment[price], apartment[rent_price], apartment[image_path], apartment[renting_apartment], apartment[bought_apartment], apartment[renting_expenses], apartment[bought_expenses])
+        apartments.append(current_apartment)
+    return apartments
+
+def update_apartment_file():
+    apartment = []
+    const.renting_apartment_file = []
+    for item in const.renting_apartment:
+        apartment.append(item.index)
+        apartment.append(item.price)
+        apartment.append(item.rent_price)
+        apartment.append(item.image_path)
+        apartment.append(item.renting_apartment) 
+        apartment.append(item.bought_apartment) 
+        apartment.append(item.renting_expenses)
+        apartment.append(item.bought_expenses)
+        const.renting_apartment_file.append(apartment)
+        apartment = []
+
 def save_game():
     #Save/update date and time every time app closes or screen changes
     save_utils.update_value_in_file("save_files\\information.txt", "day_counter")        
@@ -474,5 +504,5 @@ def save_game():
     save_utils.update_value_in_file("save_files\\information.txt", "working")
 
     #Apartment info
-    save_utils.update_value_in_file("save_files\\information.txt", "renting_apartment_index")
-    save_utils.update_value_in_file("save_files\\information.txt", "current_rent_price")
+    save_utils.update_list_in_file("save_files\\information.txt", "renting_apartment", const.renting_apartment_file)
+    #save_utils.update_value_in_file("save_files\\information.txt", "current_rent_price")
