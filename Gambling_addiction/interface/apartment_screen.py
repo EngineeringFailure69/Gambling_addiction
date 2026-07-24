@@ -16,18 +16,16 @@ def apartment_screen():
     draw_apartment_list = False
     product = None
     apartment = None
-    rect_list_inventory = []
-    rect_list_apartment = []
+    rect_list_inventory = {}
+    rect_list_apartment = {}
     day = 0
     month = " "
     year = " "
     month_old = " "
 
-    inventory_number_of_buttons = 2
-    real_estate_number_of_buttons = 4
-
-    inventory_buttons_text_list = ["Use", "->"]
-    real_estate_buttons_text_list = ["<-", "Rent", "Buy", "->"]
+    inventory_buttons = [("Use", "Use"), ("right", "->")]
+    real_estate_buttons = [("left", "<-"), ("rent", "Rent"), ("buy", "Buy"), ("right", "->")]
+    real_estate_buttons_when_renting = [("left", "<-"), ("rent", "Rent"), ("buy", "Buy"), ("stop renting", "Stop renting"), ("right", "->")]
 
     clock = pygame.time.Clock() 
 
@@ -41,11 +39,6 @@ def apartment_screen():
     const.real_estate_list.append(tier_4_apartment)
 
     day, month_old, year = utils.date_time_timer()
-
-    decrease_estate_index_button = 0
-    rent_button_index = 1
-    buy_button_index = 2
-    increase_estate_index_button = 3
 
     while running:
         inventory_length = len(const.inventory_list)
@@ -72,49 +65,59 @@ def apartment_screen():
                 if inventory_button_rect.collidepoint(mouse_pos):
                     draw_inventory = not draw_inventory
                 if len(rect_list_inventory) > 0 :
-                    if rect_list_inventory[1].collidepoint(mouse_pos):
+                    if rect_list_inventory["right"].collidepoint(mouse_pos):
                         if const.inventory_index == inventory_length - 1:
                             const.inventory_index = 0
                         elif const.inventory_index < inventory_length - 1:
                             const.inventory_index += 1
-                    if rect_list_inventory[0].collidepoint(mouse_pos) and inventory_length > 0:
+                    if rect_list_inventory["Use"].collidepoint(mouse_pos) and inventory_length > 0:
                         utils.use_inventory_item(product)
                 if real_estate_button_rect.collidepoint(mouse_pos):
                     draw_apartment_list = not draw_apartment_list
                 if len(rect_list_apartment) > 0:
-                    if rect_list_apartment[decrease_estate_index_button].collidepoint(mouse_pos):
+                    if rect_list_apartment["left"].collidepoint(mouse_pos):
                         if const.real_estate_index > 0:
                             const.real_estate_index -= 1
                         else:
                             const.real_estate_index = 0
-                    if rect_list_apartment[rent_button_index].collidepoint(mouse_pos): #Rent
+                    if rect_list_apartment["rent"].collidepoint(mouse_pos): #Rent
                         if const.balance < apartment.rent_price:
                             draw_functions.draw_message_box("Not enough money", "You don't have enough money to rent this apartment!")
                         else:
+                            for i in const.real_estate_list:
+                                if i.index != apartment.index:
+                                    i.renting_apartment = False
                             draw_functions.draw_message_box("Welcome", "Welcome to your new apartment!")
                             const.renting_apartment.clear()
+                            apartment.renting_apartment = True
                             const.renting_apartment.append(apartment)
                             utils.update_apartment_file()
                             const.balance -= const.renting_apartment[0].renting_expenses
                             const.renting_apartment_index = const.renting_apartment[0].index
                             draw_apartment_list = False
-                    if rect_list_apartment[buy_button_index].collidepoint(mouse_pos):
+                    if rect_list_apartment["buy"].collidepoint(mouse_pos):
                         draw_functions.draw_message_box("Button 2", "") #Buy
-                    if rect_list_apartment[increase_estate_index_button].collidepoint(mouse_pos):
+                    if "stop renting" in rect_list_apartment:
+                        if rect_list_apartment["stop renting"].collidepoint(mouse_pos):
+                            draw_functions.draw_message_box("Button stop renting", "") #stop renting
+                    if rect_list_apartment["right"].collidepoint(mouse_pos):
                         if const.real_estate_index >= real_estate_list_length - 1:
                             const.real_estate_index = real_estate_list_length - 1
                         else:
                             const.real_estate_index += 1
     
         if draw_inventory and inventory_length > 0:
-            rect_list_inventory = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, inventory_number_of_buttons, inventory_buttons_text_list, product)
+            rect_list_inventory = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, inventory_buttons, product)
             draw_apartment_list = False
         elif draw_inventory and inventory_length <= 0:
-            rect_list_inventory = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, inventory_number_of_buttons, inventory_buttons_text_list)
+            rect_list_inventory = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, inventory_buttons)
             draw_apartment_list = False
         
-        if draw_apartment_list:
-            rect_list_apartment = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_number_of_buttons, real_estate_buttons_text_list, apartment)
+        if draw_apartment_list and not apartment.index == const.renting_apartment[0].index:
+            rect_list_apartment = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment)
+            draw_inventory = False
+        elif draw_apartment_list and apartment.index == const.renting_apartment[0].index:
+            rect_list_apartment = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_buttons_when_renting, apartment)
             draw_inventory = False
 
         if not draw_inventory:

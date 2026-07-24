@@ -166,12 +166,26 @@ def draw_info_cards(screen):
             x_coordinate = 100
         title_counter += 1
  
-def draw_card(screen, button_colour = None, button_text_colour = None, num_of_buttons = 0, button_text_list = [], icons = None):
+def get_button_font(text, width, height, base_value):
+    size = base_value
+
+    while size > 8:
+        font = pygame.font.SysFont(None, size)
+        w, h = font.size(text)
+
+        if w <= width * 0.9 and h <= height * 0.8:
+            return font
+
+        size -= 1
+
+    return pygame.font.SysFont(None, size, bold = False)
+
+def draw_card(screen, button_colour = None, button_text_colour = None, buttons = {}, icons = None):
+    BASE_FONT_SIZE = 20
     screen_width = const.screen.get_width()
     screen_height = const.screen.get_height()
-    rect_list = []
-    short = False
-    current_text = ""
+    rect_dict = {}
+    num_of_buttons = len(buttons)
     card_width = screen_width / 3.5 
     card_height = screen_height / 1.2 
     x_coordinate = screen_width / 2 - card_width / 2
@@ -188,20 +202,11 @@ def draw_card(screen, button_colour = None, button_text_colour = None, num_of_bu
     displacement = button_width / (num_of_buttons + 1) 
     button_position_x = x_coordinate + displacement 
     button_position_y = card_height + card_height / 16.666666667
-    button_font_size = int(button_width / 2)
-    button_font_size = pygame.font.SysFont(None, button_font_size, bold = False)
-    if len(button_text_list) < num_of_buttons:
-        short = True
-    for i in range(num_of_buttons):
+    for button_name, button_text in buttons:
+        button_font = get_button_font(button_text, button_width * 0.9, button_height * 0.8, BASE_FONT_SIZE)
         button_rect = pygame.Rect(button_position_x, button_position_y, button_width, button_height)
-        rect_list.append(button_rect)
-        if short and i < len(button_text_list):
-            current_text = button_text_list[i]
-            draw_button(screen, button_colour, button_rect, current_text, button_font_size, button_text_colour)
-        elif short and i >= len(button_text_list):
-            draw_button(screen, button_colour, button_rect, current_text, button_font_size, button_text_colour)
-        elif not short:
-            draw_button(screen, button_colour, button_rect, button_text_list[i], button_font_size, button_text_colour)
+        rect_dict[button_name] = button_rect
+        draw_button(screen, button_colour, button_rect, button_text, button_font, button_text_colour)
         button_position_x = button_position_x + displacement + button_width
     if icons != None and not isinstance(icons, item_class.apartment):
         load_icons(screen, icons.image_path, icon_width, icon_height, x_coordinate + card_width / 20, y_coordinate + card_height / 25)
@@ -212,7 +217,7 @@ def draw_card(screen, button_colour = None, button_text_colour = None, num_of_bu
         draw_text(screen, f"Buy price: {icons.price}", const.black, price_text_rect, font, line_spacing = 5)
         price_text_rect  = pygame.Rect(x_coordinate + card_width / 30 + card_width / 2, y_coordinate + card_height / 15 + icon_height, card_width / 2, card_height / 5)
         draw_text(screen, f"Rent expenses: {icons.renting_expenses}", const.black, price_text_rect, font, line_spacing = 5)
-    return rect_list
+    return rect_dict
 
 def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):
     pygame.font.init()

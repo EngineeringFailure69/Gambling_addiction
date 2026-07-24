@@ -505,4 +505,3 @@ def save_game():
 
     #Apartment info
     save_utils.update_list_in_file("save_files\\information.txt", "renting_apartment", const.renting_apartment_file)
-    #save_utils.update_value_in_file("save_files\\information.txt", "current_rent_price")
