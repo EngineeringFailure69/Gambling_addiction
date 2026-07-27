@@ -87,7 +87,7 @@ def main_screen():
         draw_functions.draw_button(const.screen, const.green_settings_button, quit_button_rect, "    Quit", font, const.golden_settings_button, mouse_pos)
         draw_functions.load_icons(const.screen, quit_button_icon_path, quit_button_icon_width, quit_button_icon_height, quit_button_icon_position_x, quit_button_icon_position_y)
 
-        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
  
         draw_functions.load_icons(const.screen, title_icon_path, title_icon_width, title_icon_height, title_icon_position_x, title_icon_position_y)

@@ -84,7 +84,8 @@ work_icon_position_x = const.screen.get_width()/47
 work_icon_position_y = const.screen.get_height()-80
 
 #settings icon
-settings_icon_path = "assets\\icons\\settings_icon.png"
+settings_icon_path_new = "assets\\icons\\settings_icon.png"
+settings_icon_path_old = "assets\\icons\\settings_icon_2.png"
 settings_icon_width = screen.get_width() / 40.666666666666667
 settings_icon_height = screen.get_height() / 18
 settings_icon_position_x = screen.get_width() / 1.037

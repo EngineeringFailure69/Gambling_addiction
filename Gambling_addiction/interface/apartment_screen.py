@@ -22,6 +22,9 @@ def apartment_screen():
     month = " "
     year = " "
     month_old = " "
+    x_coordinate = 0
+    y_coordinate = 0
+    const.real_estate_list = []
 
     inventory_buttons = [("Use", "Use"), ("right", "->")]
     real_estate_buttons = [("left", "<-"), ("rent", "Rent"), ("buy", "Buy"), ("right", "->")]
@@ -39,6 +42,9 @@ def apartment_screen():
     const.real_estate_list.append(tier_4_apartment)
 
     day, month_old, year = utils.date_time_timer()
+    real_estate_card_surface = None
+    inventory_card_surface = None
+    inventory_length = 0
 
     while running:
         inventory_length = len(const.inventory_list)
@@ -47,12 +53,6 @@ def apartment_screen():
         sound_settings.play_music()
         mouse_pos = pygame.mouse.get_pos()
         day, month, year = utils.date_time_timer()
-
-        if inventory_length > 0:
-            product = const.inventory_list[const.inventory_index]
-
-        if real_estate_list_length > 0:
-            apartment = const.real_estate_list[const.real_estate_index]
 
         if month != month_old:
             const.balance -= const.renting_apartment[0].renting_expenses
@@ -64,22 +64,30 @@ def apartment_screen():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if inventory_button_rect.collidepoint(mouse_pos):
                     draw_inventory = not draw_inventory
+                    if not draw_inventory:
+                        inventory_card_surface = None
                 if len(rect_list_inventory) > 0 :
                     if rect_list_inventory["right"].collidepoint(mouse_pos):
                         if const.inventory_index == inventory_length - 1:
                             const.inventory_index = 0
                         elif const.inventory_index < inventory_length - 1:
                             const.inventory_index += 1
+                        inventory_card_surface = None
                     if rect_list_inventory["Use"].collidepoint(mouse_pos) and inventory_length > 0:
                         utils.use_inventory_item(product)
+                        inventory_card_surface = None
+                        inventory_length = len(const.inventory_list)
                 if real_estate_button_rect.collidepoint(mouse_pos):
                     draw_apartment_list = not draw_apartment_list
+                    if not draw_apartment_list:
+                        real_estate_card_surface = None
                 if len(rect_list_apartment) > 0:
                     if rect_list_apartment["left"].collidepoint(mouse_pos):
                         if const.real_estate_index > 0:
                             const.real_estate_index -= 1
                         else:
                             const.real_estate_index = 0
+                        real_estate_card_surface = None
                     if rect_list_apartment["rent"].collidepoint(mouse_pos): #Rent
                         if const.balance < apartment.rent_price:
                             draw_functions.draw_message_box("Not enough money", "You don't have enough money to rent this apartment!")
@@ -91,6 +99,7 @@ def apartment_screen():
                             const.renting_apartment.clear()
                             apartment.renting_apartment = True
                             const.renting_apartment.append(apartment)
+                            real_estate_card_surface = None
                             utils.update_apartment_file()
                             const.balance -= const.renting_apartment[0].renting_expenses
                             const.renting_apartment_index = const.renting_apartment[0].index
@@ -101,28 +110,48 @@ def apartment_screen():
                         if rect_list_apartment["stop renting"].collidepoint(mouse_pos):
                             draw_functions.draw_message_box("Button stop renting", "") #stop renting
                     if rect_list_apartment["right"].collidepoint(mouse_pos):
+
                         if const.real_estate_index >= real_estate_list_length - 1:
                             const.real_estate_index = real_estate_list_length - 1
                         else:
                             const.real_estate_index += 1
-    
-        if draw_inventory and inventory_length > 0:
-            rect_list_inventory = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, inventory_buttons, product)
-            draw_apartment_list = False
-        elif draw_inventory and inventory_length <= 0:
-            rect_list_inventory = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, inventory_buttons)
-            draw_apartment_list = False
-        
-        if draw_apartment_list and not apartment.index == const.renting_apartment[0].index:
-            rect_list_apartment = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment)
-            draw_inventory = False
-        elif draw_apartment_list and apartment.index == const.renting_apartment[0].index:
-            rect_list_apartment = draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_buttons_when_renting, apartment)
-            draw_inventory = False
+                        real_estate_card_surface = None
 
-        if not draw_inventory:
+        if inventory_length > 0:
+            product = const.inventory_list[const.inventory_index]
+        
+        if real_estate_list_length > 0:
+            apartment = const.real_estate_list[const.real_estate_index]
+
+        if draw_inventory and inventory_length > 0 and inventory_card_surface is None:
+            inventory_card_surface, rect_list_inventory, x_coordinate, y_coordinate = draw_functions.create_card_surface(const.screen, const.job_button, const.job_cards_text, inventory_buttons, product)
+            draw_apartment_list = False
+            real_estate_card_surface = None
+        elif draw_inventory and inventory_length <= 0 and inventory_card_surface is None:
+            inventory_card_surface, rect_list_inventory, x_coordinate, y_coordinate = draw_functions.create_card_surface(const.screen, const.job_button, const.job_cards_text, inventory_buttons)
+            draw_apartment_list = False
+            real_estate_card_surface = None
+        
+        if draw_apartment_list and not apartment.index == const.renting_apartment[0].index and real_estate_card_surface is None:
+            real_estate_card_surface, rect_list_apartment, x_coordinate, y_coordinate = draw_functions.create_card_surface(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment) #draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment)
+            draw_inventory = False
+            inventory_card_surface = None
             rect_list_inventory.clear()
-        if not draw_apartment_list:
+        elif draw_apartment_list and apartment.index == const.renting_apartment[0].index and real_estate_card_surface is None:
+            real_estate_card_surface, rect_list_apartment, x_coordinate, y_coordinate = draw_functions.create_card_surface(const.screen, const.job_button, const.job_cards_text, real_estate_buttons_when_renting, apartment) #draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment)
+            draw_inventory = False
+            inventory_card_surface = None
+            rect_list_inventory.clear()
+
+        if real_estate_card_surface is not None:
+            const.screen.blit(real_estate_card_surface, (x_coordinate, y_coordinate))
+
+        if inventory_card_surface is not None:
+            const.screen.blit(inventory_card_surface, (x_coordinate, y_coordinate))
+
+        if not draw_inventory and inventory_card_surface is None:
+            rect_list_inventory.clear()
+        if not draw_apartment_list and real_estate_card_surface is None:
             rect_list_apartment.clear()
 
         pygame.display.flip()

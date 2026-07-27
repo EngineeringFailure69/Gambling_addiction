@@ -219,6 +219,46 @@ def draw_card(screen, button_colour = None, button_text_colour = None, buttons =
         draw_text(screen, f"Rent expenses: {icons.renting_expenses}", const.black, price_text_rect, font, line_spacing = 5)
     return rect_dict
 
+def create_card_surface(screen, button_colour = None, button_text_colour = None, buttons = {}, icons = None):
+    BASE_FONT_SIZE = 20
+    screen_width = const.screen.get_width()
+    screen_height = const.screen.get_height()
+    rect_dict = {}
+    num_of_buttons = len(buttons)
+    card_width = screen_width / 3.5 
+    card_height = screen_height / 1.2 
+    x_coordinate = screen_width / 2 - card_width / 2
+    y_coordinate = screen_height / 1.8 - card_height / 2 
+    button_width = card_width / (num_of_buttons + 1)
+    button_height = card_height / 12.5
+    if not isinstance(icons, item_class.apartment):
+        icon_width = card_width - card_width / 10
+        icon_height = card_height - card_height / 5
+    if isinstance(icons, item_class.apartment):
+        icon_width = card_width - card_width / 10
+        icon_height = card_height - card_height / 4
+    card_surface = pygame.Surface((card_width, card_height), pygame.SRCALPHA)
+    pygame.draw.rect(card_surface, const.job_box, pygame.Rect(0, 0, card_width, card_height))
+    displacement = button_width / (num_of_buttons + 1) 
+    button_position_x = displacement 
+    button_position_y = card_height - card_height / 8.666666667
+    for button_name, button_text in buttons:
+        button_font = get_button_font(button_text, button_width * 0.9, button_height * 0.8, BASE_FONT_SIZE)
+        button_rect = pygame.Rect(button_position_x, button_position_y, button_width, button_height)
+        rect_dict[button_name] = pygame.Rect(button_rect.x + x_coordinate, button_rect.y + y_coordinate, button_rect.width, button_rect.height)
+        draw_button(card_surface, button_colour, button_rect, button_text, button_font, button_text_colour)
+        button_position_x = button_position_x + displacement + button_width
+    if icons != None and not isinstance(icons, item_class.apartment):
+        load_icons(card_surface, icons.image_path, icon_width, icon_height, card_width / 20, card_height / 25)
+    if icons != None and isinstance(icons, item_class.apartment):
+        font = pygame.font.SysFont(None, 25)
+        load_icons(card_surface, icons.image_path, icon_width, icon_height, card_width / 20, card_height / 25)
+        price_text_rect  = pygame.Rect(card_width / 20, card_height / 15 + icon_height, card_width / 2, card_height / 5)
+        draw_text(card_surface, f"Buy price: {icons.price}", const.black, price_text_rect, font, line_spacing = 5)
+        price_text_rect  = pygame.Rect(card_width / 30 + card_width / 2, card_height / 15 + icon_height, card_width / 2, card_height / 5)
+        draw_text(card_surface, f"Rent expenses: {icons.renting_expenses}", const.black, price_text_rect, font, line_spacing = 5)
+    return card_surface, rect_dict, x_coordinate, y_coordinate
+
 def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):
     pygame.font.init()
     font = pygame.font.SysFont(None, 30, False, True)
@@ -289,7 +329,7 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, and your total apartment expenses are {current_renting_expenses}", const.black, text_rect, font, line_spacing=5)
         draw_text(screen, f"Date: {day}, {str(const.day_counter)} of {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
 
-        icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, "assets\\icons\\settings_icon_2.png", const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+        icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
 
         icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
@@ -319,10 +359,10 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
 
         if apartment_index == 2:
             load_background_image(screen, "assets\\background_photos\\home_background_3.png")
-            icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, "assets\\icons\\settings_icon.png", const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+            icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         if apartment_index == 1:
             load_background_image(screen, "assets\\background_photos\\home_background_2.png")
-            icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, "assets\\icons\\settings_icon_2.png", const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+            icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
         draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, and your total apartment renting expenses are {current_renting_expenses}", const.white, text_rect, font, line_spacing=5)
@@ -423,7 +463,7 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         load_background_image(screen, "assets\\background_photos\\home_background_4.png")
         icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
-        icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+        icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
 
         load_icons(const.screen, fps_icon_path, fps_icon_width, fps_icon_height, fps_icon_position_x, fps_icon_position_y)
