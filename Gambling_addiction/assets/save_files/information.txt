@@ -12,4 +12,4 @@ index: 0
 inventory_list: []
 days_remaining_until_promotion_on_the_work: 0
 bought_apartment_index: []
-renting_apartment: [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 400, 300]]
+renting_apartment: [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100]]

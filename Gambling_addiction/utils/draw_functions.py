@@ -256,7 +256,7 @@ def create_card_surface(screen, button_colour = None, button_text_colour = None,
         price_text_rect  = pygame.Rect(card_width / 20, card_height / 15 + icon_height, card_width / 2, card_height / 5)
         draw_text(card_surface, f"Buy price: {icons.price}", const.black, price_text_rect, font, line_spacing = 5)
         price_text_rect  = pygame.Rect(card_width / 30 + card_width / 2, card_height / 15 + icon_height, card_width / 2, card_height / 5)
-        draw_text(card_surface, f"Rent expenses: {icons.renting_expenses}", const.black, price_text_rect, font, line_spacing = 5)
+        draw_text(card_surface, f"Rent expenses: {icons.get_monthly_renting_cost()}", const.black, price_text_rect, font, line_spacing = 5)
     return card_surface, rect_dict, x_coordinate, y_coordinate
 
 def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):

@@ -366,15 +366,17 @@ def restart_game():
     const.return_day_counter = 0
     const.return_month_counter = 0
     const.job_positions_list = [['janitor', 0, False, 0, False], ['waiter', 5, False, 0, False], ['slot attendant', 10, False, 0, False], ['dealer', 15, False, 0, False], ['shift leader', 20, False, 0, False], ['pit boss', 25, False, 0, False], ['shift manager', 30, False, 0, False], ['manager', 35, False, 0, False]]
+    const.renting_apartment = [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100]]
+    const.renting_apartment_file = const.renting_apartment
+    const.renting_apartment = load_current_apartment()
+    update_apartment_file()
     const.index = 0
     const.inventory_list_file = []
     const.inventory_list = []
     const.inventory_index = 0
     const.real_estate_list = []
     const.real_estate_index = 0 
-    #const.renting_apartment_index = 0
-    #const.current_rent_price = 300
-    save_utils.update_value_in_file(save_path, "renting_apartment_index")
+    save_utils.update_list_in_file(save_path, "renting_apartment", const.renting_apartment)
     save_utils.update_value_in_file(save_path, "balance")
     save_utils.update_value_in_file(save_path, "salary")
     save_utils.update_value_in_file(save_path, "working")
@@ -384,7 +386,6 @@ def restart_game():
     save_utils.update_value_in_file(save_path, "return_day_counter")
     save_utils.update_value_in_file(save_path, "return_month_counter")
     save_utils.update_value_in_file(save_path, "index")
-    save_utils.update_value_in_file(save_path, "current_rent_price")
     save_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
     save_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
     import start_screen  
@@ -461,10 +462,12 @@ def load_current_apartment():
     image_path = 3
     renting_apartment = 4
     bought_apartment = 5 
-    renting_expenses = 6
-    bought_expenses = 7
+    rent = 6
+    utilities = 7
+    property_tax = 8 
+    maintenance = 9
     for apartment in const.renting_apartment_file:
-        current_apartment = items_class.apartment(apartment[index], apartment[price], apartment[rent_price], apartment[image_path], apartment[renting_apartment], apartment[bought_apartment], apartment[renting_expenses], apartment[bought_expenses])
+        current_apartment = items_class.apartment(apartment[index], apartment[price], apartment[rent_price], apartment[image_path], apartment[renting_apartment], apartment[bought_apartment], apartment[rent], apartment[utilities], apartment[property_tax], apartment[maintenance])
         apartments.append(current_apartment)
     return apartments
 
@@ -478,8 +481,10 @@ def update_apartment_file():
         apartment.append(item.image_path)
         apartment.append(item.renting_apartment) 
         apartment.append(item.bought_apartment) 
-        apartment.append(item.renting_expenses)
-        apartment.append(item.bought_expenses)
+        apartment.append(item.rent)
+        apartment.append(item.utilities)
+        apartment.append(item.property_tax)
+        apartment.append(item.maintenance)
         const.renting_apartment_file.append(apartment)
         apartment = []
 

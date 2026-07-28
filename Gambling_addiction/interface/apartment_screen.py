@@ -32,13 +32,13 @@ def apartment_screen():
 
     clock = pygame.time.Clock() 
 
-    tier_1_apartment = apartment_class.apartment(0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 400, 300)
+    tier_1_apartment = apartment_class.apartment(0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100)
     const.real_estate_list.append(tier_1_apartment)
-    tier_2_apartment = apartment_class.apartment(1, 500000, 1500, "assets\\icons\\apartment_icons\\tier_2_apartment.png", False, False, 2000, 1500)
+    tier_2_apartment = apartment_class.apartment(1, 350000, 1200, "assets\\icons\\apartment_icons\\tier_2_apartment.png", False, False, 1200, 400, 100, 300)
     const.real_estate_list.append(tier_2_apartment)
-    tier_3_apartment = apartment_class.apartment(2, 2000000, 6000, "assets\\icons\\apartment_icons\\tier_3_apartment.png", False, False, 8000, 7000)
+    tier_3_apartment = apartment_class.apartment(2, 1200000, 4500, "assets\\icons\\apartment_icons\\tier_3_apartment.png", False, False, 4500, 1200, 700, 600)
     const.real_estate_list.append(tier_3_apartment)
-    tier_4_apartment = apartment_class.apartment(3, 10000000, 30000, "assets\\icons\\apartment_icons\\tier_4_apartment.png", False, False, 40000, 35000)
+    tier_4_apartment = apartment_class.apartment(3, 4000000, 18000, "assets\\icons\\apartment_icons\\tier_4_apartment.png", False, False, 18000, 3000, 3000, 2000)
     const.real_estate_list.append(tier_4_apartment)
 
     day, month_old, year = utils.date_time_timer()
@@ -55,10 +55,10 @@ def apartment_screen():
         day, month, year = utils.date_time_timer()
 
         if month != month_old:
-            const.balance -= const.renting_apartment[0].renting_expenses
+            const.balance -= const.renting_apartment[0].get_monthly_renting_cost()
             month_old = month
 
-        real_estate_button_rect, inventory_button_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, const.renting_apartment[0], const.renting_apartment[0].renting_expenses, const.renting_apartment[0].index)
+        real_estate_button_rect, inventory_button_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, const.renting_apartment[0], const.renting_apartment[0].get_monthly_renting_cost(), const.renting_apartment[0].index)
 
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -101,7 +101,7 @@ def apartment_screen():
                             const.renting_apartment.append(apartment)
                             real_estate_card_surface = None
                             utils.update_apartment_file()
-                            const.balance -= const.renting_apartment[0].renting_expenses
+                            const.balance -= const.renting_apartment[0].get_monthly_renting_cost() - const.renting_apartment[0].rent_price
                             const.renting_apartment_index = const.renting_apartment[0].index
                             draw_apartment_list = False
                     if rect_list_apartment["buy"].collidepoint(mouse_pos):
