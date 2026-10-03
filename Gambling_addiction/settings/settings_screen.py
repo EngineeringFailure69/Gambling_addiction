@@ -134,6 +134,7 @@ def settings_screen():
 
     new_playlist = None
     background_image_path = "assets\\background_photos\\settings_screen_background.png"
+
     while running:
         const.screen.fill(const.green)
         events = pygame.event.get()
@@ -186,7 +187,7 @@ def settings_screen():
                     const.fps_show = const.fps_apply 
                 if  back_icon_rect.collidepoint(mouse_pos):
                     running = False
-                    return
+                    return const.STATE_PREVIOUS_SCREEN
                 if apply_button_rect.collidepoint(mouse_pos): 
                     if new_playlist:
                         pygame.mixer.music.stop()

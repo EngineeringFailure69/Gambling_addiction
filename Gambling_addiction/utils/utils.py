@@ -76,20 +76,40 @@ def grab_all_variables(file_path = "const.py", starts_with="STATE"):
                         key = target.id
                         const.screen_and_buy_functions.update({key:value})  
  
-def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, type):
+# def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, type):
+#     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
+#     for event in events:
+#         if event.type == pygame.QUIT:
+#             save_game()
+#             pygame.quit()
+#             sys.exit()
+#         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
+#             if type in const.screen_and_buy_functions.values():
+#                 if type is not const.STATE_SETTINGS:
+#                     const.spin_animations.clear()
+#                 save_game()
+#                 type()
+#                 return
+
+def get_icon_rect_and_handle_click(events, position_x, position_y, icon_width, icon_height, action):
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
     for event in events:
         if event.type == pygame.QUIT:
             save_game()
             pygame.quit()
-            sys.exit()
+            sys.exit(0)
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and icon_rect.collidepoint(event.pos):
-            if type in const.screen_and_buy_functions.values():
-                if type is not const.STATE_SETTINGS:
-                    const.spin_animations.clear()
-                save_game()
-                type()
-                return
+            save_game() 
+            return action
+    return None
+
+def handle_action_list(action_list, current_state_screen):
+    for action in action_list:
+        if action is not None and action is const.STATE_SETTINGS:
+            const.STATE_PREVIOUS_SCREEN = current_state_screen
+            return action
+        elif action is not None:
+            return action
                 
 def buy(events, position_x, position_y, icon_width, icon_height, type, price, product):
     icon_rect = pygame.Rect(position_x, position_y,  icon_width, icon_height)
@@ -259,6 +279,32 @@ def date_time_timer():
     months = month[const.return_month_counter]
     return days[const.return_day_counter], months, const.year_counter
 
+# def job_details():
+#     mouse_pos = pygame.mouse.get_pos()
+#     mouse_click = pygame.mouse.get_pressed()
+#     position_button = ""
+
+#     for button in const.buttons_list:
+#         button_rect = pygame.Rect(button[5][0], button[5][1], button[5][2], button[5][3])
+#         if button_rect.collidepoint(mouse_pos):
+#             position_button = button[2]
+#         if mouse_click[0] and position_button == "Janitor":
+#             janitor_screen.janitor_screen()
+#         if mouse_click[0] and position_button == "Waiter":
+#             waiter_screen.waiter_screen()
+#         if mouse_click[0] and position_button == "Slot Attendant":
+#             slot_attendant_screen.slot_attendant_screen()
+#         if mouse_click[0] and position_button == "Dealer":
+#             dealer_screen.dealer_screen()
+#         if mouse_click[0] and position_button == "Shift Manager":
+#             shift_manager_screen.shift_manager_screen()
+#         if mouse_click[0] and position_button == "Pit Boss":
+#             pit_boss_screen.pit_boss_screen()
+#         if mouse_click[0] and position_button == "Shift Lead":
+#             shift_lead_screen.shift_lead_screen()
+#         if mouse_click[0] and position_button == "Manager":
+#             manager_screen.manager_screen()
+
 def job_details():
     mouse_pos = pygame.mouse.get_pos()
     mouse_click = pygame.mouse.get_pressed()
@@ -269,21 +315,21 @@ def job_details():
         if button_rect.collidepoint(mouse_pos):
             position_button = button[2]
         if mouse_click[0] and position_button == "Janitor":
-            janitor_screen.janitor_screen()
+            return const.STATE_JANITOR_SCREEN
         if mouse_click[0] and position_button == "Waiter":
-            waiter_screen.waiter_screen()
+            return const.STATE_WAITER_SCREEN
         if mouse_click[0] and position_button == "Slot Attendant":
-            slot_attendant_screen.slot_attendant_screen()
+            return const.STATE_SLOT_ATTENDANT_SCREEN
         if mouse_click[0] and position_button == "Dealer":
-            dealer_screen.dealer_screen()
+            return const.STATE_DEALER_SCREEN
         if mouse_click[0] and position_button == "Shift Manager":
-            shift_manager_screen.shift_manager_screen()
+            return const.STATE_SHIFT_MANAGER_SCREEN
         if mouse_click[0] and position_button == "Pit Boss":
-            pit_boss_screen.pit_boss_screen()
+            return const.STATE_PIT_BOSS_SCREEN
         if mouse_click[0] and position_button == "Shift Lead":
-            shift_lead_screen.shift_lead_screen()
+            return const.STATE_SHIFT_LEAD_SCREEN
         if mouse_click[0] and position_button == "Manager":
-            manager_screen.manager_screen()
+            return const.STATE_MANAGER_SCREEN
 
 def job_apply(button_rect, salary, working_days_requirements, job):
     index = next((i for i, sublist in enumerate(const.job_positions_list) if sublist[0] == job), None)
@@ -393,7 +439,7 @@ def restart_game():
 
 def buy_product_and_add_to_the_inventory(price, product):
     if price > const.balance:
-        draw_functions.draw_message_box("Work in progress", f"You don't have enough money! balance: {const.balance} price: {price}")
+        draw_functions.draw_message_box("No money", f"You don't have enough money! balance: {const.balance} price: {price}")
     else:
         const.balance = round(const.balance - price, 2)
         const.inventory_list.append(product)

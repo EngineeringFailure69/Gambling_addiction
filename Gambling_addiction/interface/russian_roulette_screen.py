@@ -35,6 +35,7 @@ def russian_roulette_screen():
     fps = 60
     line_spacing = 5
     clock = pygame.time.Clock()
+    action_list = []
     while running:
         events = pygame.event.get()
         sound_settings.play_music()
@@ -51,7 +52,8 @@ def russian_roulette_screen():
             drawn = True
 
         icon_position_x, icon_position_y,  icon_width, icon_height = draw_functions.load_icons(const.screen, const.door_icon_path, const.door_icon_width, const.door_icon_height, const.door_icon_position_x, const.door_icon_position_y)
-        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
+        action = utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_TO_THE_STREETS)
+        action_list.append(action)
 
         text, active = utils.process_bet_text_box_events(events, const.your_bet_box, text, active)
         draw_functions.draw_text_box(const.screen, const.blue, const.your_bet_box, text, font, const.white)
@@ -61,7 +63,13 @@ def russian_roulette_screen():
         draw_functions.draw_button(const.screen, const.blue, const.spin_the_barrell_button, "Spin the barrell/roll the dice", font, const.black, mouse_pos)
 
         icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
-        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
+        action = utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
+        action_list.append(action)
+
+        action = utils.handle_action_list(action_list, const.STATE_RUSSIAN_ROULETTE)
+        action_list.clear()
+        if action is not None:
+            return action
 
         info_text = 'Balance:' + str(const.balance) + ' ' + 'Your bet: ' + str(const.your_bet) + " " + 'Prize: ' + str(prize)
 

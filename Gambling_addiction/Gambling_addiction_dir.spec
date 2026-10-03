@@ -1,6 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
 a = Analysis(
-    ['start_screen.py'],
+    ['screen_state_manager.py'],
     pathex=[],
     binaries=[],
     datas=[

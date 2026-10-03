@@ -39,9 +39,6 @@ def main_screen():
     quit_button_icon_position_y = quit_button_position_y + (quit_button_height - quit_button_icon_height)/2
     quit_button_icon_path = "assets\\icons\\quit_button_icon.png"   
 
-    const_path = file_utils.resource_path("const.py")
-    utils.grab_all_variables(const_path, "STATE")
-
     start_button_rect = pygame.Rect(start_button_position_x, start_button_position_y, start_button_width, start_button_height)
     quit_button_rect = pygame.Rect(quit_button_position_x, quit_button_position_y, quit_button_width, quit_button_height)
 
@@ -88,7 +85,13 @@ def main_screen():
         draw_functions.load_icons(const.screen, quit_button_icon_path, quit_button_icon_width, quit_button_icon_height, quit_button_icon_position_x, quit_button_icon_position_y)
 
         icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
-        utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
+        action = utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
+        
+        if action is const.STATE_SETTINGS:
+            const.STATE_PREVIOUS_SCREEN = const.STATE_START_SCREEN
+            return action
+        elif action:
+            return action
  
         draw_functions.load_icons(const.screen, title_icon_path, title_icon_width, title_icon_height, title_icon_position_x, title_icon_position_y)
 
@@ -100,9 +103,8 @@ def main_screen():
             if mouse_click[0]:
                 const.spin_animations.clear()
                 running = False
-                apartment_screen.apartment_screen()
+                return const.STATE_APARTMENT
 
         pygame.display.flip()
     pygame.quit()
     sys.exit(0)
-main_screen()

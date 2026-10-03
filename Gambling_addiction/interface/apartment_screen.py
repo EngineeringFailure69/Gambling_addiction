@@ -58,7 +58,10 @@ def apartment_screen():
             const.balance -= const.renting_apartment[0].get_monthly_renting_cost()
             month_old = month
 
-        real_estate_button_rect, inventory_button_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, const.renting_apartment[0], const.renting_apartment[0].get_monthly_renting_cost(), const.renting_apartment[0].index)
+        real_estate_button_rect, inventory_button_rect, exit_door_icon_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, const.renting_apartment[0], const.renting_apartment[0].get_monthly_renting_cost(), const.renting_apartment[0].index)
+        action = utils.get_icon_rect_and_handle_click(events, exit_door_icon_rect.left, exit_door_icon_rect.top, exit_door_icon_rect.width, exit_door_icon_rect.height, const.STATE_TO_THE_STREETS)
+        if action:
+            return action
 
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -108,7 +111,6 @@ def apartment_screen():
                         draw_functions.draw_message_box("Button 2", "") #Buy
                     if "stop renting" in rect_list_apartment:
                         if rect_list_apartment["stop renting"].collidepoint(mouse_pos):
-                            #draw_functions.draw_message_box("Button stop renting", "") #stop renting
                             if apartment.index == 0:
                                 draw_functions.draw_message_box("Tier 1", "Can't stop renting tier 1 apartment")
                             else:
