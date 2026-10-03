@@ -108,7 +108,13 @@ def apartment_screen():
                         draw_functions.draw_message_box("Button 2", "") #Buy
                     if "stop renting" in rect_list_apartment:
                         if rect_list_apartment["stop renting"].collidepoint(mouse_pos):
-                            draw_functions.draw_message_box("Button stop renting", "") #stop renting
+                            #draw_functions.draw_message_box("Button stop renting", "") #stop renting
+                            if apartment.index == 0:
+                                draw_functions.draw_message_box("Tier 1", "Can't stop renting tier 1 apartment")
+                            else:
+                                draw_functions.draw_message_box(f"Tier {const.renting_apartment[0].index + 1}", f"You stopped renting tier {const.renting_apartment[0].index + 1} apartment and are back to tier 1")
+                                const.renting_apartment[0] = tier_1_apartment
+                                utils.update_apartment_file()
                     if rect_list_apartment["right"].collidepoint(mouse_pos):
 
                         if const.real_estate_index >= real_estate_list_length - 1:
