@@ -48,7 +48,9 @@ def city_screen():
 
         if const.fps_show:
             draw_functions.show_fps_counter(const.screen, clock, const.white, fps_rect, font, fps, line_spacing)
-            
+        else:
+            clock.tick(60)  
+              
         action = utils.handle_action_list(action_list, const.STATE_TO_THE_STREETS)
         action_list.clear()
         if action is not None:

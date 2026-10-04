@@ -117,8 +117,8 @@ def russian_roulette_screen():
                             text = "Your bet: "
                         if not win and game_over:
                             draw_functions.draw_message_box('You lost', f"You lost the game, you are dead, your balance is now 0 because you lost everything you had, and your game will restart")
-                            utils.restart_game()
-                            return
+                            action = utils.restart_game()
+                            return action
                         elif not win and not game_over and you_play:
                             draw_functions.draw_message_box('Round over', "Your opponent survived, you play now")
                         elif not win and not game_over and not you_play:
@@ -129,7 +129,6 @@ def russian_roulette_screen():
                         draw_functions.draw_message_box('Spin error', "You need to spin the barrell first")
                     elif mouse_click[0] and not bet and not barrell_spin:
                         draw_functions.draw_message_box('Roulette error', "You need to place the bet and spin the barrell first")
-
 
         if spinning:
             draw_functions.draw_custom_message_box(const.screen, text_messages.barrel_text, font)
@@ -143,7 +142,9 @@ def russian_roulette_screen():
 
         if const.fps_show:
             draw_functions.show_fps_counter(const.screen, clock, const.white, fps_rect, font, fps, line_spacing)
-    
+        else:
+            clock.tick(60)    
+            
         pygame.display.flip()
     pygame.quit()
     sys.exit(0)

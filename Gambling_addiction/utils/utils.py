@@ -1,69 +1,13 @@
 import pygame
-import interface.city_screen as city_screen
 import utils.draw_functions as draw_functions
 import utils.save_utils as save_utils
-import interface.apartment_screen as apartment_screen
 import const 
-import interface.casino_screen as casino_screen
-import interface.job_interface.work_screen as work_screen
-import interface.russian_roulette_screen as russian_roulette_screen
-import interface.job_interface.janitor_screen as janitor_screen
-import interface.job_interface.waiter_screen as waiter_screen
-import interface.job_interface.slot_attendant_screen as slot_attendant_screen
-import interface.job_interface.dealer_screen as dealer_screen
-import interface.job_interface.shift_manager_screen as shift_manager_screen
-import interface.job_interface.pit_boss_screen as pit_boss_screen
-import interface.job_interface.shift_lead_screen as shift_lead_screen
-import interface.job_interface.manager_screen as manager_screen
-import interface.shopping_interface.shopping_center_screen as shopping_center_screen
-import interface.shopping_interface.cars_section.cars_screen as cars_screen
-import interface.shopping_interface.electronics_section.electronics_screen as electronics_screen
-import interface.shopping_interface.furniture_section.furniture_screen as furniture_screen
-import interface.shopping_interface.clothing_section.clothing_screen as clothing_screen
-import interface.shopping_interface.tools_section.tools_screen as tools_screen
-import interface.shopping_interface.groceries_section.groceries_screen as groceries_screen
-import interface.shopping_interface.cars_section.sedan_car_section_screen as sedan_car_section_screen
-import interface.shopping_interface.cars_section.sports_car_section_screen as sports_car_section_screen
-import interface.shopping_interface.cars_section.pickup_car_section_screen as pickup_car_section_screen
-import interface.shopping_interface.cars_section.hatchback_car_section_screen as hatchback_car_section_screen
-import interface.shopping_interface.cars_section.suv_car_section_screen as suv_car_section_screen
-import interface.shopping_interface.electronics_section.accessories_section_screen as accessories_section_screen
-import interface.shopping_interface.electronics_section.consoles_section_screen as consoles_section_screen
-import interface.shopping_interface.electronics_section.laptops_section_screen as laptops_section_screen
-import interface.shopping_interface.electronics_section.smartphones_section_screen as smartphones_section_screen
-import interface.shopping_interface.furniture_section.armchairs_section_screen as armchairs_section_screen
-import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
-import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
-import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
-import interface.shopping_interface.clothing_section.hoodie_section_screen as hoodie_section_screen
-import interface.shopping_interface.clothing_section.pants_section_screen as pants_section_screen
-import interface.shopping_interface.clothing_section.snees_section_screen as snees_section_screen
-import interface.shopping_interface.clothing_section.tshirt_section_screen as tshirt_section_screen
-import interface.shopping_interface.groceries_section.fruits_section_screen as fruits_section_screen
-import interface.shopping_interface.groceries_section.bread_section_screen as bread_section_screen
-import interface.shopping_interface.groceries_section.milk_section_screen as milk_section_screen
-import interface.shopping_interface.groceries_section.vegetables_section_sceen as vegetables_section_screen
-import interface.shopping_interface.tools_section.hand_tools_section_screen as hand_tools_section_screen
-import interface.shopping_interface.tools_section.power_tools_section_screen as power_tools_section_screen
-import interface.shopping_interface.tools_section.safety_gear_section_screen as safety_gear_section_screen
-import interface.shopping_interface.tools_section.tools_accessories_section_screen as tools_accessories_section_screen
-import interface.shopping_interface.electronics_section.accessories_section_screen as accessories_section_screen
-import interface.shopping_interface.electronics_section.consoles_section_screen as consoles_section_screen
-import interface.shopping_interface.electronics_section.laptops_section_screen as laptops_section_screen
-import interface.shopping_interface.electronics_section.smartphones_section_screen as smartphones_section_screen
-import interface.shopping_interface.furniture_section.armchairs_section_screen as armchairs_section_screen
-import interface.shopping_interface.furniture_section.beds_section_screen as beds_section_screen
-import interface.shopping_interface.furniture_section.bookshleves_section_screen as bookshleves_section_screen
-import interface.shopping_interface.furniture_section.tables_section_screen as tables_section_screen
-import utils.file_utils as file_utils
 import sys
 from tkinter import * 
 from tkinter.ttk import *
 import ast
 import classes.items_class as items_class
 import logic.inventory_items_logic as inventory_items_logic
-import settings.settings_screen as settings_screen
-import settings.sound_settings as sound_settings
 
 def grab_all_variables(file_path = "const.py", starts_with="STATE"):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -279,32 +223,6 @@ def date_time_timer():
     months = month[const.return_month_counter]
     return days[const.return_day_counter], months, const.year_counter
 
-# def job_details():
-#     mouse_pos = pygame.mouse.get_pos()
-#     mouse_click = pygame.mouse.get_pressed()
-#     position_button = ""
-
-#     for button in const.buttons_list:
-#         button_rect = pygame.Rect(button[5][0], button[5][1], button[5][2], button[5][3])
-#         if button_rect.collidepoint(mouse_pos):
-#             position_button = button[2]
-#         if mouse_click[0] and position_button == "Janitor":
-#             janitor_screen.janitor_screen()
-#         if mouse_click[0] and position_button == "Waiter":
-#             waiter_screen.waiter_screen()
-#         if mouse_click[0] and position_button == "Slot Attendant":
-#             slot_attendant_screen.slot_attendant_screen()
-#         if mouse_click[0] and position_button == "Dealer":
-#             dealer_screen.dealer_screen()
-#         if mouse_click[0] and position_button == "Shift Manager":
-#             shift_manager_screen.shift_manager_screen()
-#         if mouse_click[0] and position_button == "Pit Boss":
-#             pit_boss_screen.pit_boss_screen()
-#         if mouse_click[0] and position_button == "Shift Lead":
-#             shift_lead_screen.shift_lead_screen()
-#         if mouse_click[0] and position_button == "Manager":
-#             manager_screen.manager_screen()
-
 def job_details():
     mouse_pos = pygame.mouse.get_pos()
     mouse_click = pygame.mouse.get_pressed()
@@ -434,8 +352,7 @@ def restart_game():
     save_utils.update_value_in_file(save_path, "index")
     save_utils.update_list_in_file(save_path, "job_positions_list", const.job_positions_list)
     save_utils.update_list_in_file(save_path, "inventory_list", const.inventory_list_file)
-    import start_screen  
-    start_screen.main_screen() 
+    return const.STATE_START_SCREEN
 
 def buy_product_and_add_to_the_inventory(price, product):
     if price > const.balance:
@@ -492,7 +409,9 @@ def use_inventory_item(item):
            remove_item_from_the_inventory(item)
         if outcome == "dead":
             draw_functions.draw_message_box('You are dead', f"You died in a car crash, your balance is now 0 because you lost everything you had, and your game will restart")
-            restart_game()
+            restart_game() 
+            return outcome
+    return "continue"
 
 def remove_item_from_the_inventory(item):
     const.inventory_list.remove(item)

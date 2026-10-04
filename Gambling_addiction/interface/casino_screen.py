@@ -372,7 +372,9 @@ def casino_screen():
 
         if const.fps_show:
             draw_functions.show_fps_counter(const.screen, clock, const.black, fps_rect, font, fps, line_spacing)
-
+        else:
+            clock.tick(60)
+            
         pygame.display.flip()
     pygame.quit()
     sys.exit(0)

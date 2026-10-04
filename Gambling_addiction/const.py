@@ -1,5 +1,4 @@
 import pygame
-import utils.file_utils as file_utils
 import utils.utils as utils
 import utils.save_utils as save_utils
 from utils.utils import* #buy_product

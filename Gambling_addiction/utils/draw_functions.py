@@ -296,6 +296,7 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
     fps_rect_height = screen_height / 30
     fps_rect_position_x = screen_width / 140
     fps_rect_position_y = screen_height / 1.05
+    fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
 
     exit_door_icon_path = "assets\\icons\\door_icon.webp"
     exit_door_icon_width = screen_width / 23
@@ -311,6 +312,10 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
     real_estate_button_rect = None 
     inventory_icon_rect = None
     exit_door_icon_rect = None
+    settings_icon_rect = None
+
+    calendar_rect = pygame.Rect(20, 10, screen_width, 50)
+    text_rect = pygame.Rect(10, 50, screen_width, 300)
 
     if apartment_index == 0:
         real_estate_button_width = screen_width / 7
@@ -318,11 +323,6 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         real_estate_button_position_x = screen_width / 1.2068965517 - real_estate_button_width - screen_width / 70
         real_estate_button_position_y = screen_height / 50
 
-        fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
-
-        calendar_rect = pygame.Rect(20, 10, screen_width, 50)
-
-        text_rect = pygame.Rect(10, 50, screen_width, 300)
         real_estate_button_rect = pygame.Rect(real_estate_button_position_x, real_estate_button_position_y, real_estate_button_width, real_estate_button_height)
         inventory_icon_rect = const.inventory_button 
 
@@ -330,16 +330,17 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, and your total apartment expenses are {current_renting_expenses}", const.black, text_rect, font, line_spacing=5)
         draw_text(screen, f"Date: {day}, {str(const.day_counter)} of {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
 
-        icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
-        #utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height)
+        load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
+        load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
 
         draw_button(screen, const.blue, const.inventory_button, "Inventory", font, const.black, mouse_pos)
         draw_button(screen, const.blue, real_estate_button_rect, "Real estate", font, const.black, mouse_pos)
 
         if const.fps_show: 
             show_fps_counter(screen, clock, const.black, fps_rect, font, fps, line_spacing)
+        else:
+            clock.tick(60)
     
     if apartment_index == 1 or apartment_index == 2:
 
@@ -351,30 +352,25 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
 
         inventory_icon_path = "assets\\icons\\apartment_icons\\inventory_icon_2.png"
 
-        fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
-
-        calendar_rect = pygame.Rect(20, 10, screen_width, 50)
-
-        text_rect = pygame.Rect(10, 50, screen_width, 300)
-
         if apartment_index == 2:
             load_background_image(screen, "assets\\background_photos\\home_background_3.png")
-            icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+            load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         if apartment_index == 1:
             load_background_image(screen, "assets\\background_photos\\home_background_2.png")
-            icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
-        
-        #utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
+            load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+
         draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, and your total apartment renting expenses are {current_renting_expenses}", const.white, text_rect, font, line_spacing=5)
         draw_text(screen, f"Date: {day}, {str(const.day_counter)} of {month}, {year}", const.white, calendar_rect, font, line_spacing=5)
 
-        icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
+        load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
 
         load_icons(screen, real_estate_icon_path, real_estate_icon_width, real_estate_icon_height, real_estate_icon_position_x, real_estate_icon_position_y)
         load_icons(screen, inventory_icon_path, inventory_icon_width, inventory_icon_height, inventory_icon_position_x, inventory_icon_position_y)
 
         if const.fps_show: 
-            show_fps_counter(const.screen, clock, const.black, fps_rect, font, fps, line_spacing)
+            show_fps_counter(const.screen, clock, const.white, fps_rect, font, fps, line_spacing)
+        else:
+            clock.tick(60)
 
         real_estate_button_rect = pygame.Rect(real_estate_icon_position_x, real_estate_icon_position_y, real_estate_icon_width, real_estate_icon_height)
         inventory_icon_rect = pygame.Rect(inventory_icon_position_x, inventory_icon_position_y, inventory_icon_width, inventory_icon_height)
@@ -386,8 +382,6 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         fps_icon_position_x = screen_width / 140 
         fps_icon_position_y = screen_height / 1.07 
 
-        fps_rect_width = screen_width / 11.67
-        fps_rect_height = screen_height / 30
         fps_rect_position_x = fps_icon_position_x + fps_icon_width / 3.6666666667
         fps_rect_position_y = fps_icon_position_y + fps_icon_height / 3.5
 
@@ -460,9 +454,8 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         inventory_icon_path = "assets\\icons\\apartment_icons\\inventory_icon.png"
 
         load_background_image(screen, "assets\\background_photos\\home_background_4.png")
-        icon_position_x, icon_position_y,  icon_width, icon_height = load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
-        icon_position_x, icon_position_y, icon_width, icon_height = load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
-        #utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y,  icon_width, icon_height, const.STATE_SETTINGS)
+        load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
+        load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
 
         load_icons(const.screen, fps_icon_path, fps_icon_width, fps_icon_height, fps_icon_position_x, fps_icon_position_y)
         load_icons(const.screen, relaxing_at_home_icon_path, relaxing_at_home_icon_width, relaxing_at_home_icon_height, relaxing_at_home_icon_position_x, relaxing_at_home_icon_position_y)
@@ -491,10 +484,13 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
 
         if const.fps_show: 
             show_fps_counter(const.screen, clock, const.golden_settings_button, fps_rect, font, fps, line_spacing)
-
+        else:
+            clock.tick(60)
+            
         real_estate_button_rect = pygame.Rect(real_estate_icon_position_x, real_estate_icon_position_y, real_estate_icon_width, real_estate_icon_height)
         inventory_icon_rect = pygame.Rect(inventory_icon_position_x, inventory_icon_position_y, inventory_icon_width, inventory_icon_height)
     
     exit_door_icon_rect = pygame.Rect(exit_door_icon_position_x, exit_door_icon_position_y, exit_door_icon_width, exit_door_icon_height)
+    settings_icon_rect = pygame.Rect(const.settings_icon_position_x, const.settings_icon_position_y, const.settings_icon_width, const.settings_icon_height)
 
-    return real_estate_button_rect, inventory_icon_rect, exit_door_icon_rect
+    return real_estate_button_rect, inventory_icon_rect, exit_door_icon_rect, settings_icon_rect

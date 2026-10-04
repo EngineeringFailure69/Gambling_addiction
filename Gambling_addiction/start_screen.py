@@ -1,10 +1,7 @@
 import pygame
 import utils.draw_functions as draw_functions
 import const
-import interface.apartment_screen as apartment_screen
-import settings.settings_screen as settings_screen
 import utils.utils as utils
-import utils.file_utils as file_utils
 import sys
 import settings.sound_settings as sound_settings
 
@@ -62,6 +59,13 @@ def main_screen():
 
     const.spin_animations = draw_functions.gather_animated_spin_animations(animation_icon_path, icon_width_animation, icon_height_animation, angle_increment, COUNTER_CLOCK_WISE)
 
+    draw_functions.load_background_image(const.screen, img_path)
+    mouse_pos = pygame.mouse.get_pos()
+
+    icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
+
+    draw_functions.load_icons(const.screen, title_icon_path, title_icon_width, title_icon_height, title_icon_position_x, title_icon_position_y)
+
     while running:
         events = pygame.event.get()
         sound_settings.change_music_volume()
@@ -70,21 +74,19 @@ def main_screen():
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed() 
 
-        draw_functions.load_background_image(const.screen, img_path)
-        draw_functions.draw_title(const.screen, const.black, "GAMBLING ADDICTION")
-
         frame_index = draw_functions.load_animated_spin_animations(const.screen, icon_center_x, icon_center_y, frame_index, const.spin_animations, 1)
 
         if const.fps_show:
             draw_functions.load_icons(const.screen, const.fps_icon_path, const.fps_icon_width, const.fps_icon_height, const.fps_icon_position_x, const.fps_icon_position_y)
             draw_functions.show_fps_counter(const.screen, clock, const.golden_settings_button, const.fps_rect, font, const.fps, const.line_spacing)
+        else:
+            clock.tick(60)
 
         draw_functions.draw_button(const.screen, const.green_settings_button, start_button_rect, "    Start", font, const.golden_settings_button, mouse_pos)
         draw_functions.load_icons(const.screen, play_button_icon_path, play_button_icon_width, play_button_icon_height, play_button_icon_position_x, play_button_icon_position_y)
         draw_functions.draw_button(const.screen, const.green_settings_button, quit_button_rect, "    Quit", font, const.golden_settings_button, mouse_pos)
         draw_functions.load_icons(const.screen, quit_button_icon_path, quit_button_icon_width, quit_button_icon_height, quit_button_icon_position_x, quit_button_icon_position_y)
 
-        icon_position_x, icon_position_y, icon_width, icon_height = draw_functions.load_icons(const.screen, const.settings_icon_path_new, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
         action = utils.get_icon_rect_and_handle_click(events, icon_position_x, icon_position_y, icon_width, icon_height, const.STATE_SETTINGS)
         
         if action is const.STATE_SETTINGS:
@@ -92,8 +94,6 @@ def main_screen():
             return action
         elif action:
             return action
- 
-        draw_functions.load_icons(const.screen, title_icon_path, title_icon_width, title_icon_height, title_icon_position_x, title_icon_position_y)
 
         if quit_button_rect.collidepoint(mouse_pos):
             if mouse_click[0]:

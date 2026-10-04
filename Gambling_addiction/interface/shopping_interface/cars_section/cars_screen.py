@@ -60,7 +60,9 @@ def cars_screen():
 
         if const.fps_show:
             draw_functions.show_fps_counter(const.screen, clock, const.white, const.fps_rect, font, const.fps, const.line_spacing)
-
+        else:
+            clock.tick(60)
+            
         action = utils.handle_action_list(action_list, const.STATE_CARS)
         action_list.clear()
         if action is not None:

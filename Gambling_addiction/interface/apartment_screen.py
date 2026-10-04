@@ -46,6 +46,8 @@ def apartment_screen():
     inventory_card_surface = None
     inventory_length = 0
 
+    action_list = []
+
     while running:
         inventory_length = len(const.inventory_list)
         real_estate_list_length = len(const.real_estate_list)
@@ -58,10 +60,15 @@ def apartment_screen():
             const.balance -= const.renting_apartment[0].get_monthly_renting_cost()
             month_old = month
 
-        real_estate_button_rect, inventory_button_rect, exit_door_icon_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, const.renting_apartment[0], const.renting_apartment[0].get_monthly_renting_cost(), const.renting_apartment[0].index)
+        real_estate_button_rect, inventory_button_rect, exit_door_icon_rect, settings_icon_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, const.renting_apartment[0], const.renting_apartment[0].get_monthly_renting_cost(), const.renting_apartment[0].index)
         action = utils.get_icon_rect_and_handle_click(events, exit_door_icon_rect.left, exit_door_icon_rect.top, exit_door_icon_rect.width, exit_door_icon_rect.height, const.STATE_TO_THE_STREETS)
-        if action:
-            return action
+        action_list.append(action)
+        action = utils.get_icon_rect_and_handle_click(events, settings_icon_rect.left, settings_icon_rect.top,  settings_icon_rect.width, settings_icon_rect.height, const.STATE_SETTINGS)
+        action_list.append(action)
+        action = utils.handle_action_list(action_list, const.STATE_APARTMENT)
+        action_list.clear()
+        if action is not None:
+            return action 
 
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -77,7 +84,9 @@ def apartment_screen():
                             const.inventory_index += 1
                         inventory_card_surface = None
                     if rect_list_inventory["Use"].collidepoint(mouse_pos) and inventory_length > 0:
-                        utils.use_inventory_item(product)
+                        action = utils.use_inventory_item(product)
+                        if action == "dead":
+                            return const.STATE_START_SCREEN
                         inventory_card_surface = None
                         inventory_length = len(const.inventory_list)
                 if real_estate_button_rect.collidepoint(mouse_pos):
