@@ -12,4 +12,10 @@ index: 0
 inventory_list: []
 days_remaining_until_promotion_on_the_work: 0
 bought_apartment_index: []
-renting_apartment: [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100]]
+renting_apartment: [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100, 0, 0]]
+debt: 0 
+tier_1_apartment_debt_months_count: 0
+tier_2_apartment_debt_months_count: 0
+tier_3_apartment_debt_months_count: 0
+tier_4_apartment_debt_months_count: 0
+real_estate_list: [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100, 0, 0], [1, 350000, 1200, "assets\\icons\\apartment_icons\\tier_2_apartment.png", False, False, 1200, 400, 100, 300, 0, 0], [2, 1200000, 4500, "assets\\icons\\apartment_icons\\tier_3_apartment.png", False, False, 4500, 1200, 700, 600, 0, 0], [3, 4000000, 18000, "assets\\icons\\apartment_icons\\tier_4_apartment.png", False, False, 18000, 3000, 3000, 2000, 0, 0]]

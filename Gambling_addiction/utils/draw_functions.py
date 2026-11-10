@@ -259,12 +259,11 @@ def create_card_surface(screen, button_colour = None, button_text_colour = None,
         draw_text(card_surface, f"Rent expenses: {icons.get_monthly_renting_cost()}", const.black, price_text_rect, font, line_spacing = 5)
     return card_surface, rect_dict, x_coordinate, y_coordinate
 
-def show_fps_counter(screen, clock, text_colour, text_rect, font, clock_value, line_spacing = 5):
+def show_fps_counter(screen, clock, text_colour, text_rect, font, line_spacing = 5):
     pygame.font.init()
     font = pygame.font.SysFont(None, 30, False, True)
     fps = clock.get_fps()
     draw_text(screen, f"FPS: {round(fps, 2)}", text_colour, text_rect, font, line_spacing)
-    clock.tick(clock_value) 
 
 def gather_animated_spin_animations(icon_path, icon_width, icon_height, angle, COUNTER_CLOCK_WISE = True):
     rotated_image = []
@@ -327,7 +326,7 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         inventory_icon_rect = const.inventory_button 
 
         load_background_image(screen, "assets\\background_photos\\home_background_1.png")
-        draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, and your total apartment expenses are {current_renting_expenses}", const.black, text_rect, font, line_spacing=5)
+        draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, your total apartment expenses are {current_renting_expenses}, your debt for this apartment is {apartment.debt}, your total debt is {const.debt}, while you are in debt for {apartment.debt_months_count} months", const.black, text_rect, font, line_spacing=5)
         draw_text(screen, f"Date: {day}, {str(const.day_counter)} of {month}, {year}", const.black, calendar_rect, font, line_spacing=5)
 
         load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
@@ -338,9 +337,11 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         draw_button(screen, const.blue, real_estate_button_rect, "Real estate", font, const.black, mouse_pos)
 
         if const.fps_show: 
-            show_fps_counter(screen, clock, const.black, fps_rect, font, fps, line_spacing)
-        else:
-            clock.tick(60)
+            if not const.first_draw_fps:
+                show_fps_counter(screen, clock, const.black, fps_rect, font, line_spacing)
+                const.first_draw_fps = True
+            elif utils.set_timer(0):
+                show_fps_counter(screen, clock, const.black, fps_rect, font, line_spacing)
     
     if apartment_index == 1 or apartment_index == 2:
 
@@ -359,7 +360,7 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
             load_background_image(screen, "assets\\background_photos\\home_background_2.png")
             load_icons(const.screen, const.settings_icon_path_old, const.settings_icon_width, const.settings_icon_height, const.settings_icon_position_x, const.settings_icon_position_y)
 
-        draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, and your total apartment renting expenses are {current_renting_expenses}", const.white, text_rect, font, line_spacing=5)
+        draw_text(screen, text_messages.game_screen1_text + f"{const.balance} dollars, your salary is {const.salary}, your total apartment renting expenses are {current_renting_expenses}, your debt for apartment is {apartment.debt}, your total debt is {const.debt}, while you are in debt for {apartment.debt_months_count} months", const.white, text_rect, font, line_spacing=5)
         draw_text(screen, f"Date: {day}, {str(const.day_counter)} of {month}, {year}", const.white, calendar_rect, font, line_spacing=5)
 
         load_icons(const.screen, exit_door_icon_path, exit_door_icon_width, exit_door_icon_height, exit_door_icon_position_x, exit_door_icon_position_y)
@@ -368,9 +369,8 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         load_icons(screen, inventory_icon_path, inventory_icon_width, inventory_icon_height, inventory_icon_position_x, inventory_icon_position_y)
 
         if const.fps_show: 
-            show_fps_counter(const.screen, clock, const.white, fps_rect, font, fps, line_spacing)
-        else:
-            clock.tick(60)
+            if utils.set_timer():
+                show_fps_counter(const.screen, clock, const.white, fps_rect, font, line_spacing)
 
         real_estate_button_rect = pygame.Rect(real_estate_icon_position_x, real_estate_icon_position_y, real_estate_icon_width, real_estate_icon_height)
         inventory_icon_rect = pygame.Rect(inventory_icon_position_x, inventory_icon_position_y, inventory_icon_width, inventory_icon_height)
@@ -423,33 +423,33 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
 
         info_bckgd_icon_path = "assets\\icons\\apartment_icons\\info_background_icon.png"
         info_bckgd_icon_width = screen_width / 4.6666666667
-        info_bckgd_icon_height = screen_height / 4
+        info_bckgd_icon_height = screen_height / 3.2#4
         info_bckgd_icon_position_x = 2
         info_bckgd_icon_position_y = 2
 
         calendar_icon_path = "assets\\icons\\apartment_icons\\calendar_icon.png"
         calendar_icon_width = info_bckgd_icon_width / 15
-        calendar_icon_height = info_bckgd_icon_height / 8.5
-        calendar_icon_position_x = info_bckgd_icon_position_x + info_bckgd_icon_width / 10
-        calendar_icon_position_y = info_bckgd_icon_position_y + info_bckgd_icon_height / 6.5
+        calendar_icon_height = info_bckgd_icon_height / 11#8.5
+        calendar_icon_position_x = info_bckgd_icon_position_x + info_bckgd_icon_width / 14#10
+        calendar_icon_position_y = info_bckgd_icon_position_y + info_bckgd_icon_height / 6#6.5
 
         balance_icon_path = "assets\\icons\\apartment_icons\\balance_icon.png"
         balance_icon_width = info_bckgd_icon_width / 15
-        balance_icon_height = info_bckgd_icon_height / 7.5
+        balance_icon_height = info_bckgd_icon_height / 10#7.5
         balance_icon_position_x = calendar_icon_position_x
-        balance_icon_position_y = calendar_icon_position_y + calendar_icon_height + info_bckgd_icon_height / 15
+        balance_icon_position_y = calendar_icon_position_y + calendar_icon_height + info_bckgd_icon_height / 15.5#15
 
         salary_icon_path = "assets\\icons\\apartment_icons\\salary_icon.png"
         salary_icon_width = info_bckgd_icon_width / 15
-        salary_icon_height = info_bckgd_icon_height / 7.5
+        salary_icon_height = info_bckgd_icon_height / 10#7.5
         salary_icon_position_x = calendar_icon_position_x
-        salary_icon_position_y = balance_icon_position_y + balance_icon_height + info_bckgd_icon_height / 15
+        salary_icon_position_y = balance_icon_position_y + balance_icon_height + info_bckgd_icon_height / 15.5#15
 
         rent_icon_path = "assets\\icons\\apartment_icons\\rent_icon.png"
         rent_icon_width = info_bckgd_icon_width / 15
-        rent_icon_height = info_bckgd_icon_height / 7.5
+        rent_icon_height = info_bckgd_icon_height / 10#7.5
         rent_icon_position_x = calendar_icon_position_x
-        rent_icon_position_y = salary_icon_position_y + salary_icon_height + info_bckgd_icon_height / 15
+        rent_icon_position_y = salary_icon_position_y + salary_icon_height + info_bckgd_icon_height / 15.5#15
 
         inventory_icon_path = "assets\\icons\\apartment_icons\\inventory_icon.png"
 
@@ -478,14 +478,13 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         salary_text_rect = pygame.Rect(salary_icon_position_x + salary_icon_width + salary_icon_width / 5, salary_icon_position_y + (salary_icon_height - font.get_height()) / 2, info_bckgd_icon_width, salary_icon_height)
         draw_text(screen, f"Salary: {const.salary}", const.golden_settings_button, salary_text_rect, font, line_spacing=5)
         rent_text_rect = pygame.Rect(rent_icon_position_x + rent_icon_width + rent_icon_width / 5, rent_icon_position_y + (rent_icon_height - font.get_height()) / 2, info_bckgd_icon_width, rent_icon_height)
-        draw_text(screen, f"Rent expenses: {current_renting_expenses}", const.golden_settings_button, rent_text_rect, font, line_spacing=5)
+        font = pygame.font.SysFont(None, 10)
+        draw_text(screen, f"Rent, apartment debt, total debt, debt months: {current_renting_expenses}, {apartment.debt}, {const.debt}, {apartment.debt_months_count}", const.golden_settings_button, rent_text_rect, font, line_spacing=5)
 
         fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
 
         if const.fps_show: 
-            show_fps_counter(const.screen, clock, const.golden_settings_button, fps_rect, font, fps, line_spacing)
-        else:
-            clock.tick(60)
+            show_fps_counter(const.screen, clock, const.golden_settings_button, fps_rect, font, line_spacing)
             
         real_estate_button_rect = pygame.Rect(real_estate_icon_position_x, real_estate_icon_position_y, real_estate_icon_width, real_estate_icon_height)
         inventory_icon_rect = pygame.Rect(inventory_icon_position_x, inventory_icon_position_y, inventory_icon_width, inventory_icon_height)

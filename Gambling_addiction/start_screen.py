@@ -66,21 +66,28 @@ def main_screen():
 
     draw_functions.load_icons(const.screen, title_icon_path, title_icon_width, title_icon_height, title_icon_position_x, title_icon_position_y)
 
+    FPS_SHOW_DURATION_MS = 5000
+    first_draw = False
+
+    print(const.real_estate_list)
+
     while running:
         events = pygame.event.get()
         sound_settings.change_music_volume()
         sound_settings.play_music()
-
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed() 
 
         frame_index = draw_functions.load_animated_spin_animations(const.screen, icon_center_x, icon_center_y, frame_index, const.spin_animations, 1)
 
         if const.fps_show:
-            draw_functions.load_icons(const.screen, const.fps_icon_path, const.fps_icon_width, const.fps_icon_height, const.fps_icon_position_x, const.fps_icon_position_y)
-            draw_functions.show_fps_counter(const.screen, clock, const.golden_settings_button, const.fps_rect, font, const.fps, const.line_spacing)
-        else:
-            clock.tick(60)
+            if not first_draw:
+                draw_functions.load_icons(const.screen, const.fps_icon_path, const.fps_icon_width, const.fps_icon_height, const.fps_icon_position_x, const.fps_icon_position_y)
+                draw_functions.show_fps_counter(const.screen, clock, const.golden_settings_button, const.fps_rect, font, const.line_spacing)
+                first_draw = True
+            elif utils.set_timer(FPS_SHOW_DURATION_MS):
+                draw_functions.load_icons(const.screen, const.fps_icon_path, const.fps_icon_width, const.fps_icon_height, const.fps_icon_position_x, const.fps_icon_position_y)
+                draw_functions.show_fps_counter(const.screen, clock, const.golden_settings_button, const.fps_rect, font, const.line_spacing)
 
         draw_functions.draw_button(const.screen, const.green_settings_button, start_button_rect, "    Start", font, const.golden_settings_button, mouse_pos)
         draw_functions.load_icons(const.screen, play_button_icon_path, play_button_icon_width, play_button_icon_height, play_button_icon_position_x, play_button_icon_position_y)
@@ -104,7 +111,8 @@ def main_screen():
                 const.spin_animations.clear()
                 running = False
                 return const.STATE_APARTMENT
-
+            
+        utils.set_fps_clock(clock, 60)
         pygame.display.flip()
     pygame.quit()
     sys.exit(0)

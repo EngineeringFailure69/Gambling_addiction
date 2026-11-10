@@ -24,7 +24,6 @@ def apartment_screen():
     month_old = " "
     x_coordinate = 0
     y_coordinate = 0
-    const.real_estate_list = []
 
     inventory_buttons = [("Use", "Use"), ("right", "->")]
     real_estate_buttons = [("left", "<-"), ("rent", "Rent"), ("buy", "Buy"), ("right", "->")]
@@ -32,14 +31,11 @@ def apartment_screen():
 
     clock = pygame.time.Clock() 
 
-    tier_1_apartment = apartment_class.apartment(0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100)
-    const.real_estate_list.append(tier_1_apartment)
-    tier_2_apartment = apartment_class.apartment(1, 350000, 1200, "assets\\icons\\apartment_icons\\tier_2_apartment.png", False, False, 1200, 400, 100, 300)
-    const.real_estate_list.append(tier_2_apartment)
-    tier_3_apartment = apartment_class.apartment(2, 1200000, 4500, "assets\\icons\\apartment_icons\\tier_3_apartment.png", False, False, 4500, 1200, 700, 600)
-    const.real_estate_list.append(tier_3_apartment)
-    tier_4_apartment = apartment_class.apartment(3, 4000000, 18000, "assets\\icons\\apartment_icons\\tier_4_apartment.png", False, False, 18000, 3000, 3000, 2000)
-    const.real_estate_list.append(tier_4_apartment)
+    tier_1_apartment = const.real_estate_list[0]
+    tier_2_apartment = const.real_estate_list[1]
+    tier_3_apartment = const.real_estate_list[2]
+    tier_4_apartment = const.real_estate_list[3]
+    current_renting_apartment = const.renting_apartment[0]
 
     day, month_old, year = utils.date_time_timer()
     real_estate_card_surface = None
@@ -57,10 +53,36 @@ def apartment_screen():
         day, month, year = utils.date_time_timer()
 
         if month != month_old:
-            const.balance -= const.renting_apartment[0].get_monthly_renting_cost()
+            if const.balance >= current_renting_apartment.get_monthly_renting_cost(): #Have money to pay rent
+                const.balance -= current_renting_apartment.get_monthly_renting_cost()
+                if const.balance > 0 and current_renting_apartment.get_apartment_debt() > 0 and const.balance < current_renting_apartment.get_apartment_debt(): #Have money but not for the entire debt
+                    current_renting_apartment.debt -= const.balance
+                    const.debt -= const.balance
+                    const.balance = 0
+                elif const.balance > 0 and current_renting_apartment.get_apartment_debt() > 0 and const.balance >= current_renting_apartment.get_apartment_debt(): #Have money for the entire debt
+                    const.balance -= current_renting_apartment.debt
+                    current_renting_apartment.debt = 0
+                    current_renting_apartment.debt_months_count = 0 #You are no longer in debt, so months and debt are reset
+                    const.debt -= current_renting_apartment.debt
+                    if const.balance > 0 and const.debt > 0 and const.balance < const.debt: #Not enough money left to pay off the entire debt
+                        const.debt -= const.balance
+                        const.balance = 0
+                    elif const.balance > 0 and const.debt > 0 and const.balance >= const.debt: #Still enough money left to pay off the entire debt
+                        const.balance -= const.debt
+                        const.debt = 0
+            elif const.balance < current_renting_apartment.get_monthly_renting_cost(): #Don't have money to pay rent
+                if const.balance > 0: #You have some money but not enough for whole rent
+                    current_renting_apartment.debt += (current_renting_apartment.get_monthly_renting_cost() - const.balance) #Give all money you have, and the rest goes to debt
+                    current_renting_apartment.debt_months_count += 1 #You are in debt for previous month
+                    const.debt += (current_renting_apartment.get_monthly_renting_cost() - const.balance) #Total debt increases
+                    const.balance = 0
+                elif const.balance == 0:
+                    current_renting_apartment.debt += current_renting_apartment.get_monthly_renting_cost() #The entire cost is now debt
+                    current_renting_apartment.debt_months_count += 1 #You are in debt for a previous month 
+                    const.debt += current_renting_apartment.get_monthly_renting_cost() 
             month_old = month
 
-        real_estate_button_rect, inventory_button_rect, exit_door_icon_rect, settings_icon_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, const.renting_apartment[0], const.renting_apartment[0].get_monthly_renting_cost(), const.renting_apartment[0].index)
+        real_estate_button_rect, inventory_button_rect, exit_door_icon_rect, settings_icon_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, current_renting_apartment, current_renting_apartment.get_monthly_renting_cost(), current_renting_apartment.index)
         action = utils.get_icon_rect_and_handle_click(events, exit_door_icon_rect.left, exit_door_icon_rect.top, exit_door_icon_rect.width, exit_door_icon_rect.height, const.STATE_TO_THE_STREETS)
         action_list.append(action)
         action = utils.get_icon_rect_and_handle_click(events, settings_icon_rect.left, settings_icon_rect.top,  settings_icon_rect.width, settings_icon_rect.height, const.STATE_SETTINGS)
@@ -111,10 +133,11 @@ def apartment_screen():
                             const.renting_apartment.clear()
                             apartment.renting_apartment = True
                             const.renting_apartment.append(apartment)
+                            current_renting_apartment = const.renting_apartment[0]
                             real_estate_card_surface = None
                             utils.update_apartment_file()
-                            const.balance -= const.renting_apartment[0].get_monthly_renting_cost() - const.renting_apartment[0].rent_price
-                            const.renting_apartment_index = const.renting_apartment[0].index
+                            const.balance -= current_renting_apartment.get_monthly_renting_cost() - current_renting_apartment.rent_price
+                            const.renting_apartment_index = current_renting_apartment.index
                             draw_apartment_list = False
                     if rect_list_apartment["buy"].collidepoint(mouse_pos):
                         draw_functions.draw_message_box("Button 2", "") #Buy
@@ -123,8 +146,9 @@ def apartment_screen():
                             if apartment.index == 0:
                                 draw_functions.draw_message_box("Tier 1", "Can't stop renting tier 1 apartment")
                             else:
-                                draw_functions.draw_message_box(f"Tier {const.renting_apartment[0].index + 1}", f"You stopped renting tier {const.renting_apartment[0].index + 1} apartment and are back to tier 1")
+                                draw_functions.draw_message_box(f"Tier {current_renting_apartment.index + 1}", f"You stopped renting tier {current_renting_apartment.index + 1} apartment and are back to tier 1")
                                 const.renting_apartment[0] = tier_1_apartment
+                                current_renting_apartment = const.renting_apartment[0]
                                 utils.update_apartment_file()
                     if rect_list_apartment["right"].collidepoint(mouse_pos):
 
@@ -149,13 +173,13 @@ def apartment_screen():
             draw_apartment_list = False
             real_estate_card_surface = None
         
-        if draw_apartment_list and not apartment.index == const.renting_apartment[0].index and real_estate_card_surface is None:
-            real_estate_card_surface, rect_list_apartment, x_coordinate, y_coordinate = draw_functions.create_card_surface(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment) #draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment)
+        if draw_apartment_list and not apartment.index == current_renting_apartment.index and real_estate_card_surface is None:
+            real_estate_card_surface, rect_list_apartment, x_coordinate, y_coordinate = draw_functions.create_card_surface(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment) 
             draw_inventory = False
             inventory_card_surface = None
             rect_list_inventory.clear()
-        elif draw_apartment_list and apartment.index == const.renting_apartment[0].index and real_estate_card_surface is None:
-            real_estate_card_surface, rect_list_apartment, x_coordinate, y_coordinate = draw_functions.create_card_surface(const.screen, const.job_button, const.job_cards_text, real_estate_buttons_when_renting, apartment) #draw_functions.draw_card(const.screen, const.job_button, const.job_cards_text, real_estate_buttons, apartment)
+        elif draw_apartment_list and apartment.index == current_renting_apartment.index and real_estate_card_surface is None:
+            real_estate_card_surface, rect_list_apartment, x_coordinate, y_coordinate = draw_functions.create_card_surface(const.screen, const.job_button, const.job_cards_text, real_estate_buttons_when_renting, apartment) 
             draw_inventory = False
             inventory_card_surface = None
             rect_list_inventory.clear()
@@ -171,6 +195,7 @@ def apartment_screen():
         if not draw_apartment_list and real_estate_card_surface is None:
             rect_list_apartment.clear()
 
+        utils.set_fps_clock(clock, 60)
         pygame.display.flip()
     pygame.quit()
     sys.exit(0)

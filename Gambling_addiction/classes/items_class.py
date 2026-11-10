@@ -7,7 +7,7 @@ class shop_item:
         self.item_tax = item_tax
 
 class apartment:
-    def __init__(self, index, price, rent_price, image_path, renting_apartment, bought_apartment, rent, utilities, property_tax, maintenance):
+    def __init__(self, index, price, rent_price, image_path, renting_apartment, bought_apartment, rent, utilities, property_tax, maintenance, debt, debt_months_count):
         self.index = index
         self.price  = price
         self.rent_price =  rent_price
@@ -18,9 +18,17 @@ class apartment:
         self.utilities = utilities
         self.property_tax = property_tax
         self.maintenance = maintenance
+        self.debt = debt
+        self.debt_months_count = debt_months_count 
 
     def get_monthly_renting_cost(self):
         return self.rent + self.utilities
 
     def get_monthly_owned_cost(self):
         return self.utilities + self.property_tax + self.maintenance
+
+    def get_apartment_debt(self):
+        return self.debt
+
+    def get_apartment_number_of_debt_months(self):
+        return self.debt_months_count

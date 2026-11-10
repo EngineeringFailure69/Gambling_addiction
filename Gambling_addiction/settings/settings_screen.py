@@ -215,7 +215,8 @@ def settings_screen():
                     if custom_playlist:
                         new_playlist = list(songs)
                         sound_settings.copy_songs_to_directory(new_playlist)
-
+                        
+        utils.set_fps_clock(const.clock, 60)
         pygame.display.flip()
     pygame.quit()
     sys.exit(0)

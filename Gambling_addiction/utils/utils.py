@@ -330,17 +330,19 @@ def restart_game():
     const.return_day_counter = 0
     const.return_month_counter = 0
     const.job_positions_list = [['janitor', 0, False, 0, False], ['waiter', 5, False, 0, False], ['slot attendant', 10, False, 0, False], ['dealer', 15, False, 0, False], ['shift leader', 20, False, 0, False], ['pit boss', 25, False, 0, False], ['shift manager', 30, False, 0, False], ['manager', 35, False, 0, False]]
-    const.renting_apartment = [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100]]
+    const.renting_apartment = [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100, 0, 0]]
     const.renting_apartment_file = const.renting_apartment
-    const.renting_apartment = load_current_apartment()
+    const.renting_apartment = load_apartment_objects(const.renting_apartment_file)
+    const.real_estate_list = [[0, 100000, 300, "assets\\icons\\apartment_icons\\tier_1_apartment.png", True, False, 300, 100, 100, 100, 0, 0], [1, 350000, 1200, "assets\\icons\\apartment_icons\\tier_2_apartment.png", False, False, 1200, 400, 100, 300, 0, 0], [2, 1200000, 4500, "assets\\icons\\apartment_icons\\tier_3_apartment.png", False, False, 4500, 1200, 700, 600, 0, 0], [3, 4000000, 18000, "assets\\icons\\apartment_icons\\tier_4_apartment.png", False, False, 18000, 3000, 3000, 2000, 0, 0]]
+    const.real_estate_list_file = const.real_estate_list
     update_apartment_file()
     const.index = 0
     const.inventory_list_file = []
     const.inventory_list = []
     const.inventory_index = 0
-    const.real_estate_list = []
     const.real_estate_index = 0 
-    save_utils.update_list_in_file(save_path, "renting_apartment", const.renting_apartment)
+    save_utils.update_list_in_file(save_path, "renting_apartment", const.renting_apartment_file)
+    save_utils.update_list_in_file(save_path, "real_estate_list", const.real_estate_list_file)
     save_utils.update_value_in_file(save_path, "balance")
     save_utils.update_value_in_file(save_path, "salary")
     save_utils.update_value_in_file(save_path, "working")
@@ -372,6 +374,25 @@ def load_inventory_objects():
         inventory_item = items_class.shop_item(item[type], item[image_path], item[item_type], item[item_price])
         inventory_items.append(inventory_item)
     return inventory_items
+
+def load_apartment_objects(real_estate_list):
+    apartment_list = []
+    index = 0
+    price = 1
+    rent_price = 2
+    image_path = 3 
+    renting_apartment = 4
+    bought_apartment = 5 
+    rent = 6 
+    utilities = 7
+    property_tax = 8
+    maintenance = 9 
+    debt = 10 
+    debt_months_count = 11
+    for real_estate in real_estate_list:
+        apartment = items_class.apartment(real_estate[index], real_estate[price], real_estate[rent_price], real_estate[image_path], real_estate[renting_apartment], real_estate[bought_apartment], real_estate[rent], real_estate[utilities], real_estate[property_tax], real_estate[maintenance], real_estate[debt], real_estate[debt_months_count])
+        apartment_list.append(apartment)
+    return apartment_list
 
 def update_inventory_file():
     inventory = []
@@ -419,22 +440,22 @@ def remove_item_from_the_inventory(item):
     if const.inventory_index > len(const.inventory_list) - 1:
         const.inventory_index = 0
 
-def load_current_apartment():
-    apartments = []
-    index = 0
-    price = 1
-    rent_price = 2
-    image_path = 3
-    renting_apartment = 4
-    bought_apartment = 5 
-    rent = 6
-    utilities = 7
-    property_tax = 8 
-    maintenance = 9
-    for apartment in const.renting_apartment_file:
-        current_apartment = items_class.apartment(apartment[index], apartment[price], apartment[rent_price], apartment[image_path], apartment[renting_apartment], apartment[bought_apartment], apartment[rent], apartment[utilities], apartment[property_tax], apartment[maintenance])
-        apartments.append(current_apartment)
-    return apartments
+# def load_current_apartment():
+#     apartments = []
+#     index = 0
+#     price = 1
+#     rent_price = 2
+#     image_path = 3
+#     renting_apartment = 4
+#     bought_apartment = 5 
+#     rent = 6
+#     utilities = 7
+#     property_tax = 8 
+#     maintenance = 9
+#     for apartment in const.renting_apartment_file:
+#         current_apartment = items_class.apartment(apartment[index], apartment[price], apartment[rent_price], apartment[image_path], apartment[renting_apartment], apartment[bought_apartment], apartment[rent], apartment[utilities], apartment[property_tax], apartment[maintenance])
+#         apartments.append(current_apartment)
+#     return apartments
 
 def update_apartment_file():
     apartment = []
@@ -450,6 +471,8 @@ def update_apartment_file():
         apartment.append(item.utilities)
         apartment.append(item.property_tax)
         apartment.append(item.maintenance)
+        apartment.append(item.debt)
+        apartment.append(item.debt_months_count)
         const.renting_apartment_file.append(apartment)
         apartment = []
 
@@ -474,4 +497,25 @@ def save_game():
     save_utils.update_value_in_file("save_files\\information.txt", "working")
 
     #Apartment info
+    update_apartment_file()
     save_utils.update_list_in_file("save_files\\information.txt", "renting_apartment", const.renting_apartment_file)
+    save_utils.update_value_in_file("save_files\\information.txt", "debt")
+
+def set_fps_clock(clock, clock_value):
+    clock.tick(clock_value) 
+
+def set_timer(interval_ms = 5000):
+    current_time = pygame.time.get_ticks()
+
+    if not hasattr(set_timer, "last_update"):
+        set_timer.last_update = current_time
+        return False
+
+    if current_time - set_timer.last_update >= interval_ms:
+        set_timer.last_update = current_time
+        return True
+
+    return False
+
+def calculate_apartment_expenses():
+    pass 

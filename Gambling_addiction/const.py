@@ -115,6 +115,11 @@ bet = ""
 your_bet = 0
 working = save_utils.load_save_game_info(save_path, "working")
 working = int(working)
+debt = save_utils.load_save_game_info(save_path, "debt")
+# tier_1_apartment_debt_months_count = 0
+# tier_2_apartment_debt_months_count = 0
+# tier_3_apartment_debt_months_count = 0
+# tier_4_apartment_debt_months_count = 0
 
 # Colours
 white = (255, 255, 255)
@@ -263,10 +268,11 @@ job_apply = False
 inventory_list_file = save_utils.load_list_from_file(save_path, "inventory_list") 
 inventory_list = utils.load_inventory_objects()
 inventory_index = 0
-real_estate_list = []
+real_estate_list_file = save_utils.load_list_from_file(save_path, "real_estate_list")
 renting_apartment_index = 0
 renting_apartment_file = save_utils.load_list_from_file(save_path, "renting_apartment")
-renting_apartment = utils.load_current_apartment()
+renting_apartment = utils.load_apartment_objects(renting_apartment_file)
+real_estate_list = utils.load_apartment_objects(real_estate_list_file)
 real_estate_index = 0
 
 #settings data
@@ -278,3 +284,5 @@ playlist = sound_settings.grab_all_sounds_from_the_music_drectory()
 current_song_index = 0 
 MUSIC_END = pygame.USEREVENT + 1
 music_volume = 0.1
+
+first_draw_fps = False
