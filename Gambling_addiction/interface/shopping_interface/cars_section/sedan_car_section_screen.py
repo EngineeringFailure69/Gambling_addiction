@@ -68,7 +68,7 @@ def sedan_car_section_screen():
         action_list.append(action)
 
         if const.fps_show:
-            draw_functions.show_fps_counter(const.screen, clock, const.black, const.fps_rect, font, const.fps, const.line_spacing)
+            draw_functions.show_fps_counter(const.screen, clock, const.black, const.fps_rect, font, const.line_spacing)
 
         utils.set_fps_clock(clock, 60)
             

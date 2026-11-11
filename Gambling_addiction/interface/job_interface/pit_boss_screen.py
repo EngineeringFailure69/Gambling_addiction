@@ -40,7 +40,7 @@ def pit_boss_screen():
         utils.job_apply(const.apply_button, 6000, 1095, "pit boss")
         
         if const.fps_show:
-            draw_functions.show_fps_counter(const.screen, clock, const.white, const.fps_rect, font, const.fps, const.line_spacing)
+            draw_functions.show_fps_counter(const.screen, clock, const.white, const.fps_rect, font, const.line_spacing)
         
         utils.set_fps_clock(clock, 60)
                    

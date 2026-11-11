@@ -9,7 +9,7 @@ class shop_item:
 class apartment:
     def __init__(self, index, price, rent_price, image_path, renting_apartment, bought_apartment, rent, utilities, property_tax, maintenance, debt, debt_months_count):
         self.index = index
-        self.price  = price
+        self.price = price
         self.rent_price =  rent_price
         self.image_path = image_path
         self.renting_apartment = renting_apartment

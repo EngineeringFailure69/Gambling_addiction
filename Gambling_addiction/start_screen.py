@@ -69,8 +69,6 @@ def main_screen():
     FPS_SHOW_DURATION_MS = 5000
     first_draw = False
 
-    print(const.real_estate_list)
-
     while running:
         events = pygame.event.get()
         sound_settings.change_music_volume()

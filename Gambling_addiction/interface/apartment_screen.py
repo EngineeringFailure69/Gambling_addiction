@@ -4,7 +4,6 @@ import utils.draw_functions as draw_functions
 import utils.utils as utils
 import sys
 import settings.sound_settings as sound_settings
-import classes.items_class as apartment_class
 
 def apartment_screen():
     running = True
@@ -32,10 +31,6 @@ def apartment_screen():
     clock = pygame.time.Clock() 
 
     tier_1_apartment = const.real_estate_list[0]
-    tier_2_apartment = const.real_estate_list[1]
-    tier_3_apartment = const.real_estate_list[2]
-    tier_4_apartment = const.real_estate_list[3]
-    current_renting_apartment = const.renting_apartment[0]
 
     day, month_old, year = utils.date_time_timer()
     real_estate_card_surface = None
@@ -43,6 +38,10 @@ def apartment_screen():
     inventory_length = 0
 
     action_list = []
+
+    for real_estate in const.real_estate_list:
+        if real_estate.renting_apartment is True:
+            current_renting_apartment = real_estate
 
     while running:
         inventory_length = len(const.inventory_list)
@@ -80,7 +79,33 @@ def apartment_screen():
                     current_renting_apartment.debt += current_renting_apartment.get_monthly_renting_cost() #The entire cost is now debt
                     current_renting_apartment.debt_months_count += 1 #You are in debt for a previous month 
                     const.debt += current_renting_apartment.get_monthly_renting_cost() 
+
+            for real_estate in const.real_estate_list:
+                if real_estate.debt_months_count > 3 and real_estate.debt > 0:
+                    if const.inventory_list is not None: #If you have something in inventory, stuff get sold for half the original price in order to pay off the debt
+                        for item in const.inventory_list:
+                            if const.debt > 0 or real_estate.debt > 0:
+                                const.balance += item.item_price / 2
+                                if const.balance >= real_estate.debt:
+                                    const.balance -= real_estate.debt 
+                                    const.debt = 0
+                                    real_estate.debt = 0
+                                elif const.balance < real_estate.debt:
+                                    real_estate.debt -= const.balance
+                                    const.debt -= const.balance
+                                    const.balance = 0
+                                utils.remove_item_from_the_inventory(item)
+                                draw_functions.draw_message_box("Item sold to pay off debt", f"Your {item.item_type} {item.type} has been sold for {item.item_price / 2} to pay off debt")
+                            else: #if you paid off your debt, check stops
+                                real_estate.debt_months_count = 0
+                                break
             month_old = month
+
+        if current_renting_apartment.debt_months_count > 3 and current_renting_apartment.index > 0: #if your are in debt higher tier apartments over 3 months, you get kicked out
+                draw_functions.draw_message_box("Kicked out", "You are kicked out back to tier 1 apartment because you are in debt for over 3 months")
+                current_renting_apartment.renting_apartment = False
+                current_renting_apartment = tier_1_apartment
+                current_renting_apartment.renting_apartment = True
 
         real_estate_button_rect, inventory_button_rect, exit_door_icon_rect, settings_icon_rect = draw_functions.draw_apartment(const.screen, mouse_pos, screen_width, screen_height, font, clock, events, current_renting_apartment, current_renting_apartment.get_monthly_renting_cost(), current_renting_apartment.index)
         action = utils.get_icon_rect_and_handle_click(events, exit_door_icon_rect.left, exit_door_icon_rect.top, exit_door_icon_rect.width, exit_door_icon_rect.height, const.STATE_TO_THE_STREETS)
@@ -125,19 +150,17 @@ def apartment_screen():
                     if rect_list_apartment["rent"].collidepoint(mouse_pos): #Rent
                         if const.balance < apartment.rent_price:
                             draw_functions.draw_message_box("Not enough money", "You don't have enough money to rent this apartment!")
+                        elif apartment.debt_months_count > 3:
+                            draw_functions.draw_message_box("You are in debt", f"You didn't pay rent for over 3 months and you are still in debt {apartment.debt} dollars")
                         else:
                             for i in const.real_estate_list:
                                 if i.index != apartment.index:
                                     i.renting_apartment = False
                             draw_functions.draw_message_box("Welcome", "Welcome to your new apartment!")
-                            const.renting_apartment.clear()
                             apartment.renting_apartment = True
-                            const.renting_apartment.append(apartment)
-                            current_renting_apartment = const.renting_apartment[0]
+                            current_renting_apartment = apartment 
                             real_estate_card_surface = None
-                            utils.update_apartment_file()
                             const.balance -= current_renting_apartment.get_monthly_renting_cost() - current_renting_apartment.rent_price
-                            const.renting_apartment_index = current_renting_apartment.index
                             draw_apartment_list = False
                     if rect_list_apartment["buy"].collidepoint(mouse_pos):
                         draw_functions.draw_message_box("Button 2", "") #Buy
@@ -147,9 +170,12 @@ def apartment_screen():
                                 draw_functions.draw_message_box("Tier 1", "Can't stop renting tier 1 apartment")
                             else:
                                 draw_functions.draw_message_box(f"Tier {current_renting_apartment.index + 1}", f"You stopped renting tier {current_renting_apartment.index + 1} apartment and are back to tier 1")
-                                const.renting_apartment[0] = tier_1_apartment
-                                current_renting_apartment = const.renting_apartment[0]
-                                utils.update_apartment_file()
+                                apartment = tier_1_apartment
+                                for i in const.real_estate_list:
+                                    if i.index != apartment.index:
+                                        i.renting_apartment = False
+                                current_renting_apartment = tier_1_apartment
+                                current_renting_apartment.renting_apartment = True
                     if rect_list_apartment["right"].collidepoint(mouse_pos):
 
                         if const.real_estate_index >= real_estate_list_length - 1:

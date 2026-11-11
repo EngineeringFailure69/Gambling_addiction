@@ -478,7 +478,6 @@ def draw_apartment(screen, mouse_pos, screen_width, screen_height, font, clock, 
         salary_text_rect = pygame.Rect(salary_icon_position_x + salary_icon_width + salary_icon_width / 5, salary_icon_position_y + (salary_icon_height - font.get_height()) / 2, info_bckgd_icon_width, salary_icon_height)
         draw_text(screen, f"Salary: {const.salary}", const.golden_settings_button, salary_text_rect, font, line_spacing=5)
         rent_text_rect = pygame.Rect(rent_icon_position_x + rent_icon_width + rent_icon_width / 5, rent_icon_position_y + (rent_icon_height - font.get_height()) / 2, info_bckgd_icon_width, rent_icon_height)
-        font = pygame.font.SysFont(None, 10)
         draw_text(screen, f"Rent, apartment debt, total debt, debt months: {current_renting_expenses}, {apartment.debt}, {const.debt}, {apartment.debt_months_count}", const.golden_settings_button, rent_text_rect, font, line_spacing=5)
 
         fps_rect = pygame.Rect(fps_rect_position_x, fps_rect_position_y, fps_rect_width, fps_rect_height)
